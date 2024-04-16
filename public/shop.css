@@ -1,0 +1,28 @@
+body{
+    background-color: (187,185,185,1);
+}
+
+
+.Body-Container{
+    display:flex;
+    /* background-color: blue; */
+    min-width: 100vw;
+    min-height: 100vh;
+}
+.Left-Container{
+    /* background-color: rgba(20, 221, 104, 0.3); */
+    width: 20%;
+
+}
+
+.Middle-Container{
+
+    background-color: rgba(122, 126, 126, 0.3);
+    width:60%
+}
+
+.Right-Container{
+    /* background-color: rgba(224, 6, 6, 0.3); */
+    width:20%
+
+}
