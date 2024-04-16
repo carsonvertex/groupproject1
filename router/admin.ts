@@ -1,10 +1,31 @@
 import { Router, Request, Response, NextFunction } from "express";
-import pg from "pg";
-// import { UserQueryType } from "../types";
+import formidable from "formidable";
+import { pgClient } from "../pgClients";
+import expressSession from "express-session";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const adminRouter = Router();
 
-adminRouter.get("/admin");
+//get the existing products
 
-adminRouter.post("/admin");
+adminRouter.get("/admin",
+    (req: Request, res: Response, next: NextFunction) => {
+        // if (req.body.username == 'admin') {
+            next()
+        // }
+    },
+    getAllProducts
+);
+
+async function getAllProducts(req: Request, res: Response) {
+    let productQueryResult = (
+        await pgClient.query(
+            "SELECT id,category,image,productname,price,description FROM Products"
+        )
+    ).rows;
+
+    res.json({ data: { Products: productQueryResult } });
+}
+
 
