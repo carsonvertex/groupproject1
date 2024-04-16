@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Router, Request, Response, NextFunction } from "express";
 import formidable from "formidable";
 import { pgClient } from "../pgClients";
@@ -27,5 +28,24 @@ async function getAllProducts(req: Request, res: Response) {
 
     res.json({ data: { Products: productQueryResult } });
 }
+=======
+import { Router, Request, Response } from "express";
+import pg from "pg";
+// import { UserQueryType } from "../types";
+
+export const adminRouter = Router();
+
+adminRouter.get("/admin",(req,res)=>{
+
+
+
+
+
+
+
+
+    
+});
+>>>>>>> d6bee45 (updated login)
 
 

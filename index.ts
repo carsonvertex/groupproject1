@@ -6,7 +6,7 @@ import { adminRouter } from "./router/admin";
 
 declare module "express-session" {
     interface SessionData {
-        secret:string|undefined;
+     
         userId: number;
         username: string;
     }
@@ -17,9 +17,14 @@ dotenv.config();
 const app = express();
 const PORT = 8080;
 
+if(!process.env.SECRET)
+    throw Error("No Secret in .env");
+    
+    
+
 app.use(
     expressSession({
-        secret: "sadasdassdvs",
+        secret: process.env.SECRET,
         saveUninitialized: true,
         resave: true,
     })
