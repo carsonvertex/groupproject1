@@ -1,5 +1,5 @@
 
-DROP DATABASE groupproject1;
+DROP DATABASE IF EXISTS groupproject1;
 CREATE DATABASE groupproject1;
 
 CREATE TABLE Products (
@@ -12,3 +12,4 @@ description varchar(255)
 );
 
 INSERT INTO groupproject1 (category,image,productname,price,description)
+
