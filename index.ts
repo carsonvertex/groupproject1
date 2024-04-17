@@ -20,7 +20,6 @@ const PORT = 8080;
 if(!process.env.SECRET)
     throw Error("No Secret in .env");
     
-    
 
 app.use(
     expressSession({

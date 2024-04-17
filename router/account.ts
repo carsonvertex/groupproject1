@@ -27,3 +27,9 @@ async function getAllProducts(req: Request, res: Response) {
 
     res.json({ data: { Products: productQueryResult } });
 }
+<<<<<<< HEAD:router/account.ts
+=======
+
+
+
+>>>>>>> 1b124ae78213dc1f8f7b75bfbb9ff623c96cab35:router/admin.ts
