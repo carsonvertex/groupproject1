@@ -1,28 +1,27 @@
 
 DROP DATABASE IF EXISTS gp1;
 CREATE DATABASE gp1;
+\c gp1
 
 CREATE TABLE account_levels (
     id SERIAL PRIMARY KEY,
     level_name VARCHAR(20) UNIQUE
 );
 
-INSERT INTO users (account_level_id)
-VALUES ('customer'), ('admin'), ('super admin');
+Create Type sizeName AS enum('S','M','L','XL');
 
 CREATE TABLE sizes (
     id SERIAL PRIMARY KEY,
-    size VARCHAR(20) UNIQUE
+    size sizeName
 );
 
-INSERT INTO size (size)
-VALUES ('S'), ('M'), ('L'),('XL');
+Create Type userPermission AS enum('customer','admin','super_admin');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(20),
+    username VARCHAR(20) UNIQUE,
     password VARCHAR(20),
-    account_level_id INT,
+    level userPermission,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -33,7 +32,8 @@ CREATE TABLE categories (
 
 CREATE TABLE products (
 id SERIAL PRIMARY KEY,
-category_id integer,
+category_id INT, 
+FOREIGN KEY (category_id) REFERENCES categories(id),
 name varchar(50),
 price float,
 description text,
@@ -53,9 +53,6 @@ CREATE TABLE product_options (
     size varchar(10),
     stock integer
 );
-
-
-
 
 
 
