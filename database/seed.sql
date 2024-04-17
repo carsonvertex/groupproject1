@@ -22,40 +22,16 @@ VALUES (2,
         'This is a White T-Shirt'
 );
 
-INSERT INTO product_options (product_id,
-                             hex_code,
-                             size,
-                             stock
-)
-VALUES (1,'0000','S',100);
-INSERT INTO product_options (product_id,
-                             hex_code,
-                             size,
-                             stock
-)
-VALUES (1,'0000','M',100);
-INSERT INTO product_options (product_id,
-                             hex_code,
-                             size,
-                             stock
-)
-VALUES (1,'0000','L',100);
-INSERT INTO product_options (product_id,
-                             hex_code,
-                             size,
-                             stock
-)
-VALUES (2,'FFFF','S',100);
-INSERT INTO product_options (product_id,
-                             hex_code,
-                             size,
-                             stock
-)
-VALUES (2,'FFFF','M',100);
-INSERT INTO product_options (product_id,
-                             hex_code,
-                             size,
-                             stock
-)
-VALUES (2,'FFFF','L',100);
+INSERT INTO product_options (product_id, hex_code, "size", stock)
+VALUES (1, '0000', 'S', 100);
+INSERT INTO product_options (product_id, hex_code, "size", stock)
+VALUES (1, '0000', 'M', 100);
+INSERT INTO product_options (product_id, hex_code, "size", stock)
+VALUES (1, '0000', 'L', 100);
+INSERT INTO product_options (product_id, hex_code, "size", stock)
+VALUES (2, 'FFFF', 'S', 100);
+INSERT INTO product_options (product_id, hex_code, "size", stock)
+VALUES (2, 'FFFF', 'M', 100);
+INSERT INTO product_options (product_id, hex_code, "size", stock)
+VALUES (2, 'FFFF', 'L', 100);
 
