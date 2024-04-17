@@ -1,22 +1,22 @@
 
-DROP DATABASE IF EXISTS groupproject1;
-CREATE DATABASE groupproject1;
+DROP DATABASE IF EXISTS gp1;
+CREATE DATABASE gp1;
 
--- CREATE TABLE users (
---  id SERIAL PRIMARY KEY,
---  username varchar(20),
---  password varchar(20),
---  account_level enum,
---  created_at timestamp WITH TIME ZONE DEFAULT now()
--- );
 CREATE TABLE account_levels (
     id SERIAL PRIMARY KEY,
     level_name VARCHAR(20) UNIQUE
 );
 
--- Insert the account levels into the lookup table
 INSERT INTO users (account_level_id)
 VALUES ('customer'), ('admin'), ('super admin');
+
+CREATE TABLE sizes (
+    id SERIAL PRIMARY KEY,
+    size VARCHAR(20) UNIQUE
+);
+
+INSERT INTO size (size)
+VALUES ('S'), ('M'), ('L'),('XL');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -28,11 +28,12 @@ CREATE TABLE users (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name varchar
+    name varchar(50)
 );
 
 CREATE TABLE products (
 id SERIAL PRIMARY KEY,
+category_id integer,
 name varchar(50),
 price float,
 description text,
@@ -48,16 +49,12 @@ CREATE TABLE product_image (
 CREATE TABLE product_options (
     id SERIAL PRIMARY KEY,
     product_id integer,
-    product_name varchar(50),
-    color_code varchar(50)
+    hex_code varchar(50)
+    size integer REFERENCES sizes(id),
+    stock integer
 );
 
-CREATE TABLE option_sizes (
-    id SERIAL PRIMARY KEY,
-    product_option_id integer,
-    size enum,
-    qunatity integer
-);
+
 
 
 
