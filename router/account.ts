@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Router, Request, Response, NextFunction } from "express";
 import formidable from "formidable";
 import { pgClient } from "../pgClients";
@@ -6,11 +5,11 @@ import expressSession from "express-session";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const adminRouter = Router();
+export const accountRouter = Router();
 
 //get the existing products
 
-adminRouter.get("/admin",
+accountRouter.get("/account",
     (req: Request, res: Response, next: NextFunction) => {
         // if (req.body.username == 'admin') {
             next()
@@ -28,24 +27,3 @@ async function getAllProducts(req: Request, res: Response) {
 
     res.json({ data: { Products: productQueryResult } });
 }
-=======
-import { Router, Request, Response } from "express";
-import pg from "pg";
-// import { UserQueryType } from "../types";
-
-export const adminRouter = Router();
-
-adminRouter.get("/admin",(req,res)=>{
-
-
-
-
-
-
-
-
-    
-});
->>>>>>> d6bee45 (updated login)
-
-

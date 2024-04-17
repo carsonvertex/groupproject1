@@ -10,10 +10,15 @@ CREATE TABLE users (
  created_at timestamp WITH TIME ZONE DEFAULT now()
 );
 
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    name varchar
+);
+
 CREATE TABLE products (
 id SERIAL PRIMARY KEY,
 name varchar(50),
-price integer,
+price float,
 description text,
 uploaded_at timestamp WITH TIME ZONE DEFAULT now()
 );
@@ -27,23 +32,13 @@ CREATE TABLE product_image (
 CREATE TABLE product_options (
     id SERIAL PRIMARY KEY,
     product_id integer,
-    product_name varchar(50),
-    color_code varchar(50)
-);
-
-CREATE TABLE option_sizes (
-    id SERIAL PRIMARY KEY,
-    product_option_id integer,
+    hex_code INT,
     size enum,
-    qunatity integer
+    stock integer
 );
 
-CREATE TABLE shopping_cart(
-    id SERIAL PRIMARY KEY,
-    user_id integer,
-    product_choice_id integer,
-    qunatity integer
-)
+
+
 
 
 

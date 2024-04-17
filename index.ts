@@ -2,7 +2,7 @@ import express from "express";
 import expressSession from "express-session";
 import { Request, Response } from "express";
 import dotenv from "dotenv"
-import { adminRouter } from "./router/admin";
+import { accountRouter } from "./router/account";
 
 declare module "express-session" {
     interface SessionData {
@@ -31,10 +31,11 @@ app.use(
 );
 
 //api
-app.use("/admin", adminRouter);
+app.use("/account", accountRouter);
 
 //static assets
 app.use(express.static("public"))
+app.use(express.static("uploads"))
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`)
