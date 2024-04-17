@@ -15,16 +15,17 @@ accountRouter.get("/account",
             next()
         // }
     },
-    getAllProducts
+    register
 );
 
-async function getAllProducts(req: Request, res: Response) {
-    let productQueryResult = (
+async function register(req: Request, res: Response) {
+    let isUsernameDuplicated = (
         await pgClient.query(
-            "SELECT id,category,image,productname,price,description FROM Products"
+            "SELECT username FROM users"
         )
     ).rows;
+    console.log(isUsernameDuplicated)
 
-    res.json({ data: { Products: productQueryResult } });
+    // res.json({ data: { Products: productQueryResult } });
 }
 

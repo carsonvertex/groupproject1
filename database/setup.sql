@@ -50,7 +50,7 @@ CREATE TABLE product_options (
     id SERIAL PRIMARY KEY,
     product_id integer,
     hex_code varchar(50),
-    size integer REFERENCES sizes(id),
+    size varchar(10),
     stock integer
 );
 
