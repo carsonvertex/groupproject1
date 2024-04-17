@@ -28,7 +28,7 @@ CREATE TABLE users (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name varchar(50)
+    name varchar
 );
 
 CREATE TABLE products (
@@ -49,7 +49,7 @@ CREATE TABLE product_image (
 CREATE TABLE product_options (
     id SERIAL PRIMARY KEY,
     product_id integer,
-    hex_code varchar(50)
+    hex_code varchar(50),
     size integer REFERENCES sizes(id),
     stock integer
 );
