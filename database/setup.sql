@@ -19,10 +19,9 @@ Create Type userPermission AS enum('customer','admin','super_admin');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    email varchar(20) UNIQUE,
     email varchar(50) UNIQUE,
     username VARCHAR(20) UNIQUE,
-    password VARCHAR(20),
+    password VARCHAR(255),
     level userPermission,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

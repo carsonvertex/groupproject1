@@ -1,12 +1,10 @@
 import express from "express";
 import expressSession from "express-session";
-import { Request, Response } from "express";
 import dotenv from "dotenv"
 import { accountRouter } from "./router/account";
 
 declare module "express-session" {
-    interface SessionData {
-     
+    interface SessionData {  
         userId: number;
         username: string;
     }
@@ -29,12 +27,19 @@ app.use(
     })
 );
 
+//parsing middleware
+app.use(express.json())
+
+
 //api
 app.use("/account", accountRouter);
+
 
 //static assets
 app.use(express.static("public"))
 app.use(express.static("uploads"))
+
+
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`)
