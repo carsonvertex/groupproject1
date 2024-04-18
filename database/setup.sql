@@ -20,6 +20,7 @@ Create Type userPermission AS enum('customer','admin','super_admin');
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     email varchar(20) UNIQUE,
+    email varchar(50) UNIQUE,
     username VARCHAR(20) UNIQUE,
     password VARCHAR(20),
     level userPermission,
