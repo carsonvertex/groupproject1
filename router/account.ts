@@ -9,6 +9,9 @@ export const accountRouter = Router();
 
 //get the existing products
 
+accountRouter.post("/register",register)
+
+// accountRouter.post("/login",login)
 
 accountRouter.post("/register", register);
 accountRouter.post("/login", login)
