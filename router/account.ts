@@ -4,11 +4,10 @@ import { checkPassword, hashPassword } from "../utils/hash";
 
 
 
+
 export const accountRouter = Router();
 
 //get the existing products
-
-// accountRouter.post("/login",login)
 
 accountRouter.post("/register", register);
 accountRouter.post("/login", login)
@@ -49,7 +48,27 @@ async function register(req: Request, res: Response) {
         console.log(e)
         res.status(400).json({ message: e });
 
+    //   email exists
+    if (userQueryResult) {
+      res.status(400).json({ message: "Duplicate entry." });
+      return;
     }
+
+    const insertResult = await pgClient.query(
+      "INSERT INTO users (username, email, password,level) VALUES ($1, $2, $3,$4) RETURNING id",
+      [username, email, hashedPassword, "customer"]
+    );
+    console.log(insertResult);
+    const returningId = insertResult.rows[0].id;
+    res.json({
+      msg: "register successful",
+      userId: returningId,
+    });
+  } catch (e) {
+    console.log(e)
+    res.status(400).json({ message: e });
+
+  }
 }
 
 async function login(req: Request, res: Response) {
