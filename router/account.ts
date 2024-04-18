@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-// import formidable from "formidable";
 import { pgClient } from "../pgClients";
 import { checkPassword, hashPassword } from "../utils/hash";
 
@@ -8,8 +7,6 @@ import { checkPassword, hashPassword } from "../utils/hash";
 export const accountRouter = Router();
 
 //get the existing products
-
-accountRouter.post("/register",register)
 
 // accountRouter.post("/login",login)
 
@@ -117,4 +114,4 @@ async function login(req: Request, res: Response) {
     } else {
       res.status(400).json({ message: "You are not logged in." });
     }
-  }
+  };
