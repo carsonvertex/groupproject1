@@ -19,6 +19,7 @@ Create Type userPermission AS enum('customer','admin','super_admin');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
+    email varchar(20) UNIQUE,
     username VARCHAR(20) UNIQUE,
     password VARCHAR(20),
     level userPermission,
@@ -27,7 +28,7 @@ CREATE TABLE users (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name varchar
+    name varchar(25)
 );
 
 CREATE TABLE products (

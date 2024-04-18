@@ -19,7 +19,7 @@ async function register(req: Request, res: Response) {
             "SELECT Username FROM users"
         )
     ).rows;
-    console.log(UserQueryResult)
+  console.log(UserQueryResult)
     // res.json({ data: { Products: productQueryResult } });
 }
 
