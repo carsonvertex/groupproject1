@@ -2,30 +2,31 @@ import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
 
 
-export const catRouter = Router();
+export const productRouter = Router();
 
-catRouter.get("/showCat", showCat);
-catRouter.post("/newCat", newCat);
-catRouter.put("/editCat", editCat);
-catRouter.delete("/delCat", delCat);
+productRouter.get("/showProduct", showProduct);
+productRouter.post("/newProduct", newProduct);
+productRouter.put("/editProduct", editProduct);
+productRouter.delete("/delProduct", delProduct);
 
-async function showCat(req: Request, res: Response) {
-    let catQueryResult = (
+async function showProduct(req: Request, res: Response) {
+    let productQueryResult = (
         await pgClient.query(
-            "SELECT  name FROM categories ORDER BY ID ASC;"
+            "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id ;"
+            
         )
     ).rows;
-    res.json({ data: { cat: catQueryResult } })
+    res.json({ data: { product: productQueryResult } })
 
 }
 
-async function newCat(req: Request, res: Response) {
+async function newProduct(req: Request, res: Response) {
     let { name } = req.body;
     try {
-        let catQueryResult = (
+        let productQueryResult = (
             await pgClient.query("SELECT id,name FROM categories WHERE name = $1;", [name])
         ).rows[0];
-        if (catQueryResult) {
+        if (productQueryResult) {
             res.status(400).json({ message: "Category already exists." });
             return;
         }
@@ -46,30 +47,30 @@ async function newCat(req: Request, res: Response) {
 }
 
 
-async function editCat(req: Request, res: Response) {
+async function editProduct(req: Request, res: Response) {
     let { name } = req.body;
     let {id}= req.query;
-    let catUpdateResult = await pgClient.query(
+    let productUpdateResult = await pgClient.query(
         "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
         [name,id]
     );
 
-    if (catUpdateResult.rowCount == 1) {
+    if (productUpdateResult.rowCount == 1) {
         res.json({
             message: "update success",
         });
     }}
 
-async function delCat(req: Request, res: Response) {
+async function delProduct(req: Request, res: Response) {
 
     let targetId = parseInt(req.query.id as string);
 
-    let catDeleteResult = await pgClient.query(
+    let productDeleteResult = await pgClient.query(
         "DELETE FROM categories WHERE id =$1",
         [targetId]
     );
 
-    if (catDeleteResult.rowCount == 1) {
+    if (productDeleteResult.rowCount == 1) {
         res.json({ message: "Delete category successful" });
     } else {
         res.status(400).json({ message: "Delete category failed" });
