@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
     "dev": "ts-node-dev index.ts",
-    "data":"psql -f ./database/setup.sql",
-    "win-data":"psql -f ./database/setup.sql -U postgres"
+    "data":"psql -f ./database/setup.sql && ts-node ./database/01_userSeed.ts",
+    "win-data":"psql -f ./database/setup.sql -U postgres && ts-node ./database/01_userSeed.ts"
   },
   "author": "",
   "license": "ISC",
