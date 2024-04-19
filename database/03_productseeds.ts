@@ -20,6 +20,21 @@ type productsImage = {
     image: string
 }
 
+enum size {
+    small = 'S',
+    median = 'M',
+    large = 'L',
+    xlarge = 'XL',
+}
+
+
+type productsOptions = {
+    name: string,
+    color_code: string,
+    size: size,
+    stock: any
+}
+
 async function productItems() {
     console.log("Test products input succeed!")
     try {
@@ -41,6 +56,12 @@ async function productItems() {
             { image: "image_test3.jpg" }
         ]
 
+        let productsOptions: productsOptions[] = [
+            { name: "Products_test1", color_code: "111", size: size.small, stock: 100 },
+            { name: "Products_test2", color_code: "222", size: size.median, stock: 100 },
+            { name: "Products_test3", color_code: "333", size: size.large, stock: 100 }
+        ]
+
 
         await pgClient.connect()
 
@@ -49,11 +70,17 @@ async function productItems() {
             let productInsertResult = await pgClient.query("INSERT INTO products (name,price,description) VALUES ($1,$2,$3) RETURNING id", [
                 entry.name, entry.price, entry.description])
 
-            console.log(productInsertResult.rows[0].id)
+            // console.log(productInsertResult.rows[0].id)
 
-            await pgClient.query("INSERT INTO product_images (product_id,image) VALUES ($1,$2)", [
-                productInsertResult.rows[0].id, images])
+            for (let imagesItems of images) {
+                await pgClient.query("INSERT INTO product_images (product_id,image) VALUES ($1,$2)", [
+                    productInsertResult.rows[0].id, imagesItems.image])
+            }
 
+            for (let productOptionsItems of productsOptions) {
+            await pgClient.query("INSERT INTO product_options (product_id,color_name,color_code,sizing,stock) VALUES ($1,$2,$3,$4,$5)", [
+                productInsertResult.rows[0].id, productOptionsItems.name, productOptionsItems.color_code, productOptionsItems.size,productOptionsItems.stock])
+            }
         }
 
         await pgClient.end()
