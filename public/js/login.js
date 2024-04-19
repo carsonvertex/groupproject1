@@ -10,8 +10,19 @@ LogoButton.addEventListener('click', function () {
 })
 
 
-JoinButton.addEventListener('click', function () {
-  console.log("sign up")
+JoinButton.addEventListener('click', async (e) => {
+  e.preventDefault()
+
+  // let email = document.querySelector("#emailInput").value
+  // let username = document.querySelector("#UsernameInput").value
+  // let passoword = document.querySelector("#passwordInput").value
+
+  // console.log(email)
+  // console.log(username)
+  // console.log(passoword)
+  console.log(clicked)
+
+
 
 })
 

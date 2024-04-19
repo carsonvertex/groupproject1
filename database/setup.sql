@@ -51,7 +51,7 @@ CREATE TABLE product_options (
     id SERIAL PRIMARY KEY,
     product_id integer,
     hex_code varchar(50),
-    size varchar(10),
+    size sizeName,
     stock integer
 );
 

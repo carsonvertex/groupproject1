@@ -1,6 +1,5 @@
 import express from "express";
 import expressSession from "express-session";
-import { Request, Response } from "express";
 import dotenv from "dotenv"
 import { accountRouter } from "./router/account";
 
