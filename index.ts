@@ -31,6 +31,7 @@ app.use(
 );
 //PARSING MIDDLEWARE
 app.use(express.json())
+app.use(express.urlencoded())
 
 //api
 app.use("/account", accountRouter);

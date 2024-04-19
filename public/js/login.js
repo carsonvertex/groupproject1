@@ -1,16 +1,13 @@
 //This is use for control 'Buttons' in the Sign Up form 
-const JoinButton = document.querySelector('#Join')
+const SignUpButton = document.querySelector('#SignUp')
 const SignInButton = document.querySelector('#SignIn')
 const LogoButton = document.querySelector('.logo')
-
-
 
 LogoButton.addEventListener('click', function () {
   console.log("logo")
 })
 
-
-JoinButton.addEventListener('click', async (e) => {
+SignUpButton.addEventListener('click', async (e) => {
   e.preventDefault()
 
   // let email = document.querySelector("#emailInput").value
