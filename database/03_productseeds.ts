@@ -1,6 +1,6 @@
 import { Client } from "pg";
 import dotenv from "dotenv"
-
+dotenv.config()
 
 let pgClient = new Client({
     database: process.env.DB_NAME,
@@ -8,15 +8,17 @@ let pgClient = new Client({
     password: process.env.DB_PASSWORD
 })
 
-dotenv.config()
+
 
 type products = {
     name: string,
-    price: any,
+    price: number,
     description: string
 }
 
-
+type productsImage = {
+    image: string
+}
 
 async function productItems() {
     console.log("Test products input succeed!")
@@ -33,12 +35,25 @@ async function productItems() {
             }
         ]
 
+        let images: productsImage[] = [
+            { image: "image_test1.jpg" },
+            { image: "image_test2.jpg" },
+            { image: "image_test3.jpg" }
+        ]
+
+
         await pgClient.connect()
 
         for (let entry of products) {
 
-            await pgClient.query("INSERT INTO categories (name) VALUES ($1,$2,$3)", [
-                entry.name,entry.price,entry.description])
+            let productInsertResult = await pgClient.query("INSERT INTO products (name,price,description) VALUES ($1,$2,$3) RETURNING id", [
+                entry.name, entry.price, entry.description])
+
+            console.log(productInsertResult.rows[0].id)
+
+            await pgClient.query("INSERT INTO product_images (product_id,image) VALUES ($1,$2)", [
+                productInsertResult.rows[0].id, images])
+
         }
 
         await pgClient.end()

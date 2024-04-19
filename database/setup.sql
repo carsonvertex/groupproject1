@@ -46,7 +46,7 @@ CREATE TABLE product_options (
     FOREIGN KEY (product_id) REFERENCES products(id),
     color_name varchar(255),
     color_code integer,
-    size sizeName,
+    sizing sizeName,
     stock integer
 );
 

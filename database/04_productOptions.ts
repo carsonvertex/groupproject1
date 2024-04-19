@@ -1,54 +1,56 @@
-import { Client } from "pg";
-import dotenv from "dotenv"
+// import { Client } from "pg";
+// import dotenv from "dotenv"
+// dotenv.config()
+
+// let pgClient = new Client({
+//     database: process.env.DB_NAME,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD
+// })
 
 
-let pgClient = new Client({
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD
-})
 
-dotenv.config()
-
-enum size {
-    small = 'S',
-    median = 'M',
-    Xlarge = 'XL',
-    XXlarge = 'XXL'
-}
+// enum size {
+//     small = 'S',
+//     median = 'M',
+//     large = 'L',
+//     xlarge = 'XL',
+// }
 
 
-type productsOptions = {
-    name: string,
-    colorCode: string,
-    size: size,
-    stock: any
-}
+// type productsOptions = {
+//     name: string,
+//     colorCode: string,
+//     size: size,
+//     stock: any
+// }
 
 
-async function productOptions() {
-    console.log("Test ProductOptions input succeed!")
-    try {
-        let products: productsOptions[] = [
-            { name: "Products_test1", colorCode: "111", size: size.small, stock: 100 },
-            { name: "Products_test2", colorCode: "222", size: size.median, stock: 100 },
-            { name: "Products_test3", colorCode: "333", size: size.XXlarge, stock: 100 }
-        ]
+// async function productOptions() {
 
-        await pgClient.connect()
+//     try {
+//         let products: productsOptions[] = [
+//             { name: "Products_test1", colorCode: "111", size: size.small, stock: 100 },
+//             { name: "Products_test2", colorCode: "222", size: size.median, stock: 100 },
+//             { name: "Products_test3", colorCode: "333", size: size.large, stock: 100 }
+//         ]
 
-        for (let entry of products) {
+//         console.log(products)
 
-            await pgClient.query("INSERT INTO categories (name) VALUES ($1,$2,$3,$4)", [
-                entry.name, entry.colorCode, size, entry.stock])
-        }
+//         await pgClient.connect()
 
-        await pgClient.end()
+//         for (let entry of products) {
 
-    } catch (error) {
+//             await pgClient.query("INSERT INTO product_options (color_name,color_code,sizing,stock) VALUES ($1,$2,$3,$4)", [
+//                 entry.name, entry.colorCode, entry.size, entry.stock])
+//         }
+//         console.log("Test ProductOptions input succeed!")
+//         await pgClient.end()
 
-        console.log(error)
-    }
-}
+//     } catch (error) {
 
-productOptions()
+//         console.log(error)
+//     }
+// }
+
+// productOptions()

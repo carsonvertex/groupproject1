@@ -26,7 +26,7 @@ type userType = {
 
 
 async function Users() {
-    console.log("Test Users input succeed!")
+   
     try {
         let fakeUsers: userType[] = [
             { email: "test@gamil.com", username: "test", password: "1234", level: Level.customer },
@@ -42,7 +42,7 @@ async function Users() {
             await pgClient.query("INSERT INTO users (email,username,password,level) VALUES ($1,$2,$3,$4)", [
                 entry.email, entry.username, hashed, entry.level])
         }
-
+        console.log("Test Users input succeed!")
         await pgClient.end()
     } catch (error) {
         console.log(error)

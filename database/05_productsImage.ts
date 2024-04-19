@@ -1,45 +1,46 @@
-import { Client } from "pg";
-import dotenv from "dotenv"
+// import { Client } from "pg";
+// import dotenv from "dotenv"
 
 
-let pgClient = new Client({
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD
-})
+// let pgClient = new Client({
+//     database: process.env.DB_NAME,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD
+// })
 
-dotenv.config()
-
-
-
-type productsImage = {
-    image: string
-}
+// dotenv.config()
 
 
-async function productImage() {
-    console.log("Test ProductImage input succeed!")
-    try {
-        let images: productsImage[] = [
-            { image: "image_test1"},
-            { image: "image_test2"},
-            { image: "image_test3"}
-        ]
 
-        await pgClient.connect()
+// type productsImage = {
+//     image: string
+// }
 
-        for (let entry of images) {
 
-            await pgClient.query("INSERT INTO categories (name) VALUES ($1)", [
-                entry.image])
-        }
+// async function productImage() {
+//     console.log("Test ProductImage input succeed!")
+//     try {
+//         let images: productsImage[] = [
+//             { image: "image_test1"},
+//             { image: "image_test2"},
+//             { image: "image_test3"}
+//         ]
 
-        await pgClient.end()
+//         await pgClient.connect()
 
-    } catch (error) {
+//         for (let entry of images) {
 
-        console.log(error)
-    }
-}
+//             let productImage = await pgClient.query("INSERT INTO product_images (image) VALUES ($1) RETURNING id", [
+//                 entry.image])
 
-productImage()
+//         }
+
+//         await pgClient.end()
+
+//     } catch (error) {
+
+//         console.log(error)
+//     }
+// }
+
+// productImage()

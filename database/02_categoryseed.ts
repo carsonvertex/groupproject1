@@ -15,7 +15,7 @@ type categories = {
 }
 
 async function category() {
-    console.log("Test Categories input succeed!")
+  
     try {
         let cat: categories[] = [
             { name: "catergory_test1" },
@@ -30,7 +30,7 @@ async function category() {
             await pgClient.query("INSERT INTO categories (name) VALUES ($1)", [
                 entry.name])
         }
-
+        console.log("Test Categories input succeed!")
         await pgClient.end()
 
     } catch (error) {
