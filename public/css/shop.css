@@ -12,7 +12,6 @@ body{
 .Left-Container{
     /* background-color: rgba(20, 221, 104, 0.3); */
     width: 20%;
-
 }
 
 .Middle-Container{
@@ -22,27 +21,58 @@ body{
 }
 
 .MiddleLeft-Container{
-    background-color: rgba(33, 226, 16, 0.3);
+    /* background-color: rgba(33, 226, 16, 0.3); */
     width:70%;
     padding: 40px;
-    
 }
 
-.input-group{
-    background-color: black;
+.productArea{
+    /* background-color: black; */
+    display: flex;
     width: 100%;
     height: 20%;
+}
 
+.productArea-A{
+    /* background-color: aliceblue; */
+    width: 20%;
+    height: 100%;
+}
+
+.productArea-B{
+    background-color: aqua;
+    justify-content: center;
+    width: 60%;
+    height: 100%;
+}
+
+.dropdown-Quantity{
+    display:flex;
+}
+
+.productArea-C{
+    background-color: rgba(103, 124, 55, 0.3);
+    width: 20%;
+    height: 100%;
 }
 
 .countArea{
     background-color: rgba(221, 100, 20, 0.3);
-    width:30%
-    
+    width:30%;
+    display: table-column;
+    justify-content: center;
+    padding-top: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.counter{
+    background-color: rgba(63, 60, 60, 0.3);
+    height: 20%;
+    width: 100%
 }
 
 .Right-Container{
     /* background-color: rgba(224, 6, 6, 0.3); */
     width:20%
-
 }

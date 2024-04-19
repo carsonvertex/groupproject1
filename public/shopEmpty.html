@@ -26,8 +26,15 @@
                 </ul>
             </div>
             <div class="col-4 text-end">
-                <button type="button" class="btn btn-outline-primary me-2">Cart</button>
-                <button type="button" class="btn btn-outline-primary me-2">Login</button>
+                
+
+                <button id="login-button" type="button" class="btn btn-outline-primary me-2">Login</button>
+                <script type="text/javascript">
+                    document.getElementById("login-button").onclick = function () {
+                        location.href = "./login.html";
+                    };
+            </script>
+
             </div>
         </header>
     </div>
@@ -53,14 +60,25 @@
                     <span class="text-base font-bold">你的購物袋空空如也!</span>
                     <span class="text-sm">開始添加心水貨品吧.</span>
                 </div>
-                <div class="text-center flex-col pt-3">
+                <div class="text-center flex-col pt-3" id="register-button">
                     <button class="zui-btn zui-btn-primary rounded-lg"
                         data-test-id="cart-empty-login-btn">登入/註冊</button>
+                    <script type="text/javascript">
+                            document.getElementById("register-button").onclick = function () {
+                                location.href = "./signup.html";
+                            };
+                    </script>
+                        
 
                 </div>
                 <div class="text-center flex-col pt-3">
                     <button id="shopping-button" type="submit"
                         class="zui-btn zui-btn-outline w-fit rounded-lg">立即去Shopping!</button>
+                        <script type="text/javascript">
+                            document.getElementById("shopping-button").onclick = function () {
+                                location.href = "./index.html";
+                            };
+                        </script>
                 </div>
             </div>
 
