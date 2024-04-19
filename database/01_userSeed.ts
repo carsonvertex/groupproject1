@@ -25,8 +25,8 @@ type userType = {
 }
 
 
-async function main() {
-    console.log("hihi")
+async function Users() {
+    console.log("Test Users input succeed!")
     try {
         let fakeUsers: userType[] = [
             { email: "test@gamil.com", username: "test", password: "1234", level: Level.customer },
@@ -51,4 +51,6 @@ async function main() {
 }
 
 
-main()
+
+Users()
+
