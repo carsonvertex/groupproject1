@@ -2,6 +2,8 @@ import express from "express";
 import expressSession from "express-session";
 import dotenv from "dotenv"
 import { accountRouter } from "./router/account";
+import { catRouter} from "./router/cat";
+
 
 declare module "express-session" {
     interface SessionData {
@@ -32,6 +34,7 @@ app.use(express.json())
 
 //api
 app.use("/account", accountRouter);
+app.use("/cat", catRouter);
 
 //static assets
 app.use(express.static("public"))
