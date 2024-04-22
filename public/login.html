@@ -31,7 +31,6 @@
 
             <div class="col-4 text-end">
                 <button type="button" class="btn btn-outline-primary me-2">Cart</button>
-                <button type="button" class="btn btn-outline-primary me-2">Login</button>
             </div>
         </header>
     </div>
@@ -41,11 +40,11 @@
     <div class="LargeContainer">
 
         <div class="LoginMethod">
-            <button id="SignUp">SIGN UP</button>
-            <button id="SignIn">SIGN IN</button>
+            <button id="SignUp"><a href="/signup.html">SIGN UP</a></button>
+            <button id="SignIn"><a href="/login.html">SIGN IN</a></button>
         </div>
         <div class="LoginForm">
-            <form action="/login" method="POST">
+            <form action="/account/login" method="POST">
                 <div>
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
