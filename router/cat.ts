@@ -17,16 +17,16 @@ async function showCat(req: Request, res: Response) {
             "SELECT  name,id FROM categories ORDER BY ID ASC;"
         )
     ).rows;
-    res.json({ data: { cat: catQueryResult } })
+    res.json( { cat: catQueryResult  })
 
 }
 
 async function newCat(req: Request, res: Response) {
-    let { name } = req.body;
-    console.log(name)
+    let { category } = req.body;
+    console.log(category)
     try {
         let catQueryResult = (
-            await pgClient.query("SELECT id,name FROM categories WHERE name = $1;", [name])
+            await pgClient.query("SELECT id,name FROM categories WHERE name = $1;", [category])
         ).rows[0];
         console.log(catQueryResult);
         if (catQueryResult) {
@@ -35,7 +35,7 @@ async function newCat(req: Request, res: Response) {
         }
         const insertResult = await pgClient.query(
             "INSERT INTO categories (name) VALUES ($1) returning id",
-            [name]
+            [category]
         );
         const returningId = insertResult.rows[0].id;
         res.json({
