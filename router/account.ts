@@ -14,7 +14,6 @@ accountRouter.get("/logout", logout)
 accountRouter.get("/getusername", getUsername)
 
 async function register(req: Request, res: Response) {
-    console.log("hi")
     let { email, username, password } = req.body;
     console.log(email, username, password)
     let hashedPassword = await hashPassword(password)
@@ -33,14 +32,14 @@ async function register(req: Request, res: Response) {
         }
 
         const insertResult = await pgClient.query(
-            "inserT inTo users (username, email, password) Values ($1, $2, $3) returning id",
-            [username, email, hashedPassword]
+            "INSERT INTO users (username, email, password, level) VALUES ($1, $2, $3, $4) RETURNING id",
+            [username, email, hashedPassword, 'customer']
         );
         console.log(insertResult);
         const returningId = insertResult.rows[0].id;
         res.json({
             msg: "register successful",
-            userId: returningId,
+            userId: returningId
         });
     } catch (e) {
         console.log(e)
