@@ -37,7 +37,7 @@ app.use(express.urlencoded({extended:true}))
 //api
 app.use("/account", accountRouter);
 app.use("/cat", catRouter);
-app.use("/manageProduct", productRouter);
+app.use("/product", productRouter);
 
 //static assets
 app.use(express.static("public"))

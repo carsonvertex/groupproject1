@@ -32,7 +32,8 @@ async function getCategories() {
     let catHTML = '';
     for (const cat of catArray) {
       const catName = cat.name;
-      const catLink = `/product.html?cat=${cat.id}`;
+      const catLink = `/showProduct.html?cat=${cat.id}`;
+      // /product/cat/:id
     
       catHTML += `<div class="catBox"><a href="${catLink}">${catName}</a></div>`;
     }

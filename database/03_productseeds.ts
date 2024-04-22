@@ -52,9 +52,9 @@ async function productItems() {
         ]
 
         let images: productsImage[] = [
-            { image: "image_test1.jpg" },
-            { image: "image_test2.jpg" },
-            { image: "image_test3.jpg" }
+            { image: "dummy1.jpg" },
+            { image: "dummy1.jpg" },
+            { image: "dummy2.jpg" }
         ]
 
         let productsOptions: productsOptions[] = [
