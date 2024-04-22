@@ -10,7 +10,6 @@ enum Level {
     super_admin = 'super_admin'
 }
 
-
 let pgClient = new Client({
     database: process.env.DB_NAME,
     user: process.env.DB_USER,

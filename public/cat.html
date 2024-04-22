@@ -8,18 +8,13 @@
 <body>
 
   <!-- create category -->
-    <form action="/cat" method="POST" id="carForm">
+    <form id="catForm">
 
         <div>
-          <label>
+          <label> 
             Category:
-            <input
-              type="text"
-              name="category"
-              id = "category"
-              placeholder="Create a new Category"
-              required
-            />
+            <input type="text" id="catInput" name="name"  placeholder="Create a new Category" required>
+            
           </label>
         </div>
        
@@ -28,5 +23,9 @@
           <input type="reset" value="Clear" />
         </div>
       </form>
+
+      <div id="catContainer">123</div>
+      <script src="./js/cat.js"></script>
+
 </body>
 </html>

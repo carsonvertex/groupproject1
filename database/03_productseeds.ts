@@ -13,7 +13,8 @@ let pgClient = new Client({
 type products = {
     name: string,
     price: number,
-    description: string
+    description: string,
+    category_id: number
 }
 
 type productsImage = {
@@ -40,13 +41,13 @@ async function productItems() {
     try {
         let products: products[] = [
             {
-                name: "catergory_test1", price: 499, description: "I LOVE DAY"
+                category_id: 1, name: "catergory_test1", price: 499, description: "I LOVE DAY"
             },
             {
-                name: "catergory_test2", price: 599, description: "I LOVE MAY"
+                category_id: 1, name: "catergory_test2", price: 599, description: "I LOVE MAY"
             },
             {
-                name: "catergory_test3", price: 699, description: "I LOVE TAY"
+                category_id: 2, name: "catergory_test3", price: 699, description: "I LOVE TAY"
             }
         ]
 
@@ -67,8 +68,8 @@ async function productItems() {
 
         for (let entry of products) {
 
-            let productInsertResult = await pgClient.query("INSERT INTO products (name,price,description) VALUES ($1,$2,$3) RETURNING id", [
-                entry.name, entry.price, entry.description])
+            let productInsertResult = await pgClient.query("INSERT INTO products (category_id, name,price,description) VALUES ($1,$2,$3,$4) RETURNING id", [
+                entry.category_id, entry.name, entry.price, entry.description])
 
             // console.log(productInsertResult.rows[0].id)
 

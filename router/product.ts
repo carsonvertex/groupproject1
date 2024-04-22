@@ -4,11 +4,25 @@ import formidable from "formidable";
 
 
 export const productRouter = Router();
+productRouter.get("/showProduct/cat/:id", showProductByCatId);
 
 productRouter.get("/showProduct", showProduct);
 // productRouter.post("/newProduct", newProduct);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
+
+
+async function showProductByCatId(req: Request, res: Response) {
+    const {id} = req.params
+    let productQueryResult = (
+        await pgClient.query(
+            "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]            
+        )
+        
+    ).rows;
+    res.json({ data: { product: productQueryResult,  id} })
+
+}
 
 async function showProduct(req: Request, res: Response) {
     let productQueryResult = (
