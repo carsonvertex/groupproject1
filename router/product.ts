@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
+import formidable from "formidable";
 
 
 export const productRouter = Router();
@@ -12,40 +13,56 @@ productRouter.delete("/delProduct", delProduct);
 async function showProduct(req: Request, res: Response) {
     let productQueryResult = (
         await pgClient.query(
-            "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id ;"
-            
+            "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id ;"            
         )
+        
     ).rows;
     res.json({ data: { product: productQueryResult } })
 
 }
 
 async function newProduct(req: Request, res: Response) {
-    let { name } = req.body;
-    try {
-        let productQueryResult = (
-            await pgClient.query("SELECT id,name FROM categories WHERE name = $1;", [name])
-        ).rows[0];
-        if (productQueryResult) {
-            res.status(400).json({ message: "Category already exists." });
-            return;
-        }
-        const insertResult = await pgClient.query(
-            "INSERT INTO categories (name) VALUES ($1) returning id",
-            [name]
-        );
-        const returningId = insertResult.rows[0].id;
-        res.json({
-            msg: "Category Created",
-            Id: returningId,
-        });
-        console.log(res.json)
-    } catch (e) {
-        console.log(e);
-        res.status(400).json({ message: e });
-    }
-}
+    const form = formidable({
+        uploadDir: __dirname + "/../uploads",
+        keepExtensions: true,
+        minFileSize: 0,
+        allowEmptyFiles: true,
+      });
+      let name:string;
+      let price:number;
+      let description:string;
 
+
+      form.parse(req, async (err, fields, files) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server erorr!" });
+      }
+  
+      if (fields.name) {
+        name = fields.name![0];
+      }
+      if (fields.price) {
+        price = fields.price![0];
+      }
+  
+      if (files.photo) {
+        memoImage = files.photo[0].newFilename;
+      }
+
+      let productInsertResult = (await pgClient.query(
+        "INSERT INTO products (name,price,description) VALUES ($1,$2, $3) RETURNING id",
+        [name,price,description]
+      ))
+  
+      res.json({
+        data: {
+          id: productInsertResult.rows[0].id,
+          photo: productInsertResult.rows[0].image,
+        },
+      });
+    });
+  }
 
 async function editProduct(req: Request, res: Response) {
     let { name } = req.body;
