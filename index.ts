@@ -3,6 +3,7 @@ import expressSession from "express-session";
 import dotenv from "dotenv"
 import { accountRouter } from "./router/account";
 import { catRouter} from "./router/cat";
+import { productRouter } from "./router/product";
 
 
 declare module "express-session" {
@@ -36,6 +37,7 @@ app.use(express.urlencoded())
 //api
 app.use("/account", accountRouter);
 app.use("/cat", catRouter);
+app.use("/product", productRouter);
 
 //static assets
 app.use(express.static("public"))

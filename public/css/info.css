@@ -27,7 +27,7 @@
 }
 
 .personal-Leftfile{
-    background-color: rgba(23, 68, 214, 0.3);
+    background-color: rgba(128, 138, 158, 0.3);
     padding: 20px;
     
     display: flex;
@@ -36,7 +36,7 @@
 }
 
 .personal-toptitle{
-    background-color: rgba(211, 233, 17, 0.836);
+    background-color: rgba(0, 0, 0, 0.3);
     display: table-column;
     width: 100%;
     height: 100%;
@@ -44,9 +44,13 @@
 }
 
 .personal-Rightfile{
-    background-color: rgba(238, 7, 7, 0.3);
-    padding-top: 35px;
+    background-color: rgba(0, 0, 0, 0.096);
+    padding-top: 40px;
     display: flex;
     width: 100%;
     height: 10%;
+}
+
+.text-container{
+    padding: 10px;
 }
