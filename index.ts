@@ -32,12 +32,12 @@ app.use(
 );
 //PARSING MIDDLEWARE
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({extended:true}))
 
 //api
 app.use("/account", accountRouter);
 app.use("/cat", catRouter);
-app.use("/product", productRouter);
+app.use("/manageProduct", productRouter);
 
 //static assets
 app.use(express.static("public"))
