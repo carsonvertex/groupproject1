@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-
-
-// // // "/manageProduct/showProduct/cat/1"
-
-
-
-=======
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 //Show and Post products
 const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
@@ -31,37 +22,6 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
         getProducts()
     }
 })
-<<<<<<< HEAD
-//show product
-
-// async function getProducts() {
-//     try {
-//         const response = await fetch(`/product/showProduct?id=1`);
-//         const data = await response.json();
-//         const productArray = data.product;
-
-
-//         // 在這裡處理取得的類別資料陣列
-//         const container = document.getElementById('productContainer');
-//         container.innerHTML = ""
-//         let productHTML = '';
-//         for (const product of productArray) {
-//             const productName = product.name;
-//             const productPrice = product.price;
-//             // const productLink = `/product.html?product=${product.id}`;
-
-//             productHTML += `<div class="productBox"><p>${productName}</p></div>`;
-//         }
-
-//         container.innerHTML = productHTML;
-//     } catch (error) {
-//         // 處理錯誤
-//         console.error('Error:', error);
-//         throw error;
-//     }
-// }
-=======
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 async function getProducts() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -82,11 +42,7 @@ async function getProducts() {
             const image = product.image;
 
             productHTML +=
-<<<<<<< HEAD
-                `<div class="productBox col-3">
-=======
             `<div class="productBox col-3" style =" background-color : grey;padding:10px">
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
             <p>${productName}</p>
             <div><img src="${image}" width="80%"></div>
             <p>${description}</p>
