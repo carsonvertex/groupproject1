@@ -7,38 +7,27 @@ export const productRouter = Router();
 // productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
 productRouter.get("/showProduct", showProduct);
+productRouter.get(`/editOption/product/:id`, singleProduct);
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
 
 
-// async function showProductByCatId(req: Request, res: Response) {
-//     const {id} = req.params
-//     let productQueryResult = (
-//         await pgClient.query(
-//             "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]            
-//         )
-        
-//     ).rows;
-//     res.send(productQueryResult)
 
-//     res.json({ product: productQueryResult,  id})
-
-// }
 
 async function showProduct(req: Request, res: Response) {
     const id = req.query.id
-    console.log(id)
+    console.log("cat:",id)
     let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
     FROM product_images
     GROUP BY product_id
     )
     
-    select * from products left join single_image on products.id = single_image.product_id;`   
+    select * from products left join single_image on products.id = single_image.product_id `   
     const params: any[] = [];
 
     if (id) {
-        sql += "where products.id  = $1"
+        sql += "where products.category_id  = $1 "
         params.push(id);
 
     }
@@ -51,6 +40,29 @@ async function showProduct(req: Request, res: Response) {
     res.json( {product: productQueryResult  })
 
 }
+
+async function singleProduct(req: Request, res: Response) {
+  try {
+    // const urlParams = new URLSearchParams(req.url);
+    const id = req.params.id
+    // console.log("pro:",id)
+    // console.log(urlParams)
+    // const productId = urlParams.get('product');
+    console.log(id)
+    
+   
+    const query = `SELECT * FROM products WHERE id =${id};`;
+    const product = await pgClient.query(query);
+    const selectedProducts = product.rows[0];
+    
+    res.json(selectedProducts);
+  } catch (error) {
+    res.json({ message: "internal error" });
+  }
+}
+
+
+
 
 async function newProductByCatId(req: Request, res: Response) {
     const form = formidable({
