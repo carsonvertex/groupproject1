@@ -29,7 +29,12 @@ productRouter.delete("/delProduct", delProduct);
 async function showProduct(req: Request, res: Response) {
     const id = req.query.id
     console.log(id)
-    let sql = "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id "   
+    let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
+    FROM product_images
+    GROUP BY product_id
+    )
+    
+    select * from products left join single_image on products.id = single_image.product_id;`   
     const params: any[] = [];
 
     if (id) {
@@ -43,7 +48,7 @@ async function showProduct(req: Request, res: Response) {
         )
         
     ).rows;
-    res.json({ data: { product: productQueryResult } })
+    res.json( {product: productQueryResult  })
 
 }
 
@@ -58,14 +63,17 @@ async function newProductByCatId(req: Request, res: Response) {
       let image:string;
       let price:string;
       let description:string;
+      let category_id = req.params.id
 
-
+      console.log({
+        category_id
+      })
       form.parse(req, async (err, fields, files) => {
       if (err) {
         console.log(err);
         res.status(500).json({ message: "Internal server erorr!" });
+        return
       }
-  
       if (fields.name) {
         name = fields.name![0];
       }
@@ -81,16 +89,19 @@ async function newProductByCatId(req: Request, res: Response) {
       }
   
       
-
       let productInsertResult = await pgClient.query(
-        "INSERT INTO products (name,price,description) VALUES ($1,$2,$3) RETURNING id",
-        [name,price,description]
+        "INSERT INTO products (name,price,description,category_id) VALUES ($1,$2,$3,$4) RETURNING id",
+        [name,price,description, category_id]
       )
-  
+      const product_id =  productInsertResult.rows[0].id
+      let imageInsertResult = await pgClient.query(
+        "INSERT INTO product_images (image,product_id) VALUES ($1,$2) RETURNING id",[image,product_id]
+      )
+
       res.json({
         data: {
-          id: productInsertResult.rows[0].id,
-          photo: productInsertResult.rows[0].image,
+          id: product_id,
+          photo: imageInsertResult.rows[0].id,
         },
       });
     });

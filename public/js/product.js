@@ -3,30 +3,28 @@
 
 
 
-// const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
-//     event.preventDefault()
+const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
+    event.preventDefault()
 
-//     const form = event.target
+    const form = event.target
+    const body = form
 
-//     const formObject = {
-//         name: form.name.value,
-//         image: form.image.value,
-//         price: form.price.value,
-//         description: form.description.value
-//     }
-//     console.log(formObject)
+    const formData = new FormData()
+    formData.append("name", form.name.value)
+    formData.append("image", form.image.files[0])
+    formData.append("price", form.price.value)
+    formData.append("description", form.description.value)
 
-//     const res = await fetch('/newProduct/cat/:id', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(formObject)
-//     })
-//     if (res.ok) {
-//         getProducts()
-//     }
-// })
+    console.log(body)
+
+    const res = await fetch(`/product/newProduct/cat/1`, {
+        method: 'POST',
+        body: formData
+    })
+    if (res.ok) {
+        getProducts()
+    }
+})
 //show product
 
 // async function getProducts() {
@@ -60,7 +58,7 @@ async function getProducts() {
     try {
         const response = await fetch(`/product/showProduct`);
         const data = await response.json();
-        const productArray = data.data.product; // Access the correct property in the response data
+        const productArray = data.product; // Access the correct property in the response data
 
         const container = document.getElementById('productContainer');
         container.innerHTML = '';
@@ -71,10 +69,11 @@ async function getProducts() {
             const description = product.description;
             const image = product.image;
 
-            productHTML += `<div class="productBox">
-            <img src="${image}"/>
-            <p>${description}</p>
+            productHTML += 
+            `<div class="productBox col-3">
             <p>${productName}</p>
+            <img src="${image}" width="80%">
+            <p>${description}</p>
             <p>${productPrice}</p>
             </div>`;
         }
