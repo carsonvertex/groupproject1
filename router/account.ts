@@ -49,46 +49,46 @@ async function register(req: Request, res: Response) {
 }
 
 async function login(req: Request, res: Response) {
-    let { username, password } = req.body;
-
-    let userQueryResult = (
-        await pgClient.query(
-            "SELECT username,password,id FROM users WHERE username = $1",
-            [username]
-        )
-    ).rows[0];
-
-
-    //   username exists
-    if (userQueryResult) {
-        let truePassword = userQueryResult.password;
-
-        // const isMatched = password == truePassword
-        const isMatched = await checkPassword({ plainPassword: password, hashedPassword: truePassword })
-
-
-        // password matched
-        if (isMatched) {
-            req.session.userId = userQueryResult.id;
-            req.session.username = userQueryResult.username;
-
-            req.session.save();
-
-            res.json({
-                message: "login success",
-                data: { username: userQueryResult.username },
-            });
-        } else {
-            console.log("log in failed,wrong password");
-
-            res.status(400).json({ message: "Login Failed" });
-        }
-    } else {
-        console.log("log in failed,wrong email");
-        res.status(400).json({ message: "Login Failed" });
+    try {
+      const { username, password } = req.body;
+  
+      // Check if the username exists in the database
+      const userQueryResult = await pgClient.query(
+        "SELECT username, password, id FROM users WHERE username = $1",
+        [username]
+      );
+  
+      if (userQueryResult.rows.length === 0) {
+        console.log("Login failed: wrong username");
+        return res.status(400).json({ message: "Login Failed" });
+      }
+  
+      const truePassword = userQueryResult.rows[0].password;
+  
+      // Check if the provided password matches the stored password
+      const isMatched = await checkPassword({ plainPassword: password, hashedPassword: truePassword });
+  
+      if (!isMatched) {
+        console.log("Login failed: wrong password");
+        return res.status(400).json({ message: "Login Failed" });
+      }
+  
+      // Password matched, set the session variables
+      req.session.userId = userQueryResult.rows[0].id;
+      req.session.username = userQueryResult.rows[0].username;
+  
+      let result = res.json({
+        message: "Login success",
+        data: { username: userQueryResult.rows[0].username },
+      });
+  
+      console.log(req.body.username);
+      return result;
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
-}
-
+  }
 
 async function logout(req: Request, res: Response) {
     if (req.session.username) {
