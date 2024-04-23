@@ -7,8 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
     "dev": "ts-node-dev index.ts",
+<<<<<<< HEAD
     "data": "psql -f ./database/setup.sql && ts-node ./database/01_userSeed.ts && ts-node ./database/02_categoryseed && ts-node ./database/03_productseeds",
     "win-data": "psql -f ./database/setup.sql -U postgres && && ts-node ./database/01_userSeed.ts && ts-node ./database/02_categoryseed && ts-node ./database/03_productseeds"
+=======
+    "data": "psql -f ./database/setup.sql -U postgres && ts-node ./database/01_userSeed.ts && ts-node ./database/02_categoryseed && ts-node ./database/03_productseeds"
+>>>>>>> b807dc1c424a78e2b115dc3e1dc84581c01c98b6
   },
   "author": "",
   "license": "ISC",

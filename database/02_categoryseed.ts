@@ -1,14 +1,19 @@
 import { Client } from "pg";
 import dotenv from "dotenv"
 
+dotenv.config()
+
+console.log({
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
+})
 
 let pgClient = new Client({
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD
 })
-
-dotenv.config()
 
 type categories = {
     name: string

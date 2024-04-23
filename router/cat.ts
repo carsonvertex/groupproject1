@@ -4,6 +4,8 @@ import { pgClient } from "../pgClients";
 
 export const catRouter = Router();
 
+
+
 catRouter.get("/showCat", showCat);
 catRouter.post("/newCat", newCat);
 catRouter.put("/editCat", editCat);
@@ -12,26 +14,28 @@ catRouter.delete("/delCat", delCat);
 async function showCat(req: Request, res: Response) {
     let catQueryResult = (
         await pgClient.query(
-            "SELECT  name FROM categories ORDER BY ID ASC;"
+            "SELECT  name,id FROM categories ORDER BY ID ASC;"
         )
     ).rows;
-    res.json({ data: { cat: catQueryResult } })
+    res.json( { cat: catQueryResult  })
 
 }
 
 async function newCat(req: Request, res: Response) {
-    let { name } = req.body;
+    let { category } = req.body;
+    console.log(category)
     try {
         let catQueryResult = (
-            await pgClient.query("SELECT id,name FROM categories WHERE name = $1;", [name])
+            await pgClient.query("SELECT id,name FROM categories WHERE name = $1;", [category])
         ).rows[0];
+        console.log(catQueryResult);
         if (catQueryResult) {
             res.status(400).json({ message: "Category already exists." });
             return;
         }
         const insertResult = await pgClient.query(
             "INSERT INTO categories (name) VALUES ($1) returning id",
-            [name]
+            [category]
         );
         const returningId = insertResult.rows[0].id;
         res.json({
