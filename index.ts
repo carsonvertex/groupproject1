@@ -2,13 +2,12 @@ import express from "express";
 import expressSession from "express-session";
 import dotenv from "dotenv"
 import { accountRouter } from "./router/account";
-import { catRouter} from "./router/cat";
+import { catRouter } from "./router/cat";
 import { productRouter } from "./router/product";
 
 
 declare module "express-session" {
     interface SessionData {
-     
         userId: number;
         username: string;
     }
@@ -19,9 +18,9 @@ dotenv.config();
 const app = express();
 const PORT = 8080;
 
-if(!process.env.SECRET)
+if (!process.env.SECRET)
     throw Error("No Secret in .env");
-    
+
 
 app.use(
     expressSession({
@@ -32,7 +31,7 @@ app.use(
 );
 //PARSING MIDDLEWARE
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 
 //api
 app.use("/account", accountRouter);

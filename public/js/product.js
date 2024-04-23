@@ -1,3 +1,5 @@
+
+
 // // // "/manageProduct/showProduct/cat/1"
 
 
@@ -32,7 +34,7 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 //         const response = await fetch(`/product/showProduct?id=1`);
 //         const data = await response.json();
 //         const productArray = data.product;
-       
+
 
 //         // 在這裡處理取得的類別資料陣列
 //         const container = document.getElementById('productContainer');
@@ -69,8 +71,8 @@ async function getProducts() {
             const description = product.description;
             const image = product.image;
 
-            productHTML += 
-            `<div class="productBox col-3">
+            productHTML +=
+                `<div class="productBox col-3">
             <p>${productName}</p>
             <img src="${image}" width="80%">
             <p>${description}</p>
