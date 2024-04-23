@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 
 
 // // // "/manageProduct/showProduct/cat/1"
 
 
 
+=======
+>>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
+//Show and Post products
 const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
     event.preventDefault()
 
@@ -27,6 +31,7 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
         getProducts()
     }
 })
+<<<<<<< HEAD
 //show product
 
 // async function getProducts() {
@@ -55,10 +60,14 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 //         throw error;
 //     }
 // }
+=======
+>>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 async function getProducts() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('cat');
     try {
-        const response = await fetch(`/product/showProduct`);
+        const response = await fetch(`/product/showProduct?id=${id}`);
         const data = await response.json();
         const productArray = data.product; // Access the correct property in the response data
 
@@ -66,19 +75,27 @@ async function getProducts() {
         container.innerHTML = '';
         let productHTML = '';
         for (const product of productArray) {
+            const productId = product.id
             const productName = product.name;
             const productPrice = product.price;
             const description = product.description;
             const image = product.image;
 
             productHTML +=
+<<<<<<< HEAD
                 `<div class="productBox col-3">
+=======
+            `<div class="productBox col-3" style =" background-color : grey;padding:10px">
+>>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
             <p>${productName}</p>
-            <img src="${image}" width="80%">
+            <div><img src="${image}" width="80%"></div>
             <p>${description}</p>
             <p>${productPrice}</p>
+            <a href="/editOption.html?product=${productId}"><button id="singleButton" >Edit Product</button></a>
             </div>`;
         }
+
+   
 
         container.innerHTML = productHTML;
     } catch (error) {
@@ -88,3 +105,29 @@ async function getProducts() {
 }
 
 getProducts()
+
+//single product
+
+async function singleProducts() {
+    const container = document.getElementById('editProductContainer');
+  
+    try {
+      const response = await fetch('/product/editOption');
+      const data = await response.json();
+  
+      data.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.innerHTML = `
+          <h3>${product.name}</h3>
+          <p>Price: $${product.price}</p>
+          <p>Description: ${product.description}</p>
+        `;
+        container.appendChild(productElement);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+  
+  // Call the function when the page finishes loading
+  document.addEventListener('DOMContentLoaded', singleProducts);
