@@ -27,7 +27,9 @@
     "formidable": "^3.5.1",
     "nodemodule": "^0.3.0",
     "pg": "^8.11.5",
-    "ts-node": "^10.9.2",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
     "ts-node-dev": "^2.0.0"
   }
 }

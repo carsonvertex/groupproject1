@@ -4,72 +4,42 @@ import formidable from "formidable";
 
 
 export const productRouter = Router();
-// productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
-
-productRouter.get("/showProduct", showProduct);
-<<<<<<< HEAD
-productRouter.post("/newProduct/cat/:id", newProductByCatId);
-// productRouter.put("/editProduct", editProduct);
-// productRouter.delete("/delProduct", delProduct);
 
 
-// async function showProductByCatId(req: Request, res: Response) {
-//     const {id} = req.params
-//     let productQueryResult = (
-//         await pgClient.query(
-//             "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]            
-//         )
+productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
-//     ).rows;
-//     res.send(productQueryResult)
-=======
-<<<<<<< HEAD
+async function showProductByCatId(req: Request, res: Response) {
+  const { id } = req.params
+  let productQueryResult = (
+    await pgClient.query(
+      "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]
+    )
+
+  ).rows;
+  res.send(productQueryResult)
+}
+
 productRouter.get(`/editOption/product/:id`, singleProduct);
-=======
-<<<<<<< HEAD
-// productRouter.post("/newProduct", newProduct);
-// productRouter.put("/editProduct", editProduct);
-// productRouter.delete("/delProduct", delProduct);
-=======
->>>>>>> 4a30d94981d78680927a9bae57ff2c6f0d808b0f
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
->>>>>>> b807dc1c424a78e2b115dc3e1dc84581c01c98b6
 
-
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 
 async function showProduct(req: Request, res: Response) {
-<<<<<<< HEAD
   const id = req.query.id
-  console.log(id)
+  console.log("cat:", id)
   let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
-=======
-    const id = req.query.id
-    console.log("cat:",id)
-    let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
     FROM product_images
     GROUP BY product_id
     )
     
-<<<<<<< HEAD
-    select * from products left join single_image on products.id = single_image.product_id;`
+    select * from products left join single_image on products.id = single_image.product_id `
   const params: any[] = [];
 
   if (id) {
-    sql += "where products.id  = $1"
+    sql += "where products.category_id  = $1 "
     params.push(id);
-=======
-    select * from products left join single_image on products.id = single_image.product_id `   
-    const params: any[] = [];
-
-    if (id) {
-        sql += "where products.category_id  = $1 "
-        params.push(id);
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
   }
   let productQueryResult = (
@@ -82,9 +52,6 @@ async function showProduct(req: Request, res: Response) {
 
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 async function singleProduct(req: Request, res: Response) {
   try {
     // const urlParams = new URLSearchParams(req.url);
@@ -93,12 +60,12 @@ async function singleProduct(req: Request, res: Response) {
     // console.log(urlParams)
     // const productId = urlParams.get('product');
     console.log(id)
-    
-   
+
+
     const query = `SELECT * FROM products WHERE id =${id};`;
     const product = await pgClient.query(query);
     const selectedProducts = product.rows[0];
-    
+
     res.json(selectedProducts);
   } catch (error) {
     res.json({ message: "internal error" });
@@ -108,8 +75,7 @@ async function singleProduct(req: Request, res: Response) {
 
 
 
-=======
-<<<<<<< HEAD
+
 // async function newProduct(req: Request, res: Response) {
 //     const form = formidable({
 //         uploadDir: __dirname + "/../uploads",
@@ -127,14 +93,14 @@ async function singleProduct(req: Request, res: Response) {
 //         console.log(err);
 //         res.status(500).json({ message: "Internal server erorr!" });
 //       }
-  
+
 //       if (fields.name) {
 //         name = fields.name![0];
 //       }
 //       if (fields.price) {
 //         price = fields.price![0];
 //       }
-  
+
 //       if (files.photo) {
 //         memoImage = files.photo[0].newFilename;
 //       }
@@ -143,7 +109,7 @@ async function singleProduct(req: Request, res: Response) {
 //         "INSERT INTO products (name,price,description) VALUES ($1,$2, $3) RETURNING id",
 //         [name,price,description]
 //       ))
-  
+
 //       res.json({
 //         data: {
 //           id: productInsertResult.rows[0].id,
@@ -152,9 +118,7 @@ async function singleProduct(req: Request, res: Response) {
 //       });
 //     });
 //   }
-=======
->>>>>>> 4a30d94981d78680927a9bae57ff2c6f0d808b0f
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
+
 async function newProductByCatId(req: Request, res: Response) {
   const form = formidable({
     uploadDir: __dirname + "/../uploads",
@@ -210,33 +174,33 @@ async function newProductByCatId(req: Request, res: Response) {
   });
 }
 
-// async function editProduct(req: Request, res: Response) {
-//     let { name } = req.body;
-//     let {id}= req.query;
-//     let productUpdateResult = await pgClient.query(
-//         "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
-//         [name,id]
-//     );
+async function editProduct(req: Request, res: Response) {
+    let { name } = req.body;
+    let {id}= req.query;
+    let productUpdateResult = await pgClient.query(
+        "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
+        [name,id]
+    );
 
-//     if (productUpdateResult.rowCount == 1) {
-//         res.json({
-//             message: "update success",
-//         });
-//     }}
+    if (productUpdateResult.rowCount == 1) {
+        res.json({
+            message: "update success",
+        });
+    }}
 
-// async function delProduct(req: Request, res: Response) {
+async function delProduct(req: Request, res: Response) {
 
-//     let targetId = parseInt(req.query.id as string);
+    let targetId = parseInt(req.query.id as string);
 
-//     let productDeleteResult = await pgClient.query(
-//         "DELETE FROM categories WHERE id =$1",
-//         [targetId]
-//     );
+    let productDeleteResult = await pgClient.query(
+        "DELETE FROM categories WHERE id =$1",
+        [targetId]
+    );
 
-//     if (productDeleteResult.rowCount == 1) {
-//         res.json({ message: "Delete category successful" });
-//     } else {
-//         res.status(400).json({ message: "Delete category failed" });
-//     }
+    if (productDeleteResult.rowCount == 1) {
+        res.json({ message: "Delete category successful" });
+    } else {
+        res.status(400).json({ message: "Delete category failed" });
+    }
 
-// }
+}
