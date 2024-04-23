@@ -44,17 +44,17 @@
             <button id="SignIn"><a href="/login.html">SIGN IN</a></button>
         </div>
         <div class="LoginForm">
-            <form action="/account/login" method="POST">
+            <form id="LoginForm">
                 <div>
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="username" value="harvie" required>
                 </div>
                 <div>
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" value="1234" required>
                 </div>
                 <div>
-                    <button type="submit">Login</button>
+                    <button type="submit" id="Login">Login</button>
                 </div>
             </form>
         </div>
@@ -81,7 +81,7 @@
             <p class="text-center text-muted">© 2022 Company, Inc</p>
         </footer>
     </div>
-    <script src="./login.js"></script>
+    <script src="/js/login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
         crossorigin="anonymous"></script>
