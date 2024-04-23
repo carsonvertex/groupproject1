@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
     "dev": "ts-node-dev index.ts",
-    "data": "psql -f ./database/setup.sql -U postgres && ts-node ./database/01_userSeed.ts && ts-node ./database/02_categoryseed && ts-node ./database/03_productseeds"
+    "data": "psql -f ./database/setup.sql -U postgres && ts-node ./database/01_userSeed.ts && ts-node ./database/02_categoryseed && ts-node ./database/03_productseeds database && ts-node ./database/04_shoppingcartseeds"
   },
   "author": "",
   "license": "ISC",

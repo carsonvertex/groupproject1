@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config()
 
 let pgClient = new Client({
@@ -33,7 +33,7 @@ async function shopping_cartItems() {
         await pgClient.connect()
 
         for(let entry of shoppingCart){
-            let shoppingCartInsertResult = await pgClient.query("INSERT INTO shoppingCart (user_id, product_options_id, quantity) VALUES ($1,$2,$3) RETURNING id",[
+            let shoppingCartInsertResult = await pgClient.query("INSERT INTO shopping_carts (user_id, product_option_id, quantity) VALUES ($1,$2,$3) RETURNING id", [
                 entry.user_id, entry.product_options_id, entry.quantity
             ])
         }
