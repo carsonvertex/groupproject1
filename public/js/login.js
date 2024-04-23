@@ -1,37 +1,30 @@
-//This is use for control 'Buttons' in the Sign Up form 
-const SignUpButton = document.querySelector('#SignUp')
-const SignInButton = document.querySelector('#SignIn')
-const LogoButton = document.querySelector('.logo')
+document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-LogoButton.addEventListener('click', function () {
-  console.log("logo")
-})
+  let username = document.querySelector("#username").value;
+  let password = document.querySelector("#password").value;
 
-SignUpButton.addEventListener('click', async (e) => {
-  e.preventDefault()
+  // Client-side validation
+  if (!username || !password) {
+    // Display an error message to the user
+    console.error("Username and password are required.");
+    return;
+  }
 
-  // let email = document.querySelector("#emailInput").value
-  // let username = document.querySelector("#UsernameInput").value
-  // let passoword = document.querySelector("#passwordInput").value
+  let res = await fetch("/account/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
 
-  // console.log(email)
-  // console.log(username)
-  // console.log(passoword)
-  console.log(clicked)
-
-
-
-})
-
-
-SignInButton.addEventListener('click', function () {
-  console.log("SignIn")
-
-})
-
-
-
-
-
-
-
+  console.log(res.ok)
+  if (res.ok) {
+    window.location.href = "/customerPage.html";
+  } else {
+    // Handle the case when the response is not ok
+    // Display an error message to the user
+    console.error("Login failed. Please check your username and password.");
+  }
+});
