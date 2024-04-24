@@ -4,7 +4,7 @@
 async function singleProducts() {
     const container = document.getElementById('editProductContainer');
     const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get('product');
+    const productId = urlParams.get('product');
     try {
       const response = await fetch(`/product/editOption/product/${productId}`);
       const product = await response.json();
