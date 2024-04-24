@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 
 
 // // // "/manageProduct/showProduct/cat/1"
 
 
 
-=======
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 //Show and Post products
 const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
@@ -31,7 +28,6 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
         getProducts()
     }
 })
-<<<<<<< HEAD
 //show product
 
 // async function getProducts() {
@@ -60,8 +56,6 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 //         throw error;
 //     }
 // }
-=======
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 async function getProducts() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -82,11 +76,7 @@ async function getProducts() {
             const image = product.image;
 
             productHTML +=
-<<<<<<< HEAD
                 `<div class="productBox col-3">
-=======
-            `<div class="productBox col-3" style =" background-color : grey;padding:10px">
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
             <p>${productName}</p>
             <div><img src="${image}" width="80%"></div>
             <p>${description}</p>

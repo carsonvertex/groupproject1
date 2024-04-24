@@ -7,7 +7,7 @@ export const productRouter = Router();
 // productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
 productRouter.get("/showProduct", showProduct);
-<<<<<<< HEAD
+
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
 // productRouter.put("/editProduct", editProduct);
 // productRouter.delete("/delProduct", delProduct);
@@ -22,54 +22,32 @@ productRouter.post("/newProduct/cat/:id", newProductByCatId);
 
 //     ).rows;
 //     res.send(productQueryResult)
-=======
-<<<<<<< HEAD
+
 productRouter.get(`/editOption/product/:id`, singleProduct);
-=======
-<<<<<<< HEAD
+
 // productRouter.post("/newProduct", newProduct);
 // productRouter.put("/editProduct", editProduct);
 // productRouter.delete("/delProduct", delProduct);
-=======
->>>>>>> 4a30d94981d78680927a9bae57ff2c6f0d808b0f
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
-productRouter.put("/editProduct", editProduct);
-productRouter.delete("/delProduct", delProduct);
->>>>>>> b807dc1c424a78e2b115dc3e1dc84581c01c98b6
+// productRouter.put("/editProduct", editProduct);
+// productRouter.delete("/delProduct", delProduct);
 
-
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
 
 async function showProduct(req: Request, res: Response) {
-<<<<<<< HEAD
-  const id = req.query.id
-  console.log(id)
-  let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
-=======
     const id = req.query.id
     console.log("cat:",id)
     let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
     FROM product_images
     GROUP BY product_id
     )
     
-<<<<<<< HEAD
-    select * from products left join single_image on products.id = single_image.product_id;`
-  const params: any[] = [];
-
-  if (id) {
-    sql += "where products.id  = $1"
-    params.push(id);
-=======
     select * from products left join single_image on products.id = single_image.product_id `   
     const params: any[] = [];
 
     if (id) {
         sql += "where products.category_id  = $1 "
         params.push(id);
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 
   }
   let productQueryResult = (
@@ -82,9 +60,6 @@ async function showProduct(req: Request, res: Response) {
 
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 async function singleProduct(req: Request, res: Response) {
   try {
     // const urlParams = new URLSearchParams(req.url);
@@ -107,54 +82,6 @@ async function singleProduct(req: Request, res: Response) {
 
 
 
-
-=======
-<<<<<<< HEAD
-// async function newProduct(req: Request, res: Response) {
-//     const form = formidable({
-//         uploadDir: __dirname + "/../uploads",
-//         keepExtensions: true,
-//         minFileSize: 0,
-//         allowEmptyFiles: true,
-//       });
-//       let name:string;
-//       let price:number;
-//       let description:string;
-
-
-//       form.parse(req, async (err, fields, files) => {
-//       if (err) {
-//         console.log(err);
-//         res.status(500).json({ message: "Internal server erorr!" });
-//       }
-  
-//       if (fields.name) {
-//         name = fields.name![0];
-//       }
-//       if (fields.price) {
-//         price = fields.price![0];
-//       }
-  
-//       if (files.photo) {
-//         memoImage = files.photo[0].newFilename;
-//       }
-
-//       let productInsertResult = (await pgClient.query(
-//         "INSERT INTO products (name,price,description) VALUES ($1,$2, $3) RETURNING id",
-//         [name,price,description]
-//       ))
-  
-//       res.json({
-//         data: {
-//           id: productInsertResult.rows[0].id,
-//           photo: productInsertResult.rows[0].image,
-//         },
-//       });
-//     });
-//   }
-=======
->>>>>>> 4a30d94981d78680927a9bae57ff2c6f0d808b0f
->>>>>>> a0a6450b959950d682ad5d5c1ef877c5576fd637
 async function newProductByCatId(req: Request, res: Response) {
   const form = formidable({
     uploadDir: __dirname + "/../uploads",

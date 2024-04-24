@@ -19,15 +19,18 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
     body: JSON.stringify({ username, password }),
   });
 
-  console.log(res.ok)
+
   if (res.ok) {
-    if (username === 'customer'){
+    let data = await res.json()
+    let level = data.level.level
+
+    if (level === 'customer'){
       window.location.href = "/customerPage.html";
     } 
-    if (username === 'admin'){
-      window.location.href = "/Product.html";
+    if (level === 'admin'){
+      window.location.href = "/cat.html";
     }
-    if (username === 'superadmin'){
+    if (level === 'superadmin'){
       window.location.href = "/superadmin.html";
     } 
   } else {

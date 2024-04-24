@@ -59,6 +59,7 @@ async function login(req: Request, res: Response) {
             [username]
         );
 
+
         if (userQueryResult.rows.length === 0) {
             console.log("Login failed: wrong username");
             return res.status(400).json({ message: "Login Failed" });
@@ -81,6 +82,7 @@ async function login(req: Request, res: Response) {
         let result = res.json({
             message: "Login success",
             data: { username: userQueryResult.rows[0].username },
+            level: { level: userQueryResult.rows[0].level}
         });
 
         console.log(req.body.username);
