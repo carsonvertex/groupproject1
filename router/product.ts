@@ -5,14 +5,18 @@ import formidable from "formidable";
 
 
 export const productRouter = Router();
-// productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
-productRouter.get("/showProduct", showProduct);
-productRouter.get(`/editOption/product/:id`, singleProduct);
-productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
+productRouter.get("/showProduct", showProduct);
+productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
+
+productRouter.get(`/editOption/product/:id`, singleProduct);
+productRouter.post(`/addOption/:id`, addOptionById);
+productRouter.delete(`/deleteOption/:id`, deleteOptionById);
+
+// product by category
 
 async function showProductByCatId(req: Request, res: Response) {
   const { id } = req.params
@@ -24,7 +28,6 @@ async function showProductByCatId(req: Request, res: Response) {
   ).rows;
   res.send(productQueryResult)
 }
-
 
 async function showProduct(req: Request, res: Response) {
   const id = req.query.id
@@ -50,26 +53,6 @@ async function showProduct(req: Request, res: Response) {
   ).rows;
   res.json({ product: productQueryResult })
 
-}
-
-async function singleProduct(req: Request, res: Response) {
-  try {
-    // const urlParams = new URLSearchParams(req.url);
-    const id = req.params.id
-    // console.log("pro:",id)
-    // console.log(urlParams)
-    // const productId = urlParams.get('product');
-    console.log(id)
-
-
-    const query = `SELECT * FROM products WHERE id =${id};`;
-    const product = await pgClient.query(query);
-    const selectedProducts = product.rows[0];
-
-    res.json(selectedProducts);
-  } catch (error) {
-    res.json({ message: "internal error" });
-  }
 }
 
 async function newProductByCatId(req: Request, res: Response) {
@@ -155,6 +138,96 @@ async function delProduct(req: Request, res: Response) {
     res.json({ message: "Delete category successful" });
   } else {
     res.status(400).json({ message: "Delete category failed" });
+  }
+
+}
+
+// product option page
+
+async function singleProduct(req: Request, res: Response) {
+  try {
+    const id = req.params.id;
+    console.log(id);
+
+    const productQuery = `SELECT * 
+      FROM products 
+      JOIN product_images ON products.id = product_images.product_id 
+      WHERE products.id = ${id};`;
+
+    const optionQuery = `SELECT * FROM products 
+      JOIN product_options ON products.id = product_options.product_id 
+      WHERE products.id = ${id};`;
+
+    const [productResult, optionResult] = await Promise.all([
+      pgClient.query(productQuery),
+      pgClient.query(optionQuery)
+    ]);
+
+    const selectedProduct = productResult.rows[0];
+    const optionQueryResult = optionResult.rows;
+
+    const productData = {
+      ...selectedProduct,
+      options: optionQueryResult
+    };
+
+    res.json(productData);
+  } catch (error) {
+    res.json({ message: "internal error" });
+  }
+}
+
+
+async function addOptionById(req: Request, res: Response) {
+
+  const id = req.params.id;
+  console.log(id);
+
+  let { color_name, color_code, sizing, stock } = req.body;
+  console.log(color_name, color_code, sizing, stock);
+
+  try {
+    let optionQueryResult = await pgClient.query(
+      "SELECT * from product_options WHERE color_name = $1 AND color_code = $2 AND sizing = $3 ",
+      [color_name, color_code, sizing]
+    );
+
+    if (optionQueryResult.rows.length > 0) {
+      res.status(400).json({ message: "Option already exists." });
+      return;
+    }
+    const addOptionQueryResult = await pgClient.query(
+      `INSERT INTO product_options (product_id,color_name, color_code, sizing, stock) 
+    VALUES ($1,$2,$3,$4,$5);`, [id,color_name, color_code, sizing, stock]
+    )
+    // console.log(addOptionQueryResult.rows[0].id)
+    // Continue with other logic if the option does not exist
+    
+    const returningOptions = addOptionQueryResult.rows[0].id;
+    res.json({
+      msg: "Options Created",
+      option: returningOptions,
+    });
+    console.log(res.json)
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ message: e });
+  }
+}
+
+async function deleteOptionById(req: Request, res: Response) {
+
+  let targetId = parseInt(req.query.id as string);
+
+  let optionDeleteResult = await pgClient.query(
+      "DELETE FROM product_options WHERE id =$1",
+      [targetId]
+  );
+
+  if (optionDeleteResult.rowCount == 1) {
+      res.json({ message: "Delete category successful" });
+  } else {
+      res.status(400).json({ message: "Delete category failed" });
   }
 
 }
