@@ -49,7 +49,7 @@ async function newShoppinglist(req: Request, res:Response){
 async function changeQuantityShoppinglist(req: Request, res:Response){
     let {id} = req.query;
     let changeQuantityResult = await pgClient.query(
-        "UPDATE quantity SET WHERE id=$1 RETURNING *",
+        "UPDATE quantity SET WHERE id = $1 RETURNING *",
         [id]
     );
 
