@@ -19,15 +19,22 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
     body: JSON.stringify({ username, password }),
   });
 
-  console.log(res.ok)
+
   if (res.ok) {
-    if (username === 'customer'){
+    let data = await res.json()
+    let level = data.level.level
+
+    if (level === 'customer'){
       window.location.href = "/customerPage.html";
     } 
+<<<<<<< HEAD
     if (username === 'admin'){
+=======
+    if (level === 'admin'){
+>>>>>>> b2bf46a836b2d3dabf138623065934e710bbd8c2
       window.location.href = "/cat.html";
     }
-    if (username === 'superadmin'){
+    if (level === 'superadmin'){
       window.location.href = "/superadmin.html";
     } 
   } else {

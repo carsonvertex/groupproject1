@@ -1,27 +1,65 @@
 
+
+// // // "/manageProduct/showProduct/cat/1"
+
+
+
+
 //Show and Post products
 const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
-    event.preventDefault()
+  event.preventDefault();
 
-    const form = event.target
-    const body = form
+  const form = event.target;
+  const body = form;
 
-    const formData = new FormData()
-    formData.append("name", form.name.value)
-    formData.append("image", form.image.files[0])
-    formData.append("price", form.price.value)
-    formData.append("description", form.description.value)
+  const formData = new FormData();
+  formData.append("name", form.name.value);
+  formData.append("image", form.image.files[0]);
+  formData.append("price", form.price.value);
+  formData.append("description", form.description.value);
 
-    console.log(body)
+  console.log("below get url");
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("cat");
 
-    const res = await fetch(`/product/newProduct/cat/1`, {
-        method: 'POST',
-        body: formData
-    })
-    if (res.ok) {
-        getProducts()
-    }
-})
+  console.log(`param is ${id}`);
+
+  const res = await fetch(`/product/newProduct/cat/${id}`, {
+      method: 'POST',
+      body: formData
+  });
+  if (res.ok) {
+      getProducts();
+  }
+});
+//show product
+
+// async function getProducts() {
+//     try {
+//         const response = await fetch(`/product/showProduct?id=1`);
+//         const data = await response.json();
+//         const productArray = data.product;
+
+
+//         // 在這裡處理取得的類別資料陣列
+//         const container = document.getElementById('productContainer');
+//         container.innerHTML = ""
+//         let productHTML = '';
+//         for (const product of productArray) {
+//             const productName = product.name;
+//             const productPrice = product.price;
+//             // const productLink = `/product.html?product=${product.id}`;
+
+//             productHTML += `<div class="productBox"><p>${productName}</p></div>`;
+//         }
+
+//         container.innerHTML = productHTML;
+//     } catch (error) {
+//         // 處理錯誤
+//         console.error('Error:', error);
+//         throw error;
+//     }
+// }
 
 async function getProducts() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -42,7 +80,7 @@ async function getProducts() {
             const image = product.image;
 
             productHTML +=
-            `<div class="productBox col-3" style =" background-color : grey;padding:10px">
+                `<div class="productBox col-3">
             <p>${productName}</p>
             <div><img src="${image}" width="80%"></div>
             <p>${description}</p>
