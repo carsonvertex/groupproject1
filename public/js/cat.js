@@ -16,11 +16,11 @@ const createCat = document.querySelector('#catForm').addEventListener('submit', 
     body: JSON.stringify(formObject)
   })
   if (res.ok) {
-    getCategories()
+    adminGetCategories()
   }
 })
-//show cat
-async function getCategories() {
+//admin page show categories
+async function adminGetCategories() {
   try {
     const response = await fetch('/cat/showCat');
     const data = await response.json();
@@ -31,11 +31,18 @@ async function getCategories() {
     container.innerHTML = ""
     let catHTML = '';
     for (const cat of catArray) {
+      const id = cat.id
       const catName = cat.name;
       const catLink = `/product.html?cat=${cat.id}`;
-      // /product/cat/:id
-    
-      catHTML += `<div class="catBox"><a href="${catLink}">${catName}</a></div>`;
+      // button
+      catHTML += 
+      `<div  class="col-3 my-2">
+         <div class="cardElement">
+           <h5><a href="${catLink}">${catName}</a></h5>
+           <p>Category ID: ${id}</p>
+         </div>
+       </div>`;
+      
     }
     
     container.innerHTML = catHTML;
@@ -45,4 +52,4 @@ async function getCategories() {
     throw error;
   }
 }
-getCategories()
+adminGetCategories()
