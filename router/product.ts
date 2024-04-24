@@ -7,18 +7,6 @@ export const productRouter = Router();
 
 
 productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
-
-async function showProductByCatId(req: Request, res: Response) {
-  const { id } = req.params
-  let productQueryResult = (
-    await pgClient.query(
-      "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]
-    )
-
-  ).rows;
-  res.send(productQueryResult)
-}
-
 productRouter.get(`/editOption/product/:id`, singleProduct);
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.put("/editProduct", editProduct);
@@ -52,6 +40,17 @@ async function showProduct(req: Request, res: Response) {
 
 }
 
+async function showProductByCatId(req: Request, res: Response) {
+  const { id } = req.params
+  let productQueryResult = (
+    await pgClient.query(
+      "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]
+    )
+
+  ).rows;
+  res.send(productQueryResult)
+}
+
 async function singleProduct(req: Request, res: Response) {
   try {
     // const urlParams = new URLSearchParams(req.url);
@@ -71,10 +70,6 @@ async function singleProduct(req: Request, res: Response) {
     res.json({ message: "internal error" });
   }
 }
-
-
-
-
 
 // async function newProduct(req: Request, res: Response) {
 //     const form = formidable({

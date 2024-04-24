@@ -25,7 +25,7 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
       window.location.href = "/customerPage.html";
     } 
     if (username === 'admin'){
-      window.location.href = "/Product.html";
+      window.location.href = "/cat.html";
     }
     if (username === 'superadmin'){
       window.location.href = "/superadmin.html";
