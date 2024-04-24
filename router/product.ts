@@ -7,13 +7,11 @@ export const productRouter = Router();
 // productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
 productRouter.get("/showProduct", showProduct);
-
+productRouter.get(`/editOption/product/:id`, singleProduct);
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
-// productRouter.put("/editProduct", editProduct);
-// productRouter.delete("/delProduct", delProduct);
-
-
 productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
+productRouter.put("/editProduct", editProduct);
+productRouter.delete("/delProduct", delProduct);
 
 async function showProductByCatId(req: Request, res: Response) {
   const { id } = req.params
@@ -26,34 +24,21 @@ async function showProductByCatId(req: Request, res: Response) {
   res.send(productQueryResult)
 }
 
-//     ).rows;
-//     res.send(productQueryResult)
-
-productRouter.get(`/editOption/product/:id`, singleProduct);
-
-// productRouter.post("/newProduct", newProduct);
-// productRouter.put("/editProduct", editProduct);
-// productRouter.delete("/delProduct", delProduct);
-productRouter.post("/newProduct/cat/:id", newProductByCatId);
-// productRouter.put("/editProduct", editProduct);
-// productRouter.delete("/delProduct", delProduct);
-
-
 
 async function showProduct(req: Request, res: Response) {
-    const id = req.query.id
-    console.log("cat:",id)
-    let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
+  const id = req.query.id
+  console.log("cat:", id)
+  let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
     FROM product_images
     GROUP BY product_id
     )
     
-    select * from products left join single_image on products.id = single_image.product_id `   
-    const params: any[] = [];
+    select * from products left join single_image on products.id = single_image.product_id `
+  const params: any[] = [];
 
-    if (id) {
-        sql += "where products.category_id  = $1 "
-        params.push(id);
+  if (id) {
+    sql += "where products.category_id  = $1 "
+    params.push(id);
 
   }
   let productQueryResult = (
@@ -85,8 +70,6 @@ async function singleProduct(req: Request, res: Response) {
     res.json({ message: "internal error" });
   }
 }
-
-
 
 async function newProductByCatId(req: Request, res: Response) {
   const form = formidable({
@@ -144,32 +127,33 @@ async function newProductByCatId(req: Request, res: Response) {
 }
 
 async function editProduct(req: Request, res: Response) {
-    let { name } = req.body;
-    let {id}= req.query;
-    let productUpdateResult = await pgClient.query(
-        "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
-        [name,id]
-    );
+  let { name } = req.body;
+  let { id } = req.query;
+  let productUpdateResult = await pgClient.query(
+    "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
+    [name, id]
+  );
 
-    if (productUpdateResult.rowCount == 1) {
-        res.json({
-            message: "update success",
-        });
-    }}
+  if (productUpdateResult.rowCount == 1) {
+    res.json({
+      message: "update success",
+    });
+  }
+}
 
 async function delProduct(req: Request, res: Response) {
 
-    let targetId = parseInt(req.query.id as string);
+  let targetId = parseInt(req.query.id as string);
 
-    let productDeleteResult = await pgClient.query(
-        "DELETE FROM categories WHERE id =$1",
-        [targetId]
-    );
+  let productDeleteResult = await pgClient.query(
+    "DELETE FROM categories WHERE id =$1",
+    [targetId]
+  );
 
-    if (productDeleteResult.rowCount == 1) {
-        res.json({ message: "Delete category successful" });
-    } else {
-        res.status(400).json({ message: "Delete category failed" });
-    }
+  if (productDeleteResult.rowCount == 1) {
+    res.json({ message: "Delete category successful" });
+  } else {
+    res.status(400).json({ message: "Delete category failed" });
+  }
 
 }
