@@ -20,7 +20,7 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 
     console.log(body)
 
-    const res = await fetch(`/product/newProduct/cat/1`, {
+    const res = await fetch(`/product/newProduct/cat/id=${id}`, {
         method: 'POST',
         body: formData
     })
@@ -61,10 +61,10 @@ async function getProducts() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('cat');
     try {
-        const response = await fetch(`/product/showProduct?id=${id}`);
+        const response = await fetch(`/product/showProduct?id=${product}`);
         const data = await response.json();
         const productArray = data.product; // Access the correct property in the response data
-
+        console.log(productArray)
         const container = document.getElementById('productContainer');
         container.innerHTML = '';
         let productHTML = '';

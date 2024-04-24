@@ -3,6 +3,7 @@ import { pgClient } from "../pgClients";
 import formidable from "formidable";
 
 
+
 export const productRouter = Router();
 // productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
@@ -83,7 +84,7 @@ async function newProductByCatId(req: Request, res: Response) {
   let price: string;
   let description: string;
   let category_id = req.params.id
-
+  console.log(req.params)
   console.log({
     category_id
   })
@@ -119,7 +120,7 @@ async function newProductByCatId(req: Request, res: Response) {
 
     res.json({
       data: {
-        id: product_id,
+        id: category_id,
         photo: imageInsertResult.rows[0].id,
       },
     });
