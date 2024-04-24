@@ -13,12 +13,18 @@ productRouter.post("/newProduct/cat/:id", newProductByCatId);
 // productRouter.delete("/delProduct", delProduct);
 
 
-// async function showProductByCatId(req: Request, res: Response) {
-//     const {id} = req.params
-//     let productQueryResult = (
-//         await pgClient.query(
-//             "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]            
-//         )
+productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
+
+async function showProductByCatId(req: Request, res: Response) {
+  const { id } = req.params
+  let productQueryResult = (
+    await pgClient.query(
+      "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]
+    )
+
+  ).rows;
+  res.send(productQueryResult)
+}
 
 //     ).rows;
 //     res.send(productQueryResult)
@@ -68,12 +74,12 @@ async function singleProduct(req: Request, res: Response) {
     // console.log(urlParams)
     // const productId = urlParams.get('product');
     console.log(id)
-    
-   
+
+
     const query = `SELECT * FROM products WHERE id =${id};`;
     const product = await pgClient.query(query);
     const selectedProducts = product.rows[0];
-    
+
     res.json(selectedProducts);
   } catch (error) {
     res.json({ message: "internal error" });
@@ -137,33 +143,33 @@ async function newProductByCatId(req: Request, res: Response) {
   });
 }
 
-// async function editProduct(req: Request, res: Response) {
-//     let { name } = req.body;
-//     let {id}= req.query;
-//     let productUpdateResult = await pgClient.query(
-//         "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
-//         [name,id]
-//     );
+async function editProduct(req: Request, res: Response) {
+    let { name } = req.body;
+    let {id}= req.query;
+    let productUpdateResult = await pgClient.query(
+        "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
+        [name,id]
+    );
 
-//     if (productUpdateResult.rowCount == 1) {
-//         res.json({
-//             message: "update success",
-//         });
-//     }}
+    if (productUpdateResult.rowCount == 1) {
+        res.json({
+            message: "update success",
+        });
+    }}
 
-// async function delProduct(req: Request, res: Response) {
+async function delProduct(req: Request, res: Response) {
 
-//     let targetId = parseInt(req.query.id as string);
+    let targetId = parseInt(req.query.id as string);
 
-//     let productDeleteResult = await pgClient.query(
-//         "DELETE FROM categories WHERE id =$1",
-//         [targetId]
-//     );
+    let productDeleteResult = await pgClient.query(
+        "DELETE FROM categories WHERE id =$1",
+        [targetId]
+    );
 
-//     if (productDeleteResult.rowCount == 1) {
-//         res.json({ message: "Delete category successful" });
-//     } else {
-//         res.status(400).json({ message: "Delete category failed" });
-//     }
+    if (productDeleteResult.rowCount == 1) {
+        res.json({ message: "Delete category successful" });
+    } else {
+        res.status(400).json({ message: "Delete category failed" });
+    }
 
-// }
+}
