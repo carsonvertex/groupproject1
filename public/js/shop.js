@@ -1,6 +1,6 @@
 
 // .querySelector 未有按購買位置
-const createProduct = document.querySelector('#').addEventListener('buybutton', async function (event) {
+const createProduct = document.querySelector('.productArea-B').addEventListener('buybutton', async function (event) {
     event.preventDefault()
 
     const form = event.target
@@ -15,7 +15,7 @@ const createProduct = document.querySelector('#').addEventListener('buybutton', 
     console.log(body)
 
 // 條path 未有
-    const res = await fetch(`/shopping_cart/showShoppinglist/`, {
+    const res = await fetch(`/shopping_cart/showShoppinglist`, {
         method: 'POST',
         body: formData
     })
@@ -30,13 +30,13 @@ async function buyitemlist() {
     // ('') 未有輸入既位於
     // const id = urlParams.get('');
     try {
-        const response = await fetch(`/shopping_cart/showShoppinglist`);
+        const response = await fetch(`/shopping_cart/newShoppinglist`);
         const data = await response.json();
         const productArray = data.product; // Access the correct property in the response data
 
         const container = document.getElementById('buyItemsContainer');
         container.innerHTML = '';
-        let productHTML = '';
+        let shopHTML = '';
         for (const product of productArray) {
             const productId = product.id
             const image = product.image;
@@ -44,7 +44,7 @@ async function buyitemlist() {
             const productPrice = product.price;
             
 
-            productHTML +=
+            shopHTML +=
             `<div class="productArea-A">
             <img width=100% height=100% src="${image}">
         </div>
@@ -55,7 +55,7 @@ async function buyitemlist() {
         </div>
             `;
         }
-        container.innerHTML = productHTML;
+        container.innerHTML = shopHTML;
     } catch (error) {
         console.error('Error:', error);
         throw error;
