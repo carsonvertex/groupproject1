@@ -12,7 +12,8 @@ productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
 
 productRouter.get(`/editOption/product/:id`, singleProduct);
-productRouter.post(`/editOption/product/:id/addOption`, addOptionById);
+productRouter.post(`/addOption/:id`, addOptionById);
+productRouter.delete(`/deleteOption/:id`, deleteOptionById);
 
 // product by category
 
@@ -142,7 +143,7 @@ async function delProduct(req: Request, res: Response) {
 
 // product option page
 
-async function singleProduct(req:Request, res:Response) {
+async function singleProduct(req: Request, res: Response) {
   try {
     const id = req.params.id;
     console.log(id);
@@ -151,7 +152,7 @@ async function singleProduct(req:Request, res:Response) {
       FROM products 
       JOIN product_images ON products.id = product_images.product_id 
       WHERE products.id = ${id};`;
-    
+
     const optionQuery = `SELECT * FROM products 
       JOIN product_options ON products.id = product_options.product_id 
       WHERE products.id = ${id};`;
@@ -177,28 +178,55 @@ async function singleProduct(req:Request, res:Response) {
 
 
 async function addOptionById(req: Request, res: Response) {
-  
-  let { color_name, color_code, sizing, stock } = req.body;
-console.log(color_name, color_code, sizing, stock);
 
-try {
-  let optionQueryResult = await pgClient.query(
-    "SELECT * from product_options WHERE color_name = $1 AND color_code = $2 AND sizing = $3 ",
-    [color_name, color_code, sizing]
+  const id = req.params.id;
+  console.log(id);
+
+  let { color_name, color_code, sizing, stock } = req.body;
+  console.log(color_name, color_code, sizing, stock);
+
+  try {
+    let optionQueryResult = await pgClient.query(
+      "SELECT * from product_options WHERE color_name = $1 AND color_code = $2 AND sizing = $3 ",
+      [color_name, color_code, sizing]
+    );
+
+    if (optionQueryResult.rows.length > 0) {
+      res.status(400).json({ message: "Option already exists." });
+      return;
+    }
+    const addOptionQueryResult = await pgClient.query(
+      `INSERT INTO product_options (product_id,color_name, color_code, sizing, stock) 
+    VALUES ($1,$2,$3,$4,$5);`, [id,color_name, color_code, sizing, stock]
+    )
+    // console.log(addOptionQueryResult.rows[0].id)
+    // Continue with other logic if the option does not exist
+    
+    const returningOptions = addOptionQueryResult.rows[0].id;
+    res.json({
+      msg: "Options Created",
+      option: returningOptions,
+    });
+    console.log(res.json)
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ message: e });
+  }
+}
+
+async function deleteOptionById(req: Request, res: Response) {
+
+  let targetId = parseInt(req.query.id as string);
+
+  let optionDeleteResult = await pgClient.query(
+      "DELETE FROM product_options WHERE id =$1",
+      [targetId]
   );
 
-  if (optionQueryResult.rows.length > 0) {
-    res.status(400).json({ message: "Option already exists." });
-    return;
+  if (optionDeleteResult.rowCount == 1) {
+      res.json({ message: "Delete category successful" });
+  } else {
+      res.status(400).json({ message: "Delete category failed" });
   }
-  const addOptionQueryResult = await pgClient.query(
-    `INSERT INTO product_options (color_name, color_code, sizing, stock) 
-    VALUES ($1,$2,$3,$4)`,[color_name, color_code, sizing, stock]
-  )
 
-  // Continue with other logic if the option does not exist
-
-} catch (e) {
-  console.log(e);
-  res.status(400).json({ message: e });
-}}
+}

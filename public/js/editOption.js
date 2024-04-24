@@ -72,7 +72,13 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
   }
   console.log(formObject)
 
-  const res = await fetch('/product/editOption/product/:id/addOption', {
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('product');
+
+  console.log(`param is ${id}`);
+
+  const res = await fetch(`/product/addOption/${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -80,6 +86,30 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
     body: JSON.stringify(formObject)
   })
   if (res.ok) {
-    getCategories()
+    console.log("hihi")
   }
 })
+
+
+// delete
+const deleteOption = document.querySelector('#optionDelete');
+
+deleteOption.addEventListener('click', async function (event) {
+  event.preventDefault();
+
+  deleteOptionById();
+
+  async function deleteOptionById() {
+    let id = 6; // Replace with the appropriate ID
+    let res = await fetch(`/product/deleteOption/${id}`, {
+      method: "DELETE"
+    });
+
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      Swal.fire("Delete Failed!");
+    }
+  }
+});
+
