@@ -16,11 +16,11 @@ const createCat = document.querySelector('#catForm').addEventListener('submit', 
     body: JSON.stringify(formObject)
   })
   if (res.ok) {
-    adminGetCategories()
+    getCategories()
   }
 })
 //admin page show categories
-async function adminGetCategories() {
+async function getCategories() {
   try {
     const response = await fetch('/cat/showCat');
     const data = await response.json();
@@ -35,13 +35,14 @@ async function adminGetCategories() {
       const catName = cat.name;
       const catLink = `/product.html?cat=${cat.id}`;
       // button
-      catHTML += 
-      `<div  class="col-3 my-2">
+
+      catHTML += `<div  class="col-3 my-2">
          <div class="cardElement">
            <h5><a href="${catLink}">${catName}</a></h5>
            <p>Category ID: ${id}</p>
          </div>
        </div>`;
+      // catHTML += `<div class="catBox"><a href="${catLink}">${catName}</a></div>`;
       
     }
     
@@ -52,4 +53,4 @@ async function adminGetCategories() {
     throw error;
   }
 }
-adminGetCategories()
+getCategories()

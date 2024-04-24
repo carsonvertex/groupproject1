@@ -28,11 +28,7 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
     if (level === 'customer'){
       window.location.href = "/customerPage.html";
     } 
-<<<<<<< HEAD
-    if (username === 'admin'){
-=======
     if (level === 'admin'){
->>>>>>> b2bf46a836b2d3dabf138623065934e710bbd8c2
       window.location.href = "/cat.html";
     }
     if (level === 'superadmin'){
