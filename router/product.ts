@@ -198,7 +198,7 @@ async function addOptionById(req: Request, res: Response) {
       `INSERT INTO product_options (color_name, color_code, sizing, stock) 
     VALUES ($1,$2,$3,$4);`, [color_name, color_code, sizing, stock]
     )
-    console.log(addOptionQueryResult.rows[0].id)
+    // console.log(addOptionQueryResult.rows[0].id)
     // Continue with other logic if the option does not exist
     const returningOptions = addOptionQueryResult.rows[0].id;
     res.json({
