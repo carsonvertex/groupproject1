@@ -13,6 +13,7 @@ productRouter.delete("/delProduct", delProduct);
 
 productRouter.get(`/editOption/product/:id`, singleProduct);
 productRouter.post(`/addOption/:id`, addOptionById);
+productRouter.delete(`/deleteOption/:id`, deleteOptionById);
 
 // product by category
 
@@ -211,4 +212,21 @@ async function addOptionById(req: Request, res: Response) {
     console.log(e);
     res.status(400).json({ message: e });
   }
+}
+
+async function deleteOptionById(req: Request, res: Response) {
+
+  let targetId = parseInt(req.query.id as string);
+
+  let optionDeleteResult = await pgClient.query(
+      "DELETE FROM product_options WHERE id =$1",
+      [targetId]
+  );
+
+  if (optionDeleteResult.rowCount == 1) {
+      res.json({ message: "Delete category successful" });
+  } else {
+      res.status(400).json({ message: "Delete category failed" });
+  }
+
 }

@@ -89,3 +89,27 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
     console.log("hihi")
   }
 })
+
+
+// delete
+const deleteOption = document.querySelector('#optionDelete');
+
+deleteOption.addEventListener('click', async function (event) {
+  event.preventDefault();
+
+  deleteOptionById();
+
+  async function deleteOptionById() {
+    let id = 6; // Replace with the appropriate ID
+    let res = await fetch(`/product/deleteOption/${id}`, {
+      method: "DELETE"
+    });
+
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      Swal.fire("Delete Failed!");
+    }
+  }
+});
+
