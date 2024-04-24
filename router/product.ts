@@ -4,12 +4,11 @@ import formidable from "formidable";
 
 
 export const productRouter = Router();
-// productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 
+productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 productRouter.get("/showProduct", showProduct);
 productRouter.get(`/editOption/product/:id`, singleProduct);
 productRouter.post("/newProduct/cat/:id", newProductByCatId);
-productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
 
@@ -23,7 +22,6 @@ async function showProductByCatId(req: Request, res: Response) {
   ).rows;
   res.send(productQueryResult)
 }
-
 
 async function showProduct(req: Request, res: Response) {
   const id = req.query.id

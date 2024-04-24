@@ -7,27 +7,31 @@
 
 //Show and Post products
 const createProduct = document.querySelector('#productForm').addEventListener('submit', async function (event) {
-    event.preventDefault()
+  event.preventDefault();
 
-    const form = event.target
-    const body = form
+  const form = event.target;
+  const body = form;
 
-    const formData = new FormData()
-    formData.append("name", form.name.value)
-    formData.append("image", form.image.files[0])
-    formData.append("price", form.price.value)
-    formData.append("description", form.description.value)
+  const formData = new FormData();
+  formData.append("name", form.name.value);
+  formData.append("image", form.image.files[0]);
+  formData.append("price", form.price.value);
+  formData.append("description", form.description.value);
 
-    console.log(body)
+  console.log("below get url");
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("cat");
 
-    const res = await fetch(`/product/newProduct/cat/1`, {
-        method: 'POST',
-        body: formData
-    })
-    if (res.ok) {
-        getProducts()
-    }
-})
+  console.log(`param is ${id}`);
+
+  const res = await fetch(`/product/newProduct/cat/${id}`, {
+      method: 'POST',
+      body: formData
+  });
+  if (res.ok) {
+      getProducts();
+  }
+});
 //show product
 
 // async function getProducts() {
