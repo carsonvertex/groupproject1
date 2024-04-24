@@ -39,11 +39,7 @@ app.use("/cat", catRouter);
 app.use("/product", productRouter);
 
 //static assets
-app.use(express.static('public', {
-    setHeaders: (res, path, stat) => {
-      res.set('Content-Type', 'application/javascript');
-    }
-  }));
+app.use(express.static('public'));
 app.use(express.static("uploads"))
 
 app.listen(PORT, () => {
