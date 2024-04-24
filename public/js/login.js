@@ -21,7 +21,15 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
 
   console.log(res.ok)
   if (res.ok) {
-    window.location.href = "/customerPage.html";
+    if (username === 'customer'){
+      window.location.href = "/customerPage.html";
+    } 
+    if (username === 'admin'){
+      window.location.href = "/Product.html";
+    }
+    if (username === 'superadmin'){
+      window.location.href = "/superadmin.html";
+    } 
   } else {
     // Handle the case when the response is not ok
     // Display an error message to the user

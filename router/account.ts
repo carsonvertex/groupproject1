@@ -12,6 +12,7 @@ accountRouter.post("/register", register);
 accountRouter.post("/login", login)
 accountRouter.get("/logout", logout)
 accountRouter.get("/getusername", getUsername)
+accountRouter.get("/users", getUsersID)
 
 async function register(req: Request, res: Response) {
     let { email, username, password } = req.body;
@@ -50,45 +51,45 @@ async function register(req: Request, res: Response) {
 
 async function login(req: Request, res: Response) {
     try {
-      const { username, password } = req.body;
-  
-      // Check if the username exists in the database
-      const userQueryResult = await pgClient.query(
-        "SELECT username, password, id FROM users WHERE username = $1",
-        [username]
-      );
-  
-      if (userQueryResult.rows.length === 0) {
-        console.log("Login failed: wrong username");
-        return res.status(400).json({ message: "Login Failed" });
-      }
-  
-      const truePassword = userQueryResult.rows[0].password;
-  
-      // Check if the provided password matches the stored password
-      const isMatched = await checkPassword({ plainPassword: password, hashedPassword: truePassword });
-  
-      if (!isMatched) {
-        console.log("Login failed: wrong password");
-        return res.status(400).json({ message: "Login Failed" });
-      }
-  
-      // Password matched, set the session variables
-      req.session.userId = userQueryResult.rows[0].id;
-      req.session.username = userQueryResult.rows[0].username;
-  
-      let result = res.json({
-        message: "Login success",
-        data: { username: userQueryResult.rows[0].username },
-      });
-  
-      console.log(req.body.username);
-      return result;
+        const { level, username, password } = req.body;
+
+        // Check if the username exists in the database
+        const userQueryResult = await pgClient.query(
+            "SELECT level, username, password, id FROM users WHERE username = $1",
+            [username]
+        );
+
+        if (userQueryResult.rows.length === 0) {
+            console.log("Login failed: wrong username");
+            return res.status(400).json({ message: "Login Failed" });
+        }
+
+        const truePassword = userQueryResult.rows[0].password;
+
+        // Check if the provided password matches the stored password
+        const isMatched = await checkPassword({ plainPassword: password, hashedPassword: truePassword });
+
+        if (!isMatched) {
+            console.log("Login failed: wrong password");
+            return res.status(400).json({ message: "Login Failed" });
+        }
+
+        // Password matched, set the session variables
+        req.session.userId = userQueryResult.rows[0].id;
+        req.session.username = userQueryResult.rows[0].username;
+
+        let result = res.json({
+            message: "Login success",
+            data: { username: userQueryResult.rows[0].username },
+        });
+
+        console.log(req.body.username);
+        return result;
     } catch (error) {
-      console.error("An error occurred during login:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
+        console.error("An error occurred during login:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
-  }
+}
 
 async function logout(req: Request, res: Response) {
     if (req.session.username) {
@@ -110,4 +111,16 @@ async function getUsername(req: Request, res: Response) {
     } else {
         res.status(400).json({ message: "You are not logged in." });
     }
+}
+
+
+async function getUsersID(req: Request, res: Response) {
+    try {
+        const userQueryResult = await pgClient.query("SELECT * FROM users;");
+        const users = userQueryResult.rows;
+        res.json(users);
+      } catch (error) {
+        console.error("An error occurred while retrieving users:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+      }
 }

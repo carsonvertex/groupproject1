@@ -17,7 +17,7 @@ async function showCat(req: Request, res: Response) {
             "SELECT  name,id FROM categories ORDER BY ID ASC;"
         )
     ).rows;
-    res.json( { cat: catQueryResult  })
+    res.json({ cat: catQueryResult })
 
 }
 
@@ -52,17 +52,18 @@ async function newCat(req: Request, res: Response) {
 
 async function editCat(req: Request, res: Response) {
     let { name } = req.body;
-    let {id}= req.query;
+    let { id } = req.query;
     let catUpdateResult = await pgClient.query(
         "UPDATE categories SET name=$1 WHERE id = $2 RETURNING *",
-        [name,id]
+        [name, id]
     );
 
     if (catUpdateResult.rowCount == 1) {
         res.json({
             message: "update success",
         });
-    }}
+    }
+}
 
 async function delCat(req: Request, res: Response) {
 
