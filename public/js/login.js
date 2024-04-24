@@ -17,6 +17,7 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ username, password }),
+    credentials: "include",
   });
 
 

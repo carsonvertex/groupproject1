@@ -13,6 +13,15 @@ accountRouter.post("/login", login)
 accountRouter.get("/logout", logout)
 accountRouter.get("/getusername", getUsername)
 accountRouter.get("/users", getUsersID)
+accountRouter.get("/level", level)
+
+async function level(req: Request, res: Response) {
+    if (req.session.level) {
+        res.json({ data: { username: req.session.level } });
+    } else {
+        res.status(400).json({ message: "You are not logged in." });
+    }
+}
 
 async function register(req: Request, res: Response) {
     let { email, username, password } = req.body;
@@ -78,11 +87,14 @@ async function login(req: Request, res: Response) {
         // Password matched, set the session variables
         req.session.userId = userQueryResult.rows[0].id;
         req.session.username = userQueryResult.rows[0].username;
+        req.session.level = userQueryResult.rows[0].level;
+       
+        
 
         let result = res.json({
             message: "Login success",
             data: { username: userQueryResult.rows[0].username },
-            level: { level: userQueryResult.rows[0].level}
+            level: { level: userQueryResult.rows[0].level }
         });
 
         console.log(req.body.username);
@@ -121,8 +133,10 @@ async function getUsersID(req: Request, res: Response) {
         const userQueryResult = await pgClient.query("SELECT * FROM users;");
         const users = userQueryResult.rows;
         res.json(users);
-      } catch (error) {
+    } catch (error) {
         console.error("An error occurred while retrieving users:", error);
         res.status(500).json({ message: "Internal Server Error" });
-      }
+    }
 }
+
+

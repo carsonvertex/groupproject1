@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
-import formidable from "formidable";
 
 export const shopping_cartRouter = Router();
 
