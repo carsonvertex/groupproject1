@@ -218,18 +218,21 @@ async function addOptionById(req: Request, res: Response) {
 async function deleteOptionById(req: Request, res: Response) {
   try {
     const targetId = parseInt(req.params.id as string);
-    console.log("this is targetID", targetId)
+    console.log("this is targetID", req.params.id)
     if (isNaN(targetId)) {
       throw new Error('Invalid ID');
     }
 
     const optionDeleteResult = await pgClient.query(
-      "DELETE FROM product_options WHERE product_id = $1",
+      "DELETE FROM product_options WHERE id = $1",
       [targetId]
     );
 
     if (optionDeleteResult.rowCount === 1) {
-      res.json({ message: "Delete option successful" });
+      res.json({ 
+        message: "Delete option successful",
+        id: targetId,
+      });
     } else {
       res.status(404).json({ message: "Option not found" });
     }
