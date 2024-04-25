@@ -11,7 +11,7 @@ async function singleProducts() {
   try {
     const response = await fetch(`/product/editOption/product/${productId}`);
     const product = await response.json();
-    console.log(product)
+    console.log("this is the product:", product)
     if (response.ok) {
       const uploadedAt = product.uploaded_at;
       const productName = product.name;
@@ -34,23 +34,23 @@ async function singleProducts() {
       const options = product.options;
       if (options && options.length > 0) {
         const optionsElement = document.createElement('div');
-        optionsElement.innerHTML = '<h6>Options:</h6>';
-
+        optionsElement.innerHTML = '<h6 class="DeleteButton">Options:</h6>';
+        
         options.forEach((option) => {
-          const { color_name, sizing, stock } = option;
+          const { id, color_name, sizing, stock } = option;
           const optionElement = document.createElement('p');
           optionElement.innerHTML = `
             Color: ${color_name} | Size: ${sizing} | Stock: ${stock}
-            <button id="optionDelete" onclick="deleteOption(${option.id})">Delete</button>`;  //added id=optionDelete buttons here
+            <button class="optionDeleteButton" data-option-id="${id}">Delete</button>`;
+            console.log(id)
           optionsElement.appendChild(optionElement);
         });
-
+        
         productElement.appendChild(optionsElement);
       }
-
+      
       container.appendChild(productElement);
     }
-
 
   } catch (error) {
     console.error('Error:', error);
@@ -92,24 +92,31 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
 
 
 // delete
-const deleteOption = document.querySelector('#optionDelete');
+const deleteOptionButtons = document.querySelectorAll('.optionDeleteButton');
 
-deleteOption.addEventListener('click', async function (event) {
-  event.preventDefault();
-
-  deleteOptionById();
-
-  async function deleteOptionById() {
-    let id = 6; // Replace with the appropriate ID
-    let res = await fetch(`/product/deleteOption/${id}`, {
-      method: "DELETE"
-    });
-
-    if (res.ok) {
-      window.location.reload();
-    } else {
+deleteOptionButtons.forEach((button) => {
+  button.addEventListener('click', async function (event) {
+    event.preventDefault();
+    const id = button.dataset.optionId;
+    console.log("this is clientid", id)
+    try {
+      await deleteOptionById(id);
+      // Instead of reloading the page, consider removing the deleted option from the DOM
+      button.closest('.option-container').remove(); // Example: Remove the option container
+    } catch (error) {
+      console.error('Delete Failed:', error);
       Swal.fire("Delete Failed!");
     }
-  }
+  });
 });
+
+async function deleteOptionById(id) {
+  const response = await fetch(`/product/deleteOption/id=${id}`, {
+    method: "DELETE"
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete option');
+  }
+}
 

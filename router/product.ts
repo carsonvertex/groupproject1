@@ -216,18 +216,25 @@ async function addOptionById(req: Request, res: Response) {
 }
 
 async function deleteOptionById(req: Request, res: Response) {
+  try {
+    const targetId = parseInt(req.params.id as string);
+    console.log("this is targetID", targetId)
+    if (isNaN(targetId)) {
+      throw new Error('Invalid ID');
+    }
 
-  let targetId = parseInt(req.query.id as string);
-
-  let optionDeleteResult = await pgClient.query(
-      "DELETE FROM product_options WHERE id =$1",
+    const optionDeleteResult = await pgClient.query(
+      "DELETE FROM product_options WHERE product_id = $1",
       [targetId]
-  );
+    );
 
-  if (optionDeleteResult.rowCount == 1) {
-      res.json({ message: "Delete category successful" });
-  } else {
-      res.status(400).json({ message: "Delete category failed" });
+    if (optionDeleteResult.rowCount === 1) {
+      res.json({ message: "Delete option successful" });
+    } else {
+      res.status(404).json({ message: "Option not found" });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: "Internal server error" });
   }
-
 }

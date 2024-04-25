@@ -65,7 +65,7 @@ async function getProducts() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('cat');
     try {
-        const response = await fetch(`/product/showProduct?id=${product}`);
+        const response = await fetch(`/product/showProduct?id=${id}`);
         const data = await response.json();
         const productArray = data.product; // Access the correct property in the response data
         console.log(productArray)
@@ -106,7 +106,7 @@ async function singleProducts() {
     const container = document.getElementById('editProductContainer');
   
     try {
-      const response = await fetch('/product/editOption');
+      const response = await fetch(`/product/editOption/product`);
       const data = await response.json();
   
       data.forEach(product => {
