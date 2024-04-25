@@ -38,8 +38,8 @@ app.use(express.urlencoded({ extended: true }))
 
 //api
 app.use("/account", accountRouter);
-app.use("/cat", checkAdminPermission, catRouter);
-app.use("/product", checkAdminPermission, productRouter);
+app.use("/cat", catRouter);
+app.use("/product", productRouter);
 
 app.use("/", securityCheckRouter);
 
