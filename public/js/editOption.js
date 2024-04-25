@@ -21,7 +21,7 @@ async function singleProducts() {
 
       const productElement = document.createElement('div');
       productElement.innerHTML = `
-        <div style="background-color: grey">
+        <div>
           <h3>${productName}</h3>
           <div><img src="${image}" width="30%"></div>
           <p>Price: $${productPrice}</p>
@@ -40,8 +40,16 @@ async function singleProducts() {
           const { color_name, sizing, stock } = option;
           const optionElement = document.createElement('p');
           optionElement.innerHTML = `
-            Color: ${color_name} | Size: ${sizing} | Stock: ${stock}
-            <button id="optionDelete" onclick="deleteOption(${option.id})">Delete</button>`;  //added id=optionDelete buttons here
+          <div class="listDiv container-fluid">
+            <div class="row">
+              <div class="col-10">
+              Color: ${color_name} | Size: ${sizing} | Stock: ${stock}
+              </div>
+              <div class="col-2" style="display:flex;justify-content:flex-end">
+              <button id="optionDelete" onclick="deleteOption(${option.id})">Delete</button>
+              </div>
+            </div>
+          </div>`;  //added id=optionDelete buttons here
           optionsElement.appendChild(optionElement);
         });
 

@@ -4,12 +4,15 @@ import dotenv from "dotenv"
 import { accountRouter } from "./router/account";
 import { catRouter } from "./router/cat";
 import { productRouter } from "./router/product";
+import { securityCheckRouter } from "./router/securityPage";
+import { checkAdminPermission, checkCustomerPermission, checkSuperAdminPermission } from "./utils/guard";
 
 
 declare module "express-session" {
     interface SessionData {
         userId: number;
         username: string;
+        level:string;
     }
 }
 
@@ -35,8 +38,10 @@ app.use(express.urlencoded({ extended: true }))
 
 //api
 app.use("/account", accountRouter);
-app.use("/cat", catRouter);
-app.use("/product", productRouter);
+app.use("/cat", checkAdminPermission, catRouter);
+app.use("/product", checkAdminPermission, productRouter);
+
+app.use("/", securityCheckRouter);
 
 //static assets
 app.use(express.static('public'));

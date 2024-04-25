@@ -25,11 +25,11 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
   console.log(`param is ${id}`);
 
   const res = await fetch(`/product/newProduct/cat/${id}`, {
-      method: 'POST',
-      body: formData
+    method: 'POST',
+    body: formData
   });
   if (res.ok) {
-      getProducts();
+    getProducts();
   }
 });
 //show product
@@ -62,40 +62,53 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 // }
 
 async function getProducts() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('cat');
-    try {
-        const response = await fetch(`/product/showProduct?id=${id}`);
-        const data = await response.json();
-        const productArray = data.product; // Access the correct property in the response data
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('cat');
+  try {
+    const response = await fetch(`/product/showProduct?id=${id}`);
+    const data = await response.json();
+    const productArray = data.product; // Access the correct property in the response data
 
-        const container = document.getElementById('productContainer');
-        container.innerHTML = '';
-        let productHTML = '';
-        for (const product of productArray) {
-            const productId = product.id
-            const productName = product.name;
-            const productPrice = product.price;
-            const description = product.description;
-            const image = product.image;
+    const container = document.getElementById('productContainer');
+    container.innerHTML = '';
+    let productHTML = '';
+    for (const product of productArray) {
+      const productId = product.id
+      const productName = product.name;
+      const productPrice = product.price;
+      const description = product.description;
+      const image = product.image;
 
-            productHTML +=
-                `<div class="productBox col-3">
-            <p>${productName}</p>
-            <div><img src="${image}" width="80%"></div>
-            <p>${description}</p>
-            <p>${productPrice}</p>
+      productHTML +=
+        // `<div class="productBox col-3">
+        `
+        <div  class="col-3 my-2">
+          <div class="cardElement">
+            <p><h5>${productName}</h5></p>
+
+            
+
+            <div class="constrained-div">
+                 <div class="content">
+                   <img src="${image}">
+                 </div>
+            </div>
+
+            <p><b>Description: </b><br>
+            ${description}</p>
+            <p>Price: $${productPrice}</p>
             <a href="/editOption.html?product=${productId}"><button id="singleButton" >Edit Product</button></a>
-            </div>`;
-        }
-
-   
-
-        container.innerHTML = productHTML;
-    } catch (error) {
-        console.error('Error:', error);
-        throw error;
+          </div>
+        </div>`;
     }
+
+
+
+    container.innerHTML = productHTML;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 
 getProducts()
@@ -103,25 +116,25 @@ getProducts()
 //single product
 
 async function singleProducts() {
-    const container = document.getElementById('editProductContainer');
-  
-    try {
-      const response = await fetch('/product/editOption');
-      const data = await response.json();
-  
-      data.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.innerHTML = `
+  const container = document.getElementById('editProductContainer');
+
+  try {
+    const response = await fetch('/product/editOption');
+    const data = await response.json();
+
+    data.forEach(product => {
+      const productElement = document.createElement('div');
+      productElement.innerHTML = `
           <h3>${product.name}</h3>
           <p>Price: $${product.price}</p>
           <p>Description: ${product.description}</p>
         `;
-        container.appendChild(productElement);
-      });
-    } catch (error) {
-      console.error('Error:', error);
-    }
+      container.appendChild(productElement);
+    });
+  } catch (error) {
+    console.error('Error:', error);
   }
-  
-  // Call the function when the page finishes loading
-  document.addEventListener('DOMContentLoaded', singleProducts);
+}
+
+// Call the function when the page finishes loading
+document.addEventListener('DOMContentLoaded', singleProducts);
