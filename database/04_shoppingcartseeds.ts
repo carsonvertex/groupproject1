@@ -19,14 +19,42 @@ type shoppingCart = {
 async function shopping_cartItems() {
     try {
         let shoppingCart: shoppingCart[] = [
+            // user_id 1
             {
-                user_id: 1, product_options_id: 3, quantity: 20
+                user_id: 1, product_options_id: 3, quantity: 5
             },
+
             {
-                user_id: 2, product_options_id: 1,  quantity: 20
+                user_id: 1, product_options_id: 2, quantity: 3
             },
+
             {
-                user_id: 3, product_options_id: 2,  quantity: 20
+                user_id: 1, product_options_id: 1, quantity: 7
+            },
+            
+            // user_id 2
+            {
+                user_id: 2, product_options_id: 1,  quantity: 2
+            },
+
+            {
+                user_id: 2, product_options_id: 1,  quantity: 2
+            },
+            // user_id 3
+            {
+                user_id: 3, product_options_id: 2,  quantity: 10
+            },
+
+            {
+                user_id: 3, product_options_id: 2,  quantity: 10
+            },
+
+            {
+                user_id: 3, product_options_id: 2,  quantity: 10
+            },
+
+            {
+                user_id: 3, product_options_id: 1,  quantity: 10
             },
         ]
 

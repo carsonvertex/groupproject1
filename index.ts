@@ -6,7 +6,11 @@ import { catRouter } from "./router/cat";
 import { productRouter } from "./router/product";
 import { securityCheckRouter } from "./router/securityPage";
 import { checkAdminPermission, checkCustomerPermission, checkSuperAdminPermission } from "./utils/guard";
+<<<<<<< Updated upstream
 import { customerRouter } from "./router/customer";
+=======
+import { shopping_cartRouter } from "./router/shopping_cart";
+>>>>>>> Stashed changes
 
 
 declare module "express-session" {
@@ -43,8 +47,12 @@ app.use("/cat", catRouter);
 app.use("/product", productRouter);
 
 app.use("/", securityCheckRouter);
+<<<<<<< Updated upstream
 app.use("/customer", customerRouter);
 
+=======
+app.use("/cart", shopping_cartRouter)
+>>>>>>> Stashed changes
 //static assets
 app.use(express.static('public'));
 app.use(express.static("uploads"))
