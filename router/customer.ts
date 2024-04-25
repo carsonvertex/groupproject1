@@ -5,6 +5,7 @@ export const customerRouter = Router();
 
 customerRouter.get("/category", showCat);
 customerRouter.get("/category/:id", showProductById);
+customerRouter.get(`/details/:id`, singleProduct);
 
 async function showCat(req: Request, res: Response) {
   try {
@@ -50,3 +51,37 @@ async function showProductById(req: Request, res: Response) {
     res.status(500).json({ error: "Failed to fetch products" });
   }
 }
+
+async function singleProduct(req: Request, res: Response) {
+  try {
+    const id = req.params.id;
+    console.log(id);
+
+    const productQuery = `SELECT * 
+      FROM products 
+      JOIN product_images ON products.id = product_images.product_id 
+      WHERE products.id = ${id};`;
+
+    const optionQuery = `SELECT * FROM products 
+      JOIN product_options ON products.id = product_options.product_id 
+      WHERE products.id = ${id};`;
+
+    const [productResult, optionResult] = await Promise.all([
+      pgClient.query(productQuery),
+      pgClient.query(optionQuery)
+    ]);
+
+    const selectedProduct = productResult.rows[0];
+    const optionQueryResult = optionResult.rows;
+
+    const productData = {
+      ...selectedProduct,
+      options: optionQueryResult
+    };
+
+    res.json(productData);
+  } catch (error) {
+    res.json({ message: "internal error" });
+  }
+}
+
