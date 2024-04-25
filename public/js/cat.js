@@ -19,7 +19,7 @@ const createCat = document.querySelector('#catForm').addEventListener('submit', 
     getCategories()
   }
 })
-//show cat
+//admin page show categories
 async function getCategories() {
   try {
     const response = await fetch('/cat/showCat');
@@ -31,11 +31,19 @@ async function getCategories() {
     container.innerHTML = ""
     let catHTML = '';
     for (const cat of catArray) {
+      const id = cat.id
       const catName = cat.name;
       const catLink = `/product.html?cat=${cat.id}`;
-      // /product/cat/:id
-    
-      catHTML += `<div class="catBox"><a href="${catLink}">${catName}</a></div>`;
+      // button
+
+      catHTML += `<div  class="col-3 my-2">
+         <div class="cardElement">
+           <h5><a href="${catLink}">${catName}</a></h5>
+           <p>Category ID: ${id}</p>
+         </div>
+       </div>`;
+      // catHTML += `<div class="catBox"><a href="${catLink}">${catName}</a></div>`;
+      
     }
     
     container.innerHTML = catHTML;
