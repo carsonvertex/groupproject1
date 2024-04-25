@@ -36,7 +36,8 @@ async function getCategories() {
       const catLink = `/product.html?cat=${cat.id}`;
       // button
 
-      catHTML += `<div  class="col-3 my-2">
+      catHTML += `
+      <div  class="col-3 my-2">
          <div class="cardElement">
            <h5><a href="${catLink}">${catName}</a></h5>
            <p>Category ID: ${id}</p>

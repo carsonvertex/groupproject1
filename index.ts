@@ -6,6 +6,7 @@ import { catRouter } from "./router/cat";
 import { productRouter } from "./router/product";
 import { securityCheckRouter } from "./router/securityPage";
 import { checkAdminPermission, checkCustomerPermission, checkSuperAdminPermission } from "./utils/guard";
+import { customerRouter } from "./router/customer";
 
 
 declare module "express-session" {
@@ -42,6 +43,7 @@ app.use("/cat", catRouter);
 app.use("/product", productRouter);
 
 app.use("/", securityCheckRouter);
+app.use("/customer", customerRouter);
 
 //static assets
 app.use(express.static('public'));

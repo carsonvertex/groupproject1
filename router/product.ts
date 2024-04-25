@@ -16,6 +16,8 @@ productRouter.get(`/editOption/product/:id`, singleProduct);
 productRouter.post(`/addOption/:id`, addOptionById);
 productRouter.delete(`/deleteOption/:id`, deleteOptionById);
 
+
+
 // product by category
 
 async function showProductByCatId(req: Request, res: Response) {
@@ -241,3 +243,4 @@ async function deleteOptionById(req: Request, res: Response) {
     res.status(500).json({ message: "Internal server error" });
   }
 }
+
