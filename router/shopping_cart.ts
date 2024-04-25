@@ -10,12 +10,13 @@ shopping_cartRouter.delete("/delShoppinglist", delShoppinglist);
 
 
 async function showShoppinglist(req: Request, res: Response){
-    let { user_id, product_option_id, quantity } = req.body;
-    console.log (user_id,product_option_id,quantity);
-
+    // let { user_id, product_option_id, quantity } = req.body;
+    // console.log (user_id,product_option_id,quantity);
+    const user_id = req.session.userId;
+    console.log(user_id)
     try{ 
         // 於database 顯示user_id 
-        let buyProduct = (
+        let cart_items = (
             await pgClient.query(
                 `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
                 FROM product_images
@@ -34,13 +35,17 @@ async function showShoppinglist(req: Request, res: Response){
             `,
                 [user_id] 
             )
-        ).rows[0];
+        ).rows;
 
+        res.json(cart_items)
     } catch (e) {
         console.log(e)
         res.status(400).json({message: e});
     }
 }
+
+
+
 
 async function newShoppinglist(req: Request, res:Response){
 
