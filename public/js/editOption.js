@@ -36,15 +36,16 @@ async function singleProducts() {
         optionsElement.innerHTML = '<h6 class="DeleteButton">Options:</h6>';
 
         options.forEach((option) => {
-          const { color_name, sizing, stock } = option;
+          const { color_name, color_code, sizing, stock } = option;
           const optionElement = document.createElement('p');
           optionElement.innerHTML = `
           <div class="listDiv container-fluid">
           <div class="row">
           <div class="col-10">
-             Color: ${color_name} | Size: ${sizing} | Stock: ${stock}
+             <span id="colorInput_${option.id}">Color: ${color_name}</span> | <span id="colorCodeInput_${option.id}">color_code: ${color_code}</span> | <span id="sizeInput_${option.id}">Size: ${sizing}</span> | <span id="stockInput_${option.id}">Stock: ${stock}</span>
           </div>
           <div class="col-2" style="display:flex;justify-content:flex-end">
+          <button class="optionEditButton" data-option-id="${option.id}">Edit</button>
           <button class="optionDeleteButton" data-option-id="${option.id}">Delete</button>
           </div>
           </div>
@@ -86,7 +87,83 @@ async function singleProducts() {
         }
       }
 
+      // Add an event listener to the "Edit" button
+      // Display an input field or a modal with editable fields
+      // Allow the user to update the product option values
+      // Retrieve the updated values
+      const editOptionButtons = document.querySelectorAll('.optionEditButton');
 
+      editOptionButtons.forEach((button) => {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
+          const id = button.dataset.optionId;
+          const optionContainer = button.closest('.listDiv');
+          const optionContent = optionContainer.querySelector('.col-10');
+
+          if (button.textContent === 'Edit') {
+            button.textContent = 'Update';
+
+            // Create the input fields using innerHTML
+            optionContent.innerHTML = `
+        <input type="text" id="colorInput_${id}" placeholder="Color">
+        <input type="text" id="colorCodeInput_${id}" placeholder="Color Code">
+        <select type="text" id="sizeInput_${id}" placeholder="Size">
+                    <option value="">Choose an option</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
+        <input type="text" id="stockInput_${id}" placeholder="Stock">
+      `;
+          } else {
+            button.textContent = 'Edit';
+
+            // Retrieve the updated values from the input fields
+            const updatedColor = optionContainer.querySelector(`#colorInput_${id}`).value;
+            const updatedColorCode = optionContainer.querySelector(`#colorCodeInput_${id}`).value;
+            const updatedSize = optionContainer.querySelector(`#sizeInput_${id}`).value;
+            const updatedStock = optionContainer.querySelector(`#stockInput_${id}`).value;
+
+            // Call the update function here
+            updateOptionById(id, {
+              color: updatedColor,
+              color_code: updatedColorCode,
+              size: updatedSize,
+              stock: updatedStock
+            })
+              .then(() => {
+                // Update the option's content in the DOM
+                optionContent.innerHTML = `Color: ${updatedColor} | Color Code: ${updatedColorCode} | Size: ${updatedSize} | Stock: ${updatedStock}`;
+              })
+              .catch((error) => {
+                console.error('Update Failed:', error);
+                Swal.fire("Update Failed!");
+              });
+          }
+        });
+      });
+
+      async function updateOptionById(id, updatedValues) {
+        try {
+          const response = await fetch(`/product/updateOption/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedValues)
+          });
+      
+          if (!response.ok) {
+            throw new Error('Update Failed');
+          }
+      
+          // Handle the response or return any necessary data
+          // ...
+        } catch (error) {
+          throw new Error(error.message);
+        }
+      }
     }
   } catch (error) {
     console.error('Error:', error);
