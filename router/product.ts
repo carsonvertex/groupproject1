@@ -17,6 +17,8 @@ productRouter.post(`/addOption/:id`, addOptionById);
 productRouter.delete(`/deleteOption/:id`, deleteOptionById);
 productRouter.put(`/updateOption/:id`, updateOption)
 
+
+
 // product by category
 
 async function showProductByCatId(req: Request, res: Response) {
