@@ -15,6 +15,7 @@ async function showShoppinglist(req: Request, res: Response){
     console.log (user_id,product_option_id,quantity);
 
     try{ 
+        // 於database 顯示user_id 
         let buyProduct = (
             await pgClient.query(
                 `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
