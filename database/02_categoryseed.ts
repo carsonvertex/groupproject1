@@ -23,7 +23,7 @@ async function category() {
   
     try {
         let cat: categories[] = [
-            { name: "T-Shirts" },
+            { name: "TShirts" },
             { name: "Trousers" },
             { name: "Shoes" }
         ]
