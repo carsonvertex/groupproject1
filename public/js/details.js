@@ -42,31 +42,71 @@ async function singleProducts() {
         optionsElement.innerHTML = '<h6 class="DeleteButton">Options:</h6>';
 
         options.forEach((option) => {
-          const { color_name, color_code, sizing, stock } = option;
-          const optionElement = document.createElement('p');
-          optionElement.innerHTML = `
-          <div class="listDiv container-fluid">
-          <div class="row">
-          <div class="col-10">
-             <span id="colorInput_${option.id}">Color: ${color_name}</span> | <span id="colorCodeInput_${option.id}">color_code: ${color_code}</span> | <span id="sizeInput_${option.id}">Size: ${sizing}</span> | <span id="stockInput_${option.id}">Stock: ${stock}</span>
-          </div>
-          <div class="col-2" style="display:flex;justify-content:flex-end">
-          <button class="optionEditButton" data-option-id="${option.id}">Edit</button>
-          <button class="optionDeleteButton" data-option-id="${option.id}">Delete</button>
-          </div>
-          </div>
-          </div> `//added id=optionDelete buttons here
+          const { id, color_name, color_code, sizing, stock } = option;
+          const optionElement = document.createElement('div');
+          optionElement.className = 'listDiv container-fluid';
+
+          const optionContent = document.createElement('div');
+          optionContent.className = 'row';
+
+          const optionInfo = document.createElement('div');
+          optionInfo.className = 'col-8';
+          optionInfo.innerHTML = `
+            <span id="colorInput_${option.id}">${id} - Color: ${color_name}</span> |
+            <span id="colorCodeInput_${option.id}">Color Code: ${color_code}</span> |
+            <span id="sizeInput_${option.id}">Size: ${sizing}</span> |
+          `;
+
+          const optionActions = document.createElement('div');
+          optionActions.className = 'col-4 d-flex justify-content-end';
+
+          const addToCartButton = document.createElement('button');
+          addToCartButton.className = 'optionAddToCartButton';
+          addToCartButton.dataset.optionId = option.id;
+          addToCartButton.innerText = 'Add to Cart';
+
+          const quantityInput = document.createElement('input');
+          quantityInput.type = 'number';
+          quantityInput.className = 'optionQuantityInput';
+          quantityInput.placeholder = 'Quantity';
+          quantityInput.min = 0; // Set the minimum value to 0
+
+          addToCartButton.onclick = () => addtoCart(quantityInput.value, id);
+
+
+          optionActions.appendChild(quantityInput);
+          optionActions.appendChild(addToCartButton);
+
+          optionContent.appendChild(optionInfo);
+          optionContent.appendChild(optionActions);
+
+          optionElement.appendChild(optionContent);
           optionsElement.appendChild(optionElement);
         });
 
         productElement.appendChild(optionsElement);
       }
-  
-        container.appendChild(productElement);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+
+      container.appendChild(productElement);
     }
+  } catch (error) {
+    console.error('Error:', error);
   }
-  
-  singleProducts();
+}
+
+async function addtoCart(quantity, product_options_id) {
+  const res = await fetch("/cart/newShoppinglist", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      product_options_id,
+      quantity
+    })
+  })
+  if (res.ok) {
+    console.log("successfully add to cart")
+  }
+}
+singleProducts();
