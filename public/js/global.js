@@ -31,6 +31,7 @@ async function login(username, password) {
 async function logout() {
   try {
     const response = await fetch('/account/logout', {
+      method: 'POST',
       // Add any necessary headers or request parameters for authentication
     });
 

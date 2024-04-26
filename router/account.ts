@@ -103,17 +103,17 @@ async function login(req: Request, res: Response) {
 }
 
 async function logout(req: Request, res: Response) {
-    if (req.session.username) {
-        req.session.destroy((err) => {
-            if (err) {
-                res.status(500).json({ message: "Server Internal Error" });
-            }
-
-            res.status(200).json({ message: "Logout success" });
-        });
+  // Clear all user sessions
+  req.sessionStore.destroy(req.sessionID, (err) => {
+    if (err) {
+      // Handle session destruction error
+      console.error('Failed to clear user sessions', err);
+      res.status(500).json({ message: 'Failed to clear user sessions' });
     } else {
-        res.status(400).json({ message: "You are not logged in." });
+      // Send a success response
+      res.json({ message: 'Logout successful' });
     }
+  });
 }
 
 async function getUsername(req: Request, res: Response) {
