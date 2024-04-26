@@ -50,7 +50,7 @@ async function getProducts() {
   
         productHTML += `
           <div class="col-3 my-2">
-            <div class="cardElement fingerPointer" onclick="window.location.href = '/details.html?product=${id}'">
+            <div class="cardElement fingerPointer" onclick="window.location.href = '/details.html?product=${productId}'">
               <p><h5>${productName}</h5></p>
   
               <div class="constrained-div">
