@@ -9,6 +9,7 @@
 
 async function singleProducts() {
     const container = document.getElementById('detailProductContainer');
+    const productNameContainer = document.getElementById('productNameContainer');
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('product');  //http://localhost:8080/details.html?product=1
   
@@ -24,8 +25,11 @@ async function singleProducts() {
         const image = product.image;
   
         const productElement = document.createElement('div');
+        //Product Name
+        productNameContainer.innerHTML=`<h3>${productName}</h3>`
+        //Product Carousel
+        // Product Info
         productElement.innerHTML = `
-          <h3>${productName}</h3>
           <div><img src="${image}" width="30%"></div>
           <p>Price: $${productPrice}</p>
           <p>Description: ${description}</p>

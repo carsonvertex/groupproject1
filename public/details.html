@@ -42,69 +42,19 @@
         </header>
     </div>
 
-<div class="container-fluid">
-    <div class="row">
-   
-    
-   
-     <!-- division to display product details -->
-     <div class="col-12">
-        <div class="cardElement" id="detailProductContainer"></div>
-    <!-- Form to add product options -->
-    <div class="col-2">
-        <form id="addProductOptionForm" class="formBox">
-            <div class="formElement">
-                <label>
-                    Color Name:
-                </label>
-                <br>
-                <input type="text" name="color_name" placeholder="Enter Color Name" required>
+    <div class="container-fluid">
+        <div class="row cardElement">
+            <!-- Product Name -->
+            <div class = "cardElement" id="productNameContainer"></div>
+            <!-- Product Carousel -->
+            <div class = "cardElement" id="productCarouselContainer"></div>
 
-            </div>
-
-            <div class="formElement">
-                <label>
-                    Color Code:
-                </label>
-                <br>
-                <input type="string" name="color_code" placeholder="Enter the Color Code" required>
-            </div>
-
-            <div class="formElement">
-                <label>
-                    Size:
-                </label>
-                <br>
-                <select name="sizing" id="selectSize">
-                    <option value="">Choose an option</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                </select>
-            </div>
-
-            <div class="formElement">
-                <label>
-                    Stock:
-                </label>
-                <br>
-                <input type="number" name="stock" placeholder="Number of Stocks" required>
-            </div>
+            <!-- Product Info -->
+            <div class="cardElement" id="detailProductContainer"></div>
 
 
-            <div class="formElement">
-                <input type="submit" value="Submit" />
-                <input type="reset" value="Clear" />
-            </div>
-        </form>
+        </div>
     </div>
-     <!-- division to display product details -->
-     <div class="col-10">
-        <div class="cardElement" id="editProductContainer"></div>
-    </div>
-</div>
-</div>
 
     <script src="./js/details.js"></script>
     <script src="./js/global.js"></script>

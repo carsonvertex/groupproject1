@@ -16,92 +16,93 @@
 
 
 
-   <!-- navbar -->
-   <div class="container-fluid py-4 border-bottom">
-    <header class=" row " style="display: flex;align-items: center;padding: 10px;">
+    <!-- navbar -->
+    <div class="container-fluid py-4 border-bottom">
+        <header class=" row " style="display: flex;align-items: center;padding: 10px;">
 
 
-        <div class="col-4">
-            <a href="index.html"><img width=80 height=80 src="imgs\logo.png"></a>
-        </div>
+            <div class="col-4">
+                <a href="index.html"><img width=80 height=80 src="imgs\logo.png"></a>
+            </div>
 
-        <div class="col-4" style="display: flex;justify-content: center;">
-            <p>LSDIFFUSION</p>
-        </div>
+            <div class="col-4" style="display: flex;justify-content: center;">
+                <p>LSDIFFUSION</p>
+            </div>
 
-        <div class="col-4 text-end usernameConatiner" style="align-items: end;">
-            <div class="row" style="display: flex;justify-content: end;">
-                <!-- cart button -->
-                <div class="col-sm-12 col-md-2">
-                <button type="button" class="btn btn-outline-primary me-2" id="cartButton"><a
-                        href="shop.html">Cart</a></button>
+            <div class="col-4 text-end usernameConatiner" style="align-items: end;">
+                <div class="row" style="display: flex;justify-content: end;">
+                    <!-- cart button -->
+                    <div class="col-sm-12 col-md-2">
+                        <button type="button" class="btn btn-outline-primary me-2" id="cartButton"><a
+                                href="shop.html">Cart</a></button>
                     </div>
-                <!-- account button -->
-                <div class="accountButton col-sm-12 col-md-2" >
-                    <button type="button" class="btn btn-outline-primary me-2" id="loginButton"
-                        onclick="window.location.href = '/login.html'">
-                        Login</button>
+                    <!-- account button -->
+                    <div class="accountButton col-sm-12 col-md-2">
+                        <button type="button" class="btn btn-outline-primary me-2" id="loginButton"
+                            onclick="window.location.href = '/login.html'">
+                            Login</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- create product -->
+            <div class="col-2">
+                <form id="productForm" class="formBox">
+                    <div class="formElement">
+                        <label>
+                            Product Name:
+                        </label>
+                        <br>
+                        <input type="text" name="name" placeholder="Create a new Product" required>
+
+                    </div>
+                    <div class="formElement">
+
+                        <label>
+                            Product Image:
+
+                        </label>
+                        <br>
+                        <input type="file" name="image" multiple>
+
+                    </div>
+                    <div class="formElement">
+                        <label>
+                            Product Price:
+                        </label>
+                        <br>
+                        <input type="number" name="price" placeholder="Enter the Price $ HKD" required>
+                    </div>
+                    <div class="formElement">
+                        <label>
+                            Description:
+
+                        </label>
+                        <br>
+                        <textarea type="text" name="description" placeholder="Description of the Product"
+                            required></textarea>
+                    </div>
+
+                    <div class="formElement">
+                        <input type="submit" value="Submit" />
+                        <input type="reset" value="Clear" />
+                    </div>
+                </form>
+            </div>
+            <!-- Show the product -->
+            <div class="col-10">
+                <div class="container-fluid" style=" padding-left: 0px; padding-right: 0px;">
+                    <div class="row" id="productContainer"
+                        style=" padding-left: 5%;padding-right: 5%;display:flex;justify-content: flex-start;"></div>
                 </div>
             </div>
         </div>
-    </header>
-</div>
-
-
-<div class="container-fluid">
-<div class="row">
-    <!-- create product -->
-    <div class="col-2">
-        <form id="productForm" class="formBox">
-            <div class="formElement">
-                <label>
-                    Product Name:
-                </label>
-                <br>
-                <input type="text" name="name" placeholder="Create a new Product" required>
-
-            </div>
-            <div class="formElement">
-
-                <label>
-                    Product Image:
-
-                </label>
-                <br>
-                <input type="file" name="image" multiple>
-
-            </div>
-            <div class="formElement">
-                <label>
-                    Product Price:
-                </label>
-                <br>
-                <input type="number" name="price" placeholder="Enter the Price $ HKD" required>
-            </div>
-            <div class="formElement">
-                <label>
-                    Description:
-
-                </label>
-                <br>
-                <textarea type="text" name="description" placeholder="Description of the Product" required></textarea>
-            </div>
-
-            <div class="formElement">
-                <input type="submit" value="Submit" />
-                <input type="reset" value="Clear" />
-            </div>
-        </form>
     </div>
-    <!-- Show the product -->
-    <div class="col-10">
-    <div class="container-fluid" style=" padding-left: 0px; padding-right: 0px;">
-        <div class="row" id="productContainer"
-            style=" padding-left: 5%;padding-right: 5%;display:flex;justify-content: flex-start;"></div>
-    </div>
-    </div>
-</div>
-</div>
     <script src="./js/product.js"></script>
     <script src="./js/global.js"></script>
 
