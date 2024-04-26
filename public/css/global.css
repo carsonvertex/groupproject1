@@ -42,8 +42,6 @@
 
 }
 
-
-
 .constrained-div {
     position: relative;
     width: 100%;
@@ -59,4 +57,15 @@
     max-height: 100%;
     display: block;
   
+  }
+
+  .hoverDiv:hover{
+    background-color:#ccc;
+<<<<<<< Updated upstream
+  }
+
+  /* cursor change to finger while hovering */
+  .fingerPointer:hover{cursor: pointer;
+=======
+>>>>>>> Stashed changes
   }

@@ -33,7 +33,7 @@ async function getCategories() {
     for (const cat of catArray) {
       const id = cat.id
       const catName = cat.name;
-      const catLink = `/product.html?cat=${cat.id}`;
+      const catLink = `/product.html?cat=${cat.id}`; //query用戶?cat=
       // button
 
       catHTML += `

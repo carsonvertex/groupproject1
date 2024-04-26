@@ -7,6 +7,7 @@ import { productRouter } from "./router/product";
 import { securityCheckRouter } from "./router/securityPage";
 import { checkAdminPermission, checkCustomerPermission, checkSuperAdminPermission } from "./utils/guard";
 import { customerRouter } from "./router/customer";
+import { shopping_cartRouter } from "./router/shopping_cart";
 
 
 declare module "express-session" {
@@ -45,6 +46,7 @@ app.use("/product", productRouter);
 app.use("/", securityCheckRouter);
 app.use("/customer", customerRouter);
 
+app.use("/cart", shopping_cartRouter)
 //static assets
 app.use(express.static('public'));
 app.use(express.static("uploads"))

@@ -30,6 +30,7 @@ async function Users() {
         let fakeUsers: userType[] = [
             { email: "test@gamil.com", username: "test", password: "1234", level: Level.customer },
             { email: "test2@gamil.com", username: "test2", password: "1234", level: Level.customer },
+            { email: "test3@gamil.com", username: "test3", password: "1234", level: Level.customer },
             { email: "admin@gamil.com", username: "admin", password: "1234", level: Level.admin },
             { email: "superadmin@gamil.com", username: "superadmin", password: "4321", level: Level.super_admin }
         ]
