@@ -61,8 +61,11 @@
 
   .hoverDiv:hover{
     background-color:#ccc;
+<<<<<<< Updated upstream
   }
 
   /* cursor change to finger while hovering */
   .fingerPointer:hover{cursor: pointer;
+=======
+>>>>>>> Stashed changes
   }
