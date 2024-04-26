@@ -36,9 +36,10 @@ async function fetchCartItems() {
                     <div class="dropdown-Quantity">
                         <h6>Quantity:</h6>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            ${item.quantity}
-                            </button>
+                            
+                            <input type="text" id="myInput" style="width: 50px" placeholder="${item.quantity}">
+                            <button type="submit" onclick="submitForm()">Change</button>
+
                         </div>
                     </div>
                 </div>
@@ -122,7 +123,25 @@ async function getUser() {
   }
 
 
+//改變購買數量
+async function changeQuantityShoppinglist(inputForm){
+    console.log(inputForm)
+    const res = await fetch("/cart/changeQuantityShoppinglist",{
+        method: "put",
+        body: JSON.stringify({
+            inputForm:inputForm
+        }),
+        headers:{
+            "Content-Type": "application/json"
+        }
+    })
+    if (res.ok) {
+        await fetchCartItems()
+    }
+}
 
+
+  
 
 
 
