@@ -12,7 +12,7 @@ productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
 
-productRouter.get(`/editOption/product/:id`, singleProduct);
+productRouter.get(`/editOption/:id`, singleProduct);
 productRouter.post(`/addOption/:id`, addOptionById);
 productRouter.delete(`/deleteOption/:id`, deleteOptionById);
 productRouter.put(`/updateOption/:id`, updateOption)

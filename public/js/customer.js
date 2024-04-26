@@ -48,8 +48,8 @@ async function getProducts(id) {
         const image = product.image;
   
         productHTML += `
-          <div class="col-3 my-2">
-            <div class="cardElement">
+        <div class="col-3 my-2 " onclick="window.location.href = '/details.html?product=${productId}'">
+            <div class="cardElement fingerPointer">
               <p><h5>${productName}</h5></p>
   
               <div class="constrained-div">
@@ -61,10 +61,11 @@ async function getProducts(id) {
               <p><b>Description: </b><br>
               ${description}</p>
               <p>Price: $${productPrice}</p>
-              <a href="/editOption.html?product=${productId}"><button id="singleButton">Add to Cart</button></a>
+              
             </div>
           </div>`;
       }
+      // <a href="/details.html?product=${productId}"><button id="singleButton">Add to Cart</button></a>
   
       container.innerHTML = productHTML;
     } catch (error) {

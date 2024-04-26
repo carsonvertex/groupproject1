@@ -8,7 +8,7 @@ async function singleProducts() {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('product');
   try {
-    const response = await fetch(`/product/editOption/product/${productId}`);
+    const response = await fetch(`/product/editOption/${productId}`);
     const product = await response.json();
     console.log("this is the product:", product)
     if (response.ok) {

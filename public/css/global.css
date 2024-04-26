@@ -62,3 +62,7 @@
   .hoverDiv:hover{
     background-color:#ccc;
   }
+
+  /* cursor change to finger while hovering */
+  .fingerPointer:hover{cursor: pointer;
+  }
