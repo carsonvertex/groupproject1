@@ -15,7 +15,10 @@ async function login(username, password) {
       logoutButton.addEventListener('click', logout);
       // Remove the login button
       const loginButton = document.getElementById('loginButton');
-      loginButton.remove();
+      if (loginButton) {
+        loginButton.remove();
+
+      }
     } else {
       // Handle login error
       console.log('Login failed');
