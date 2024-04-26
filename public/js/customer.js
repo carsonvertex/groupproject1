@@ -1,3 +1,4 @@
+//category menu
 async function getCategories() {
     try {
         let res = await fetch("/customer/category");
@@ -27,11 +28,11 @@ async function getCategories() {
 }
 getCategories();
 
-async function getProducts(id) {
+async function getProducts() {
     try {
-    //   const urlParams = new URLSearchParams(window.location.search);
-    //   const id = urlParams.get("product");
-      console.log("param is " + id);
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('cat');
+      let id = productId
   
       const response = await fetch(`/customer/category/${id}`);
       const data = await response.json();
