@@ -14,7 +14,7 @@ async function getCategories() {
                 // <a class="btn btn-outline-secondary" href="${catLink}" role="button">${catName}</a>
                 target.innerHTML += `
                 
-                <div class="col hoverDiv py-4" onclick='getProducts(${id})'>
+                <div class="col hoverDiv fingerPointer py-4" onclick="window.location.href = '/category.html?cat=${id}'">
                  ${catName}
                  </div>
                  </div>`;
@@ -27,17 +27,16 @@ async function getCategories() {
 }
 getCategories();
 
-async function getProducts(id) {
+async function getProducts() {
     try {
-    //   const urlParams = new URLSearchParams(window.location.search);
-    //   const id = urlParams.get("product");
-      console.log("param is " + id);
+      const container = document.getElementById('productContainer');
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('cat')
   
       const response = await fetch(`/customer/category/${id}`);
       const data = await response.json();
       const productArray = data; // Access the correct property in the response data
   
-      const container = document.getElementById("productContainer");
       container.innerHTML = "";
       let productHTML = "";
       for (const product of productArray) {
