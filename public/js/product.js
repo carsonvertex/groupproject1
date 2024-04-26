@@ -14,7 +14,11 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 
   const formData = new FormData();
   formData.append("name", form.name.value);
-  formData.append("image", form.image.files[0]);
+   // Loop through each selected image file and append them to the FormData
+   const imageFiles = form.image.files;
+   for (let i = 0; i < imageFiles.length; i++) {
+     formData.append("image", imageFiles[i]);
+   }
   formData.append("price", form.price.value);
   formData.append("description", form.description.value);
 
@@ -101,8 +105,6 @@ async function getProducts() {
           </div>
         </div>`;
     }
-
-
 
     container.innerHTML = productHTML;
   } catch (error) {
