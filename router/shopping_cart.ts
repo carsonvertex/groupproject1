@@ -48,7 +48,35 @@ async function showShoppinglist(req: Request, res: Response){
 
 
 async function newShoppinglist(req: Request, res:Response){
-
+    try {
+        const userId = req.session.userId
+        const product_options_id = req.body.product_options_id
+        const quantity = req.body.quantity
+    
+        // const id = req.params.id;
+        console.log({product_options_id, userId});
+      
+        // const optionQuery = `SELECT * FROM product_options 
+        //   WHERE product_id = ${id};`;
+      
+        // const optionResult = await pgClient.query(optionQuery);
+      
+        // const optionQueryResult = optionResult.rows;
+      
+        // Insert product options and quantity into the shopping_cart table
+        const insertOptionQuery = `INSERT INTO shopping_carts (user_id, product_option_id, quantity) VALUES ($1, $2, $3)`;
+      
+        // for (const option of optionQueryResult) {
+          // const { product_option_id, quantity } = option; // Assuming the product_options table has an id column as the primary key and a quantity column
+          await pgClient.query(insertOptionQuery, [userId, product_options_id, quantity]);
+        // }
+      
+        res.json({ message: "Product options and quantities added to shopping cart successfully!" });
+      } catch (error) {
+        console.log(error)
+        res.json({ message: "Internal error" });
+      }
+      
 }
 
 async function changeQuantityShoppinglist(req: Request, res:Response){
