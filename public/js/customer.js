@@ -49,7 +49,7 @@ async function getProducts(id) {
   
         productHTML += `
           <div class="col-3 my-2">
-            <div class="cardElement">
+            <div class="cardElement fingerPointer" onclick="window.location.href = '/details.html?product=${id}'">
               <p><h5>${productName}</h5></p>
   
               <div class="constrained-div">
@@ -61,7 +61,7 @@ async function getProducts(id) {
               <p><b>Description: </b><br>
               ${description}</p>
               <p>Price: $${productPrice}</p>
-              <a href="/editOption.html?product=${productId}"><button id="singleButton">Add to Cart</button></a>
+            
             </div>
           </div>`;
       }
