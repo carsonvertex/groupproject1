@@ -64,11 +64,20 @@ async function changeQuantityShoppinglist(req: Request, res:Response){
         });
     }}
 
-async function delShoppinglist(req:Request, res:Response){
-    
-    let targetId = parseInt(req.query.id as string);
-
-    let delShoppinglistResult = await pgClient.query(
-        "DELETE FROM "
-    )
-}
+async function delShoppinglist(req: Request, res: Response) {
+    const cartId = req.body.cartId
+      console.log({cartId})
+    try {
+          // 在此處執行刪除購物清單的操作
+          // 例如，你可以使用以下代碼從數據庫中刪除購物清單項目：
+        await pgClient.query(
+            `DELETE FROM shopping_carts WHERE id = $1`,
+            [cartId]
+          );
+      
+          res.json({ message: "Shoppinglist deleted" });
+        } catch (e) {
+          console.log(e);
+          res.status(400).json({ message: e });
+        }
+      }

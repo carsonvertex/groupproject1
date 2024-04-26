@@ -13,6 +13,8 @@ accountRouter.post("/login", login)
 accountRouter.get("/logout", logout)
 accountRouter.get("/getusername", getUsername)
 accountRouter.get("/users", getUsersID)
+accountRouter.get("/user", getUserID)
+
 accountRouter.get("/level", level)
 
 async function level(req: Request, res: Response) {
@@ -138,5 +140,17 @@ async function getUsersID(req: Request, res: Response) {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+async function getUserID(req: Request, res: Response) {
+    if (req.session.userId) {
+        res.json({userId:req.session.userId, username: req.session.username})
+        return 
+    } else {
+        res.status(401).json({msg: "Login first"})
+    }
+}
+
+
+
 
 

@@ -1,8 +1,5 @@
 window.addEventListener("load", () => {
     console.log("http://localhost:8080/cart/showShoppinglist")
-
-   
-
     fetchCartItems()
 })
 
@@ -10,6 +7,7 @@ window.addEventListener("load", () => {
 
 async function fetchCartItems() {
     
+    const user = await getUser()
     const res = await fetch("http://localhost:8080/cart/showShoppinglist") 
     const data = await res.json()
     if (res.ok) {
@@ -43,12 +41,15 @@ async function fetchCartItems() {
                             </button>
                         </div>
                     </div>
-                    
                 </div>
 
                 <div class="productArea-C">
                     <h4>Total Price: ${Number(item.price) * Number(item.quantity)}</h4>
+
+                    <button id="deleteButton" onclick="delShoppinglist(${item.shopping_carts_id})">Delete</button>
                 </div>
+
+                
 
                 
 
@@ -59,7 +60,7 @@ async function fetchCartItems() {
         }
 
         right += `  <div class="counter">
-        <h5>UserID:  </h5>
+        <h5>UserID: ${user.loggedInUsername} </h5>
         <h5>Total product: ${totalProduct}</h5>
         <h5>Address: Pick up at store</h5>
                 </div>
@@ -83,6 +84,43 @@ async function fetchCartItems() {
 
     }
 } 
+
+async function delShoppinglist(cartId) {
+    const res = await fetch("/cart/delShoppinglist", {
+        method: "Delete" ,
+        body: JSON.stringify({
+            cartId:cartId
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    if (res.ok) {
+        await fetchCartItems()
+    }
+}
+
+
+//顯示USER_ID
+async function getUser() {
+    try {
+      const response = await fetch('/account/user');
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        const userId = data.userId;
+        const loggedInUsername = data.username;
+        return {userId, loggedInUsername}
+      } else {
+        // Handle login error
+        console.log('Login failed');
+      }
+    } catch (error) {
+      console.error('Error logging in', error);
+    }
+  }
+
 
 
 
