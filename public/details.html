@@ -12,27 +12,32 @@
 
 <body>
     <!-- navbar -->
-    <div class="container-fluid">
-
-        <header
-            class=" d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="container-fluid py-4 border-bottom">
+        <header class=" row " style="display: flex;align-items: center;padding: 10px;">
 
 
             <div class="col-4">
-                <img width=80 height=80 src="imgs\logo.png">
+                <a href="index.html"><img width=80 height=80 src="imgs\logo.png"></a>
             </div>
 
             <div class="col-4" style="display: flex;justify-content: center;">
-                <ul class="nav col-4 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <button type="button" class="btn btn-outline-primary me-2">Shirts</button>
-                    <button type="button" class="btn btn-outline-primary me-2">Pants</button>
-                    <button type="button" class="btn btn-outline-primary me-2">Shoes</button>
-                </ul>
+                <p>LSDIFFUSION</p>
             </div>
 
-            <div class="col-4 text-end">
-                <button type="button" class="btn btn-outline-primary me-2">Cart</button>
-                <button type="button" class="btn btn-outline-primary me-2"><a href="/login.html">Login</a></button>
+            <div class="col-4 text-end usernameConatiner" style="align-items: end;">
+                <div class="row" style="display: flex;justify-content: end;">
+                    <!-- cart button -->
+                    <div class="col-sm-12 col-md-2">
+                        <button type="button" class="btn btn-outline-primary me-2" id="cartButton"><a
+                                href="shop.html">Cart</a></button>
+                    </div>
+                    <!-- account button -->
+                    <div class="accountButton col-sm-12 col-md-2">
+                        <button type="button" class="btn btn-outline-primary me-2" id="loginButton"
+                            onclick="window.location.href = '/login.html'">
+                            Login</button>
+                    </div>
+                </div>
             </div>
         </header>
     </div>
@@ -40,13 +45,11 @@
 <div class="container-fluid">
     <div class="row">
    
-<<<<<<< Updated upstream
     
    
      <!-- division to display product details -->
      <div class="col-12">
         <div class="cardElement" id="detailProductContainer"></div>
-=======
     <!-- Form to add product options -->
     <div class="col-2">
         <form id="addProductOptionForm" class="formBox">
@@ -99,12 +102,12 @@
      <!-- division to display product details -->
      <div class="col-10">
         <div class="cardElement" id="editProductContainer"></div>
->>>>>>> Stashed changes
     </div>
 </div>
 </div>
 
     <script src="./js/details.js"></script>
+    <script src="./js/global.js"></script>
 
 </body>
 

@@ -26,7 +26,7 @@ document.querySelector("#LoginForm").addEventListener("submit", async (e) => {
     let level = data.level.level
 
     if (level === 'customer'){
-      window.location.href = "/customerPage.html";
+      window.location.href = "/index.html";
     } 
     if (level === 'admin'){
       window.location.href = "/cat.html";

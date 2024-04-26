@@ -6,33 +6,37 @@
     <title>SIGN UP Page</title>
 </head>
 <body>
+  <div class="LoginMethod">
+    <button id="SignUp"><a href="/signup.html">SIGN UP</a></button>
+    <button id="LogIn"><a href="/login.html">LOG IN</a></button>
+  </div>
+  <div>
+    <div>SIGN UP WITH...</div>
     <div>
-        <div>SIGN UP WITH...</div>
-        <div class="Google">Google</div>
-        <div>Signing up with social is super quick. No extra passwords to remember - no brain fail. Don't worry, we'd never
-            share any of your data or post anything on your behalf #NotEvil</div>
-    </div>
-    <div>
-        <div>OR SIGN UP WITH EMAIL</div>
-        <div class="signUpForm">
-            <form action="/account/register" method="POST">
-              <div>
-                <label for="email">Email:</label>
-                <input type="email" id="emailInput" name="email" required>
-              </div>
-              <div>
-                <label for="Username">Username:</label>
-                <input type="username" id="UsernameInput" name="username" required>
-              </div>
-              <div>
-                <label for="password">Password:</label>
-                <input type="password" id="passwordInput" name="password" required>
-              </div>
-              <div>
-                <button type="submit">Sign Up</button>
-              </div>
-            </form>
+      <!-- signup form -->
+      <div class="signUpForm">
+        <form id="signupForm">
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" id="emailInput" name="email" required>
           </div>
-          <script src="./signup.js"></script>
+          <div>
+            <label for="Username">Username:</label>
+            <input type="username" id="UsernameInput" name="username" required>
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" id="passwordInput" name="password" required>
+          </div>
+          <div>
+            <button type="submit">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/signup.js"></script>
+</body>
 </body>
 </html>

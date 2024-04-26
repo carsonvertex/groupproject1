@@ -8,26 +8,20 @@ export const accountRouter = Router();
 
 //get the existing products
 
-accountRouter.post("/register", register);
+accountRouter.post("/signUp", signUp);
 accountRouter.post("/login", login)
 accountRouter.get("/logout", logout)
+
 accountRouter.get("/getusername", getUsername)
 accountRouter.get("/users", getUsersID)
 accountRouter.get("/user", getUserID)
 
 accountRouter.get("/level", level)
 
-async function level(req: Request, res: Response) {
-    if (req.session.level) {
-        res.json({ data: { username: req.session.level } });
-    } else {
-        res.status(400).json({ message: "You are not logged in." });
-    }
-}
 
-async function register(req: Request, res: Response) {
+
+async function signUp(req: Request, res: Response) {
     let { email, username, password } = req.body;
-    console.log(email, username, password)
     let hashedPassword = await hashPassword(password)
     console.log(email, username, password, hashedPassword)
     try {
@@ -44,11 +38,12 @@ async function register(req: Request, res: Response) {
         }
 
         const insertResult = await pgClient.query(
-            "INSERT INTO users (username, email, password, level) VALUES ($1, $2, $3, $4) RETURNING id",
-            [username, email, hashedPassword, 'customer']
+            "INSERT INTO users (email,username,  password, level) VALUES ($1, $2, $3, $4) RETURNING id",
+            [email, username, hashedPassword, 'customer']
         );
         console.log(insertResult);
         const returningId = insertResult.rows[0].id;
+        console.log(returningId)
         res.json({
             msg: "register successful",
             userId: returningId
@@ -90,8 +85,8 @@ async function login(req: Request, res: Response) {
         req.session.userId = userQueryResult.rows[0].id;
         req.session.username = userQueryResult.rows[0].username;
         req.session.level = userQueryResult.rows[0].level;
-       
-        
+
+
 
         let result = res.json({
             message: "Login success",
@@ -143,14 +138,20 @@ async function getUsersID(req: Request, res: Response) {
 
 async function getUserID(req: Request, res: Response) {
     if (req.session.userId) {
-        res.json({userId:req.session.userId, username: req.session.username})
-        return 
+        res.json({ userId: req.session.userId, username: req.session.username })
+        return
     } else {
-        res.status(401).json({msg: "Login first"})
+        res.status(401).json({ msg: "Login first" })
     }
 }
 
-
+async function level(req: Request, res: Response) {
+    if (req.session.level) {
+        res.json({ data: { username: req.session.level } });
+    } else {
+        res.status(400).json({ message: "You are not logged in." });
+    }
+}
 
 
 
