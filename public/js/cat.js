@@ -37,9 +37,9 @@ async function getCategories() {
       // button
 
       catHTML += `
-      <div  class="col-3 my-2">
-         <div class="cardElement">
-           <h5><a href="${catLink}">${catName}</a></h5>
+      <div  class="col-md-6 col-lg-3 my-4" >
+         <div class="cardElement hoverDiv fingerPointer" onclick="window.location.href = '${catLink}'">
+           <h5>${catName}</h5>
            <p>Category ID: ${id}</p>
          </div>
        </div>`;

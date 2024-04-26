@@ -86,22 +86,22 @@ async function getProducts() {
       productHTML +=
         // `<div class="productBox col-3">
         `
-        <div  class="col-3 my-2">
-          <div class="cardElement">
-            <p><h5>${productName}</h5></p>
+        <div  class="col-md-6 col-lg-3 my-4">
+          <div class="cardElement my-4">
+            <div><h5>${productName}</h5></div>
 
             
 
             <div class="constrained-div">
-                 <div class="content">
+                 <div class="content  ">
                    <img src="${image}">
                  </div>
             </div>
 
-            <p><b>Description: </b><br>
-            ${description}</p>
-            <p>Price: $${productPrice}</p>
-            <a href="/editOption.html?product=${productId}"><button id="singleButton" >Edit Product</button></a>
+            <div><b>Description: </b><br>
+            ${description}</div>
+            <div>Price: $${productPrice}</div>
+            <a href="/editProduct.html?product=${productId}"><button id="singleButton" >Edit Product</button></a>
           </div>
         </div>`;
     }
@@ -121,7 +121,7 @@ async function singleProducts() {
   const container = document.getElementById('editProductContainer');
 
   try {
-    const response = await fetch('/product/editOption');
+    const response = await fetch('/product/editProduct');
     const data = await response.json();
 
     data.forEach(product => {

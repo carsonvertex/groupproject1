@@ -9,12 +9,12 @@ async function login(username, password) {
       const loggedInUsername = data.data.username;
       // Customize the content of the page based on the logged-in username
       const greetingDiv = document.querySelector('.accountButton');
-      greetingDiv.innerHTML = `<button type="button" onclick="window.location.href = '/index.html'"class="btn btn-outline-primary me-2" id="logoutButton">Logout</button><div>Hi, ${loggedInUsername}</div>`;
+      greetingDiv.innerHTML = `<button type="button" onclick="window.location.href = '/index.html'"class="btn btn-outline-primary me-2 logoutButton" >Logout</button><div>Hi, ${loggedInUsername}</div>`;
       // Add event listener to the new logout button
-      const logoutButton = document.getElementById('logoutButton');
+      const logoutButton = document.querySelector('.logoutButton');
       logoutButton.addEventListener('click', logout);
       // Remove the login button
-      const loginButton = document.getElementById('loginButton');
+      const loginButton = document.querySelector('.loginButton');
       if (loginButton) {
         loginButton.remove();
 
@@ -43,7 +43,7 @@ async function logout() {
       greetingDiv.innerHTML = '';
       // Add the login button back
       const accountButton = document.querySelector('.accountButton');
-      accountButton.innerHTML = `<button type="button" onclick="window.location.href = '/login.html'" class="btn btn-outline-primary me-2" id="loginButton"Login</button>`;
+      accountButton.innerHTML = `<button type="button" onclick="window.location.href = '/login.html'" class="btn btn-outline-primary me-2 loginButton"> Login</button>`;
     } else {
       // Handle logout error
       console.log('Logout failed');

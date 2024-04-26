@@ -30,10 +30,10 @@ async function singleProducts() {
         //Product Name
         productNameContainer.innerHTML=`<h3>${productName}</h3>`
         //Product Carousel
-        carouselPicContainer.innerHTML=`
-        <div class="carousel-item active">
-          <img src="${image}" class="d-block w-100" alt="...">
-        </div>`
+        // carouselPicContainer.innerHTML=`
+        // <div class="carousel-item active">
+        //   <img src="${image}" class="d-block w-100" alt="...">
+        // </div>`
         // Product Info
         productElement.innerHTML = `
           <div><img src="${image}" width="30%"></div>

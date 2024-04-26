@@ -47,19 +47,17 @@ async function getProducts() {
         const image = product.image;
   
         productHTML += `
-          <div class="col-3 my-2">
-            <div class="cardElement fingerPointer" onclick="window.location.href = '/details.html?product=${productId}'">
-              <p><h5>${productName}</h5></p>
-  
+          <div class="col-3 my-4 ">
+            <div class="cardElement fingerPointer mx-4 my-4" onclick="window.location.href = '/details.html?product=${productId}'">
+              <div><h5>${productName}</h5></div>
               <div class="constrained-div">
                 <div class="content">
                   <img src="${image}">
                 </div>
               </div>
-  
-              <p><b>Description: </b><br>
-              ${description}</p>
-              <p>Price: $${productPrice}</p>
+              <div><b>Description: </b><br>
+              ${description}</div >
+              <div>Price: $${productPrice}</div>
             
             </div>
           </div>`;
