@@ -57,3 +57,9 @@ async function logout() {
 const username = 'exampleUser';
 const password = 'examplePassword';
 login(username, password);
+
+
+// back to last page button
+function goBack() {
+  window.history.back();
+}

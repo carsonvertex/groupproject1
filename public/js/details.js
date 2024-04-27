@@ -50,7 +50,7 @@ async function singleProducts() {
         options.forEach((option) => {
           const { id, color_name, color_code, sizing, stock } = option;
           const optionElement = document.createElement('div');
-          optionElement.className = 'listDiv container-fluid';
+          optionElement.className = 'listDiv container-fluid my-4';
 
           const optionContent = document.createElement('div');
           optionContent.className = 'row';
