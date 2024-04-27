@@ -11,37 +11,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function getCategories() {
   try {
-      let res = await fetch("/customer/category");
-      let response = await res.json();
+    let res = await fetch("/customer/category");
+    let response = await res.json();
 
-      if (res.ok) {
-          let target = document.querySelector("#menuBar"); // Fix: Add "#" to select by ID
-          target.innerHTML = ""; // Fix: Clear the innerHTML before appending new content
+    if (res.ok) {
+      let target = document.querySelector("#menuBar"); // Fix: Add "#" to select by ID
+      target.innerHTML = ""; // Fix: Clear the innerHTML before appending new content
 
-          for (let cat of response.data.cats) {
-              const id = cat.id
-              const catName = cat.name;
-              // const catLink = `/customer/category/${cat.id}`;
-              // <a class="btn btn-outline-secondary" href="${catLink}" role="button">${catName}</a>
-              target.innerHTML += `
+      for (let cat of response.data.cats) {
+        const id = cat.id;
+        const catName = cat.name;
+        // const catLink = `/customer/category/${cat.id}`;
+        // <a class="btn btn-outline-secondary" href="${catLink}" role="button">${catName}</a>
+        target.innerHTML += `
               
               <div class="col " onclick='getProducts(${id})'>
                ${catName}
                </div>
                </div>`;
-          }
       }
-
+    }
   } catch (error) {
-      console.error("Error fetching categories:", error);
+    console.error("Error fetching categories:", error);
   }
 }
 getCategories();
 
 async function getProducts(id) {
   try {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const id = urlParams.get("product");
+    //   const urlParams = new URLSearchParams(window.location.search);
+    //   const id = urlParams.get("product");
     console.log("param is " + id);
 
     const response = await fetch(`/customer/category/${id}`);
@@ -79,7 +78,7 @@ async function getProducts(id) {
 
     container.innerHTML = productHTML;
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
   }
 }
-getProducts(1)
+getProducts(1);

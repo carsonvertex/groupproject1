@@ -32,7 +32,7 @@ async function getProducts() {
       const productId = urlParams.get('cat');
       let id = productId
   
-      const response = await fetch(`/customer/category/${id}`);
+      const response = await fetch(`/customer/category`);
       const data = await response.json();
       const productArray = data; // Access the correct property in the response data
   
@@ -63,9 +63,9 @@ async function getProducts() {
           </div>`;
       }
   
-      container.innerHTML = productHTML;
+      // container.innerHTML = productHTML;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      // console.error('Error fetching products:', error);
     }
   }
   getProducts()
