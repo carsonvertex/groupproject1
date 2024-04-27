@@ -1,7 +1,7 @@
 //category menu
 async function getCategories() {
     try {
-        let res = await fetch("/customer/category");
+        let res = await fetch("/customer/category/");
         let response = await res.json();
 
         if (res.ok) {
@@ -65,7 +65,7 @@ async function getProducts() {
   
       container.innerHTML = productHTML;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error('Error fetching products:', error);
     }
   }
   getProducts()

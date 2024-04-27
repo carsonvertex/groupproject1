@@ -115,7 +115,7 @@ async function getProducts() {
 
 getProducts()
 
-//single product
+//show single product
 
 async function singleProducts() {
   const container = document.getElementById('editProductContainer');
