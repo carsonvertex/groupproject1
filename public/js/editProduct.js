@@ -3,6 +3,13 @@ const selectElement = document.getElementById('selectSize');
 selectElement.addEventListener('change', function () {
   selectElement.blur(); // Close the dropdown after an option is selected
 });
+
+//refresh
+function refreshPage() {
+  // Reload the current page
+  window.location.reload();
+}
+//getfunction
 async function singleProducts() {
   const container = document.getElementById('editProductContainer');
   const urlParams = new URLSearchParams(window.location.search);
@@ -11,6 +18,7 @@ async function singleProducts() {
     const response = await fetch(`/product/editProduct/${productId}`);
     const product = await response.json();
     console.log("this is the product:", product)
+    
     if (response.ok) {
       const uploadedAt = product.uploaded_at;
       const productName = product.name;
@@ -170,23 +178,27 @@ async function singleProducts() {
   }
 }
 // Call the function when the page finishes loading
+//post new option
 document.addEventListener('DOMContentLoaded', singleProducts);
 
 const createOption = document.querySelector('#addProductOptionForm').addEventListener('submit', async function (event) {
   event.preventDefault();
-
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('product');
+  console.log(`param is ${id}`);
   const form = event.target;
+
   const formObject = {
+    product_id: id,
     color_name: form.color_name.value,
     color_code: form.color_code.value,
     sizing: form.sizing.value,
     stock: form.stock.value
   };
   console.log(formObject);
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('product');
-  console.log(`param is ${id}`);
+   
+  
 
   const res = await fetch(`/product/addOption/${id}`, {
     method: 'POST',
@@ -194,9 +206,11 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(formObject)
-  });
+      });
 
   if (res.ok) {
     console.log("hihi");
+    singleProducts()
   }
+  refreshPage()
 });

@@ -119,9 +119,12 @@ getProducts()
 
 async function singleProducts() {
   const container = document.getElementById('editProductContainer');
+  const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('product');
+console.log(`param is ${id}`);
 
   try {
-    const response = await fetch('/product/editProduct');
+    const response = await fetch(`/product/editProduct/${id}`);
     const data = await response.json();
 
     data.forEach(product => {

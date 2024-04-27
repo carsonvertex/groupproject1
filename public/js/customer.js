@@ -31,6 +31,12 @@ async function getProducts() {
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get('cat');
       let id = productId
+
+      if (productId === null) {
+        console.log("Fuck cat is null")
+        return;
+               
+      }
   
       const response = await fetch(`/customer/category/${id}`);
       const data = await response.json();
@@ -66,6 +72,7 @@ async function getProducts() {
       container.innerHTML = productHTML;
     } catch (error) {
       console.error('Error fetching products:', error);
+    
     }
   }
   getProducts()
