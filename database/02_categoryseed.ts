@@ -23,9 +23,9 @@ async function category() {
   
     try {
         let cat: categories[] = [
-            { name: "catergory_test1" },
-            { name: "catergory_test2" },
-            { name: "catergory_test3" }
+            { name: "TShirts" },
+            { name: "Trousers" },
+            { name: "Shoes" }
         ]
 
         await pgClient.connect()

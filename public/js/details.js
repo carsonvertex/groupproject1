@@ -8,31 +8,40 @@
 //最後 container.appendChild(productElement);
 
 async function singleProducts() {
-  const container = document.getElementById('editProductContainer');
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('product');  // http://localhost:8080/details.html?product=1
+    const container = document.getElementById('detailProductContainer');
+    const productNameContainer = document.getElementById('productNameContainer');
+    const carouselPicContainer = document.getElementById('carouselPicContainer');
 
-  try {
-    const response = await fetch(`/customer/details/${productId}`);
-    const product = await response.json();
-
-    if (response.ok) {
-      const uploadedAt = product.uploaded_at;
-      const productName = product.name;
-      const productPrice = product.price;
-      const description = product.description;
-      const image = product.image;
-
-      const productElement = document.createElement('div');
-      productElement.innerHTML = `
-        <h3>${productName}</h3>
-        <div><img src="${image}" width="30%"></div>
-        <p>Price: $${productPrice}</p>
-        <p>Description: ${description}</p>
-        <p>Uploaded at: ${uploadedAt}</p>
-      `;
-
-      // Add product options
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product');  //http://localhost:8080/details.html?product=1
+  
+    try {
+      const response = await fetch(`/customer/details/${productId}`); //呢條path suppose唔會入去 純res data
+      const product = await response.json();
+  
+      if (response.ok) {
+        const uploadedAt = product.uploaded_at;
+        const productName = product.name;
+        const productPrice = product.price;
+        const description = product.description;
+        const image = product.image;
+  
+        const productElement = document.createElement('div');
+        //Product Name
+        productNameContainer.innerHTML=`<h3>${productName}</h3>`
+        //Product Carousel
+        // carouselPicContainer.innerHTML=`
+        // <div class="carousel-item active">
+        //   <img src="${image}" class="d-block w-100" alt="...">
+        // </div>`
+        // Product Info
+        productElement.innerHTML = `
+          <div><img src="${image}" width="30%"></div>
+          <p>Price: $${productPrice}</p>
+          <p>Description: ${description}</p>
+          <p>Uploaded at: ${uploadedAt}</p>
+        `;
+        // Add product options
       const options = product.options;
       if (options && options.length > 0) {
         const optionsElement = document.createElement('div');
@@ -41,7 +50,7 @@ async function singleProducts() {
         options.forEach((option) => {
           const { id, color_name, color_code, sizing, stock } = option;
           const optionElement = document.createElement('div');
-          optionElement.className = 'listDiv container-fluid';
+          optionElement.className = 'listDiv container-fluid my-4';
 
           const optionContent = document.createElement('div');
           optionContent.className = 'row';

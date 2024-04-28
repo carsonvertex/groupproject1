@@ -4,7 +4,7 @@ import { pgClient } from "../pgClients";
 export const shopping_cartRouter = Router();
 
 shopping_cartRouter.get("/showShoppinglist", showShoppinglist);
-shopping_cartRouter.post("/newShoppinglist", newShoppinglist);
+
 shopping_cartRouter.put("/changeQuantityShoppinglist", changeQuantityShoppinglist);
 shopping_cartRouter.delete("/delShoppinglist", delShoppinglist);
 
@@ -79,7 +79,7 @@ async function newShoppinglist(req: Request, res:Response){
       
 }
 
-async function changeQuantityShoppinglist(req: Request, res:Response){
+async function casdt(req: Request, res:Response){
     let {id} = req.query;
     let changeQuantityResult = await pgClient.query(
         "UPDATE quantity SET WHERE id = $1 RETURNING *",
@@ -91,6 +91,29 @@ async function changeQuantityShoppinglist(req: Request, res:Response){
             message: "ChangeQuantity Success",
         });
     }}
+
+async function changeQuantityShoppinglist(req: Request, res:Response){
+    const inputForm = req.body.inputForm
+    console.log({inputForm})
+
+    try{
+        await pgClient.query(
+            // select id,quantity from shopping_carts,
+            // `UPDATE From shopping_carts where (id,quantity) VALUES ($1,$2)`,[inputForm]
+            `UPDATE shopping_carts SET quantity = $1 WHERE id = $2`,
+            [inputForm.quantity, inputForm.id]
+
+        );
+        res.json({ message: "Shopping list updated"});
+    }catch (e) {
+        console.log(e);
+        res.status(400).json({ message: e });
+      }
+}
+
+
+
+
 
 async function delShoppinglist(req: Request, res: Response) {
     const cartId = req.body.cartId

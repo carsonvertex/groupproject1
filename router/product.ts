@@ -12,7 +12,7 @@ productRouter.post("/newProduct/cat/:id", newProductByCatId);
 productRouter.put("/editProduct", editProduct);
 productRouter.delete("/delProduct", delProduct);
 
-productRouter.get(`/editOption/:id`, singleProduct);
+productRouter.get(`/editProduct/:id`, singleProduct);
 productRouter.post(`/addOption/:id`, addOptionById);
 productRouter.delete(`/deleteOption/:id`, deleteOptionById);
 productRouter.put(`/updateOption/:id`, updateOption)
@@ -186,8 +186,8 @@ async function addOptionById(req: Request, res: Response) {
   const id = req.params.id;
   console.log(id);
 
-  let { color_name, color_code, sizing, stock } = req.body;
-  console.log(color_name, color_code, sizing, stock);
+  let { product_id, color_name, color_code, sizing, stock } = req.body;
+  console.log(product_id, color_name, color_code, sizing, stock);
 
   try {
     let optionQueryResult = await pgClient.query(
@@ -201,7 +201,7 @@ async function addOptionById(req: Request, res: Response) {
     }
     const addOptionQueryResult = await pgClient.query(
       `INSERT INTO product_options (product_id,color_name, color_code, sizing, stock) 
-    VALUES ($1,$2,$3,$4,$5);`, [id, color_name, color_code, sizing, stock]
+    VALUES ($1,$2,$3,$4,$5);`, [product_id, color_name, color_code, sizing, stock]
     )
     // console.log(addOptionQueryResult.rows[0].id)
     // Continue with other logic if the option does not exist

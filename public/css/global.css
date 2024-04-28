@@ -1,64 +1,158 @@
-.formBox{
-    background-color: rgb(243, 243, 243);
-    color: black;
-    height: max-content;
-    padding: 20px;
-    border-radius: 5px;
-    
-   
+.formBox {
+  background-color: rgb(243, 243, 243);
+  color: black;
+  height: max-content;
+  padding: 20px;
+  border-radius: 5px;
+
+
 
 }
 
-.listDiv{
-    background-color: rgb(175, 175, 175);
-    color: black;
-    height: max-content;
-    padding: 20px;
-    border-radius: 5px;
-   
+.listDiv {
+  background-color: rgb(175, 175, 175);
+  color: black;
+  height: max-content;
+  padding: 20px;
+  border-radius: 5px;
+
 
 }
 
-.formElement{
-    margin: 10%;
+.formElement {
+  margin: 10%;
 }
 
-.cardElement{
-    background-color: rgb(243, 243, 243);
-    color: black;
-    
-    padding: 20px;
-    border-radius: 5px;
+.cardElement {
+  background-color: rgb(243, 243, 243);
+  color: black;
+
+  padding: 20px;
+  border-radius: 5px;
 }
 
-.buttonElement{
-    background-color: rgb(243, 243, 243);
-    color: black;
-    
-    
-    padding: 5px;
-    border-radius: 5px;
-   
+.buttonElement {
+  background-color: rgb(243, 243, 243);
+  color: black;
+
+
+  padding: 5px;
+  border-radius: 5px;
+
 
 }
 
 .constrained-div {
-    position: relative;
-    width: 100%;
-    height: 66.67%;
-    background-color: #ccc;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 66.67%;
+  background-color: #ccc;
+  overflow: hidden;
+}
+
+
+
+.content {
+  position: relative;
+  width: 100%;
+  padding-bottom: 133.33%;
+  /* 4:3 aspect ratio (3 / 4 * 100) */
+  overflow: auto;
+  /* Enable scrolling within the frame */
+}
+
+.content img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hoverDiv {
+  color: rgb(0, 0, 0);
+}
+
+.hoverDiv:hover {
+  background-color: #979797;
+}
+
+.fingerPointer:hover {
+  cursor: pointer;
+
+}
+
+.carousel-item .image-frame {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  /* 16:9 aspect ratio (9 / 16 * 100) */
+  overflow: auto;
+  /* Enable scrolling within the frame */
+}
+
+.carousel-item .image-frame img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.formElement label {
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 768px) {
+  .formElement label {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .formElement label {
+    font-size: 14px;
+  }
+}
+
+.formElement input[type="text"],
+.formElement input[type="number"],
+.formElement select {
+  font-size: 16px;
+  width: 100%;
+}
+
+.formElement textarea {
+  font-size: 16px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .formElement input[type="text"],
+  .formElement input[type="number"],
+  .formElement input[type="string"],
+  .formElement textarea {
+    font-size: 14px;
   }
 
- 
+  .formElement select {
+    font-size: 14px;
+  }
+}
 
-  .content img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-  
+@media only screen and (max-width: 576px) {
+
+  .formElement input[type="text"],
+  .formElement input[type="number"],
+  .formElement input[type="string"],
+  .formElement select {
+    font-size: 12px;
   }
 
-  .hoverDiv:hover{
-    background-color:#ccc;
+  .formElement textarea {
+    font-size: 12px;
   }
+}

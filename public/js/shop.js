@@ -18,33 +18,37 @@ async function fetchCartItems() {
         let totalProduct = 0
         const countArea = document.querySelector(".countArea")
 
-        const container = document.querySelector(".MiddleLeft-Container")
+        const container = document.querySelector(".selectedItems")
         for (let item of data) {
             console.table(item)
             total += Number(item.price) * Number(item.quantity)
             totalProduct += Number(item.quantity)
 
-            html += `  <div class="productArea">
-            <div class="productArea-A">
-                    <img width=100% height=100% src="${item.image}">
+            html += ` 
+             <div class="productArea cardElement my-4">
+                 <div class="productArea-A ">
+                  
+                  <div class="constrained-div">
+                    <div class="content">
+                      <img src="${item.image}">
+                     </div>
+                  </div>
+                    
                 </div>
                 <div class="productArea-B">
-                    <h6>Product: ${item.name}</h6>
-                    
-                    
-                    <h6>Price: ${item.price}</h6>
+                    <p>Product: ${item.name}</p>                  
+                    <p>Price: ${item.price}</p>
                     <div class="dropdown-Quantity">
                         <h6>Quantity:</h6>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            ${item.quantity}
-                            </button>
+                            <input type="text" id="myInput" style="width: 50px" placeholder="${item.quantity}">
+                            <button type="submit" onclick="submitForm()">Change</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="productArea-C">
-                    <h4>Total Price: ${Number(item.price) * Number(item.quantity)}</h4>
+                    <p>Total Price: ${Number(item.price) * Number(item.quantity)}</p>
 
                     <button id="deleteButton" onclick="delShoppinglist(${item.shopping_carts_id})">Delete</button>
                 </div>
@@ -122,7 +126,25 @@ async function getUser() {
   }
 
 
+//改變購買數量
+async function changeQuantityShoppinglist(inputForm){
+    console.log(inputForm)
+    const res = await fetch("/cart/changeQuantityShoppinglist",{
+        method: "put",
+        body: JSON.stringify({
+            inputForm:inputForm
+        }),
+        headers:{
+            "Content-Type": "application/json"
+        }
+    })
+    if (res.ok) {
+        await fetchCartItems()
+    }
+}
 
+
+  
 
 
 

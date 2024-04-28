@@ -14,7 +14,11 @@ const createProduct = document.querySelector('#productForm').addEventListener('s
 
   const formData = new FormData();
   formData.append("name", form.name.value);
-  formData.append("image", form.image.files[0]);
+   // Loop through each selected image file and append them to the FormData
+   const imageFiles = form.image.files;
+   for (let i = 0; i < imageFiles.length; i++) {
+     formData.append("image", imageFiles[i]);
+   }
   formData.append("price", form.price.value);
   formData.append("description", form.description.value);
 
@@ -82,27 +86,25 @@ async function getProducts() {
       productHTML +=
         // `<div class="productBox col-3">
         `
-        <div  class="col-3 my-2">
-          <div class="cardElement">
-            <p><h5>${productName}</h5></p>
+        <div  class="col-md-6 col-lg-3 my-4">
+          <div class="cardElement my-4">
+            <div><h5>${productName}</h5></div>
 
             
 
             <div class="constrained-div">
-                 <div class="content">
+                 <div class="content  ">
                    <img src="${image}">
                  </div>
             </div>
 
-            <p><b>Description: </b><br>
-            ${description}</p>
-            <p>Price: $${productPrice}</p>
-            <a href="/editOption.html?product=${productId}"><button id="singleButton" >Edit Product</button></a>
+            <div><b>Description: </b><br>
+            ${description}</div>
+            <div>Price: $${productPrice}</div>
+            <a href="/editProduct.html?product=${productId}"><button id="singleButton" >Edit Product</button></a>
           </div>
         </div>`;
     }
-
-
 
     container.innerHTML = productHTML;
   } catch (error) {
@@ -113,13 +115,16 @@ async function getProducts() {
 
 getProducts()
 
-//single product
+//show single product
 
 async function singleProducts() {
   const container = document.getElementById('editProductContainer');
+  const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('product');
+console.log(`param is ${id}`);
 
   try {
-    const response = await fetch('/product/editOption');
+    const response = await fetch(`/product/editProduct/${id}`);
     const data = await response.json();
 
     data.forEach(product => {
