@@ -111,12 +111,14 @@ async function logout(req: Request, res: Response) {
 
             res.status(200).json({ message: "Logout success" });
         });
+        console.log(req.session)
     } else {
         res.status(400).json({ message: "You are not logged in." });
     }
 }
 
 async function getUsername(req: Request, res: Response) {
+    console.log("username: " ,req.session.username)
     if (req.session.username) {
         res.json({ data: { username: req.session.username } });
     } else {

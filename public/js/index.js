@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (username) {
     // Customize the content of the page based on the username
     const greeting = document.querySelector("#loginButton");
-    greeting.textContent = `Hi, ${username}`;
+ 
+      greeting.textContent = `Hi, ${username}`;
+
+    
   }
 });
 
@@ -49,35 +52,39 @@ async function getProducts(id) {
     const productArray = data; // Access the correct property in the response data
 
     const container = document.getElementById("productContainer");
-    container.innerHTML = "";
-    let productHTML = "";
-    for (const product of productArray) {
-      const productId = product.id;
-      const productName = product.name;
-      const productPrice = product.price;
-      const description = product.description;
-      const image = product.image;
+    if (container) {
+        container.innerHTML = "";
+        let productHTML = "";
+        for (const product of productArray) {
+          const productId = product.id;
+          const productName = product.name;
+          const productPrice = product.price;
+          const description = product.description;
+          const image = product.image;
 
-      productHTML += `
-        <div class="col-3 my-2">
-          <div class="cardElement">
-            <p><h5>${productName}</h5></p>
+          productHTML += `
+            <div class="col-3 my-2">
+              <div class="cardElement">
+                <p><h5>${productName}</h5></p>
 
-            <div class="constrained-div">
-              <div class="content">
-                <img src="${image}">
+                <div class="constrained-div">
+                  <div class="content">
+                    <img src="${image}">
+                  </div>
+                </div>
+
+                <p><b>Description: </b><br>
+                ${description}</p>
+                <p>Price: $${productPrice}</p>
+                <a href="/editOption.html?product=${productId}"><button id="singleButton">Add to Cart</button></a>
               </div>
-            </div>
+            </div>`;
+        }
 
-            <p><b>Description: </b><br>
-            ${description}</p>
-            <p>Price: $${productPrice}</p>
-            <a href="/editOption.html?product=${productId}"><button id="singleButton">Add to Cart</button></a>
-          </div>
-        </div>`;
+
+      container.innerHTML = productHTML;
+
     }
-
-    container.innerHTML = productHTML;
   } catch (error) {
     console.error("Error fetching products:", error);
   }
