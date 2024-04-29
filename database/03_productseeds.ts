@@ -41,13 +41,13 @@ async function productItems() {
     try {
         let products: products[] = [
             {
-                category_id: 1, name: "catergory_test1", price: 499, description: "I LOVE DAY"
+                category_id: 1, name: "American Pants", price: 499, description: "I LOVE DAY"
             },
             {
-                category_id: 1, name: "catergory_test2", price: 599, description: "I LOVE MAY"
+                category_id: 1, name: "English Pants", price: 599, description: "I LOVE MAY"
             },
             {
-                category_id: 2, name: "catergory_test3", price: 699, description: "I LOVE TAY"
+                category_id: 2, name: "Chinese Pants", price: 699, description: "I LOVE TAY"
             }
         ]
 
@@ -58,9 +58,9 @@ async function productItems() {
         ]
 
         let productsOptions: productsOptions[] = [
-            { name: "Products_test1", color_code: "111", size: size.small, stock: 100 },
-            { name: "Products_test2", color_code: "222", size: size.median, stock: 100 },
-            { name: "Products_test3", color_code: "333", size: size.large, stock: 100 }
+            { name: "Yellow", color_code: "111", size: size.small, stock: 100 },
+            { name: "Black", color_code: "222", size: size.median, stock: 100 },
+            { name: "Red", color_code: "333", size: size.large, stock: 100 }
         ]
 
 

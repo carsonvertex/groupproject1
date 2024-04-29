@@ -200,7 +200,7 @@ async function addOptionById(req: Request, res: Response) {
       return;
     }
     const addOptionQueryResult = await pgClient.query(
-      `INSERT INTO product_options (product_id,color_name, color_code, sizing, stock) 
+      `INSERT INTO product_options (product_id, color_name, color_code, sizing, stock) 
     VALUES ($1,$2,$3,$4,$5);`, [product_id, color_name, color_code, sizing, stock]
     )
     // console.log(addOptionQueryResult.rows[0].id)
