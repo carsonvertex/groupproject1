@@ -20,17 +20,17 @@ async function singleProducts() {
     console.log("this is the product:", product)
     
     if (response.ok) {
-      const uploadedAt = product.uploaded_at;
-      const productName = product.name;
-      const productPrice = product.price;
-      const description = product.description;
-      const image = product.image;
+      const uploadedAt = product.selectedProduct[0].uploaded_at;
+      const productName = product.selectedProduct[0].name;
+      const productPrice = product.selectedProduct[0].price;
+      const description = product.selectedProduct[0].description;
+      // const image = product[0].image;
 
       const productElement = document.createElement('div');
       productElement.innerHTML = `
         <div>
           <h3>${productName}</h3>
-          <div><img src="${image}" width="30%"></div>
+        ${product.selectedProduct.map((entry)=> {return `<div><img src="${entry.image}" width="30%"></div>`}).join("")}
           <p>Price: $${productPrice}</p>
           <p>Description: ${description}</p>
           <p>Uploaded at: ${uploadedAt}</p>

@@ -2,8 +2,6 @@ import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
 import formidable from "formidable";
 
-
-
 export const productRouter = Router();
 
 productRouter.get(`/showProduct/cat/:id`, showProductByCatId);
@@ -15,47 +13,38 @@ productRouter.delete("/delProduct", delProduct);
 productRouter.get(`/editProduct/:id`, singleProduct);
 productRouter.post(`/addOption/:id`, addOptionById);
 productRouter.delete(`/deleteOption/:id`, deleteOptionById);
-productRouter.put(`/updateOption/:id`, updateOption)
-
-
+productRouter.put(`/updateOption/:id`, updateOption);
 
 // product by category
 
 async function showProductByCatId(req: Request, res: Response) {
-  const { id } = req.params
+  const { id } = req.params;
   let productQueryResult = (
     await pgClient.query(
-      "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;", [id]
+      "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id where category_id = $1 ;",
+      [id]
     )
-
   ).rows;
-  res.send(productQueryResult)
+  res.send(productQueryResult);
 }
 
 async function showProduct(req: Request, res: Response) {
-  const id = req.query.id
-  console.log("cat:", id)
+  const id = req.query.id;
+  console.log("cat:", id);
   let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
     FROM product_images
     GROUP BY product_id
     )
     
-    select * from products left join single_image on products.id = single_image.product_id `
+    select * from products left join single_image on products.id = single_image.product_id `;
   const params: any[] = [];
 
   if (id) {
-    sql += "where products.category_id  = $1 "
+    sql += "where products.category_id  = $1 ";
     params.push(id);
-
   }
-  let productQueryResult = (
-    await pgClient.query(
-      sql, params
-    )
-
-  ).rows;
-  res.json({ product: productQueryResult })
-
+  let productQueryResult = (await pgClient.query(sql, params)).rows;
+  res.json({ product: productQueryResult });
 }
 
 async function newProductByCatId(req: Request, res: Response) {
@@ -69,24 +58,30 @@ async function newProductByCatId(req: Request, res: Response) {
   let image: string;
   let price: string;
   let description: string;
-  let category_id = req.params.id
-  console.log(req.params)
+  let category_id = req.params.id;
+
+  let imageArray: Array<string> = [];
+  console.log(req.params);
   console.log({
-    category_id
-  })
+    category_id,
+  });
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.log(err);
       res.status(500).json({ message: "Internal server erorr!" });
-      return
+      return;
     }
     if (fields.name) {
       name = fields.name![0];
     }
 
+    console.log("files has", files);
     if (files.image) {
-      image = files.image[0].newFilename;
+      for (let i = 0; i < files.image.length; i++) {
+        imageArray.push(files.image[i].newFilename);
+      }
     }
+
     if (fields.price) {
       price = fields.price![0];
     }
@@ -94,20 +89,25 @@ async function newProductByCatId(req: Request, res: Response) {
       description = fields.description![0];
     }
 
-
     let productInsertResult = await pgClient.query(
       "INSERT INTO products (name,price,description,category_id) VALUES ($1,$2,$3,$4) RETURNING id",
       [name, price, description, category_id]
-    )
-    const product_id = productInsertResult.rows[0].id
-    let imageInsertResult = await pgClient.query(
-      "INSERT INTO product_images (image,product_id) VALUES ($1,$2) RETURNING id", [image, product_id]
-    )
+    );
+    const product_id = productInsertResult.rows[0].id;
+
+    for (let image of imageArray) {
+      let imageInsertResult = await pgClient.query(
+        "INSERT INTO product_images (image,product_id) VALUES ($1,$2) RETURNING id",
+        [image, product_id]
+      );
+
+      console.log(imageInsertResult.rows[0].id);
+    }
 
     res.json({
       data: {
         id: category_id,
-        photo: imageInsertResult.rows[0].id,
+        // photo: imageInsertResult.rows[0].id,
       },
     });
   });
@@ -129,7 +129,6 @@ async function editProduct(req: Request, res: Response) {
 }
 
 async function delProduct(req: Request, res: Response) {
-
   let targetId = parseInt(req.query.id as string);
 
   let productDeleteResult = await pgClient.query(
@@ -142,7 +141,6 @@ async function delProduct(req: Request, res: Response) {
   } else {
     res.status(400).json({ message: "Delete category failed" });
   }
-
 }
 
 // product option page
@@ -163,15 +161,17 @@ async function singleProduct(req: Request, res: Response) {
 
     const [productResult, optionResult] = await Promise.all([
       pgClient.query(productQuery),
-      pgClient.query(optionQuery)
+      pgClient.query(optionQuery),
     ]);
 
-    const selectedProduct = productResult.rows[0];
+    // console.log("check more than one row", productResult);
+
+    const selectedProduct = productResult.rows;
     const optionQueryResult = optionResult.rows;
 
     const productData = {
-      ...selectedProduct,
-      options: optionQueryResult
+      selectedProduct,
+      options: optionQueryResult,
     };
 
     res.json(productData);
@@ -180,9 +180,7 @@ async function singleProduct(req: Request, res: Response) {
   }
 }
 
-
 async function addOptionById(req: Request, res: Response) {
-
   const id = req.params.id;
   console.log(id);
 
@@ -201,8 +199,9 @@ async function addOptionById(req: Request, res: Response) {
     }
     const addOptionQueryResult = await pgClient.query(
       `INSERT INTO product_options (product_id,color_name, color_code, sizing, stock) 
-    VALUES ($1,$2,$3,$4,$5);`, [product_id, color_name, color_code, sizing, stock]
-    )
+    VALUES ($1,$2,$3,$4,$5);`,
+      [product_id, color_name, color_code, sizing, stock]
+    );
     // console.log(addOptionQueryResult.rows[0].id)
     // Continue with other logic if the option does not exist
 
@@ -211,7 +210,7 @@ async function addOptionById(req: Request, res: Response) {
       msg: "Options Created",
       option: returningOptions,
     });
-    console.log(res.json)
+    console.log(res.json);
   } catch (e) {
     console.log(e);
     res.status(400).json({ message: e });
@@ -221,9 +220,9 @@ async function addOptionById(req: Request, res: Response) {
 async function deleteOptionById(req: Request, res: Response) {
   try {
     const targetId = parseInt(req.params.id as string);
-    console.log("this is targetID", req.params.id)
+    console.log("this is targetID", req.params.id);
     if (isNaN(targetId)) {
-      throw new Error('Invalid ID');
+      throw new Error("Invalid ID");
     }
 
     const optionDeleteResult = await pgClient.query(
@@ -240,7 +239,7 @@ async function deleteOptionById(req: Request, res: Response) {
       res.status(404).json({ message: "Option not found" });
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
@@ -252,18 +251,22 @@ async function updateOption(req: Request, res: Response) {
 
     // Update the product option in the database
     // Example code using SQL
-    const query = 'UPDATE product_options SET color_name = $1, color_code = $2, sizing = $3, stock = $4 WHERE id = $5';
+    const query =
+      "UPDATE product_options SET color_name = $1, color_code = $2, sizing = $3, stock = $4 WHERE id = $5";
     const values = [color, color_code, size, stock, id];
     await pgClient.query(query, values, (error, result) => {
       if (error) {
-        console.error('Error occurred while updating the product option:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error(
+          "Error occurred while updating the product option:",
+          error
+        );
+        res.status(500).json({ error: "Internal Server Error" });
       } else {
         res.json({ success: true });
       }
     });
   } catch (error) {
-    console.error('Error occurred while processing the request:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error occurred while processing the request:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}

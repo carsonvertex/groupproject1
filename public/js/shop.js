@@ -5,6 +5,20 @@ window.addEventListener("load", () => {
 
 
 
+async function submitForm(shoppingCartId){
+    console.log(shoppingCartId)
+    let  quantity = parseInt(document.querySelector(`#quantity-${shoppingCartId}`).value)
+
+    await fetch("http://localhost:8080/cart/changeQuantityShoppinglist",{
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({shoppingCartId,quantity})
+    })
+
+}
+
 async function fetchCartItems() {
     
     const user = await getUser()
@@ -41,8 +55,9 @@ async function fetchCartItems() {
                     <div class="dropdown-Quantity">
                         <h6>Quantity:</h6>
                         <div class="dropdown">
-                            <input type="text" id="myInput" style="width: 50px" placeholder="${item.quantity}">
-                            <button type="submit" onclick="submitForm()">Change</button>
+                            <input type="text" id="quantity-${item.shopping_carts_id}" style="width: 50px" placeholder="${item.quantity}">
+                            <button type="submit" onclick="submitForm(${item.shopping_carts_id
+                            })">Change</button>
                         </div>
                     </div>
                 </div>
@@ -52,13 +67,6 @@ async function fetchCartItems() {
 
                     <button id="deleteButton" onclick="delShoppinglist(${item.shopping_carts_id})">Delete</button>
                 </div>
-
-                
-
-                
-
-                
-
 
             </div>`
         }
