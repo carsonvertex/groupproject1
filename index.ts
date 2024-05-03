@@ -28,23 +28,23 @@ if (!process.env.SECRET)
 
 
 app.use(
-    expressSession({
+    expressSession({        
         secret: process.env.SECRET,
         saveUninitialized: true,
         resave: true,
     })
 );
-//PARSING MIDDLEWARE
+//PARSING MIDDLEWARE 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //api
 app.use("/account", accountRouter);
-app.use("/cat", catRouter);
-app.use("/product", productRouter);
+app.use("/cat", checkAdminPermission, catRouter);
+app.use("/product", checkAdminPermission, productRouter);
 
 app.use("/", securityCheckRouter);
-app.use("/customer", customerRouter);
+app.use("/customer", checkCustomerPermission, customerRouter);
 
 app.use("/cart", shopping_cartRouter)
 //static assets
