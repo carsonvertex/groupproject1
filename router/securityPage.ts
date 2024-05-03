@@ -6,7 +6,7 @@ export const securityCheckRouter = Router();
 
 const app = express();
 
-securityCheckRouter.get("/", landingPage);
+// securityCheckRouter.get("/", landingPage);
 securityCheckRouter.get("/landingPage", landingPage);
 
 
@@ -16,7 +16,7 @@ async function landingPage(req: Request, res: Response) {
         // Check if the user is logged in
         if (!req.session.userId) {
             // Redirect the user to the login page or display an error message
-            return res.redirect("/login.html");
+            return res.redirect("/index.html");
         }
 
         // Retrieve the user's account level from the session
