@@ -1,7 +1,5 @@
 import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
-import formidable from "formidable";
-
 
 export const productRouter = Router();
 
@@ -10,11 +8,7 @@ productRouter.get("/showProduct", showProduct);
 
 productRouter.get(`/editOption/product/:id`, singleProduct);
 
-
-
-
 // product by category
-
 async function showProductByCatId(req: Request, res: Response) {
   const { id } = req.params
   let productQueryResult = (
@@ -54,7 +48,6 @@ async function showProduct(req: Request, res: Response) {
 
 
 // product option page
-
 async function singleProduct(req: Request, res: Response) {
   try {
     const id = req.params.id;

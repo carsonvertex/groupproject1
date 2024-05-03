@@ -1,10 +1,7 @@
 import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
 
-
 export const catRouter = Router();
-
-
 
 catRouter.get("/showCat", showCat);
 catRouter.post("/newCat", newCat);

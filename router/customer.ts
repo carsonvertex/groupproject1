@@ -23,11 +23,6 @@ async function showProductById(req: Request, res: Response) {
     const { id } = req.params;
     console.log(id);
 
-    // const productQueryResult = await pgClient.query(
-    //   "SELECT * FROM products FULL OUTER JOIN product_images ON products.id = product_images.id WHERE category_id = $1;",
-    //   [id]
-    // );
-
     let sql = `with single_image as ( SELECT product_id, min(id) as product_images_id, min(image) as image
     FROM product_images
     GROUP BY product_id
