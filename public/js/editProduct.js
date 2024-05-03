@@ -18,7 +18,7 @@ async function singleProducts() {
     const response = await fetch(`/product/editProduct/${productId}`);
     const product = await response.json();
     console.log("this is the product:", product)
-
+    
     if (response.ok) {
       const uploadedAt = product.uploaded_at;
       const productName = product.name;
@@ -161,11 +161,11 @@ async function singleProducts() {
             },
             body: JSON.stringify(updatedValues)
           });
-
+      
           if (!response.ok) {
             throw new Error('Update Failed');
           }
-
+      
           // Handle the response or return any necessary data
           // ...
         } catch (error) {
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', singleProducts);
 
 const createOption = document.querySelector('#addProductOptionForm').addEventListener('submit', async function (event) {
   event.preventDefault();
-
+  
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('product');
   console.log(`param is ${id}`);
@@ -197,8 +197,8 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
     stock: form.stock.value
   };
   console.log(formObject);
-
-
+   
+  
 
   const res = await fetch(`/product/addOption/${id}`, {
     method: 'POST',
@@ -206,7 +206,7 @@ const createOption = document.querySelector('#addProductOptionForm').addEventLis
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(formObject)
-  });
+      });
 
   if (res.ok) {
     console.log("hihi");

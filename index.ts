@@ -53,5 +53,5 @@ app.use(express.static('public'));
 app.use(express.static("uploads"))
 
 app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}/index.html`)
+    console.log(`http://localhost:${PORT}`)
 })

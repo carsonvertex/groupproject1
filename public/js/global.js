@@ -13,7 +13,7 @@ async function checkLogin() {
       // Customize the content of the page based on the logged-in username
       greetingDiv.innerHTML = `<button type="button" onclick="logout();" class="btn btn-outline-primary me-2 logoutButton accountButton">Logout</button><div>Hi, ${loggedInUsername}</div>`;
       // Add event listener to the new logout button
-      const logoutButton = document.querySelector(".logoutButton");
+      // const logoutButton = document.querySelector(".logoutButton");
       logoutButton.addEventListener("click", logout);
       // Remove the login button
       const loginButton = document.querySelector(".loginButton");
